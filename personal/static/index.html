@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent-to-Agent Demo</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --ink: #1b1f24; --muted: #5d6673; --line: #e3e6ea;
+  --accent: #1f5eff; --accent-ink: #ffffff; --soft: #eef2ff;
+  --ok: #127a43; --ok-bg: #e5f5ec; --warn: #9a5b00; --warn-bg: #fff3dc; --bad: #b42318; --bad-bg: #fde8e6;
+  --oauth: #7a3cff; --card: #0b7a8a; --a2a: #1f5eff; --mcp: #c2410c; --local: #5d6673;
+  --code-bg: #f3f4f6; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1216; --panel: #171b21; --ink: #e8ebef; --muted: #9aa4b2; --line: #2a313a;
+    --accent: #6b93ff; --accent-ink: #0f1216; --soft: #1d2740;
+    --ok: #4ade80; --ok-bg: #12301f; --warn: #fbbf24; --warn-bg: #33270d; --bad: #f87171; --bad-bg: #3a1614;
+    --oauth: #a78bfa; --card: #2dd4bf; --a2a: #6b93ff; --mcp: #fb923c; --local: #9aa4b2;
+    --code-bg: #0f1216; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1216; --panel: #171b21; --ink: #e8ebef; --muted: #9aa4b2; --line: #2a313a;
+  --accent: #6b93ff; --accent-ink: #0f1216; --soft: #1d2740;
+  --ok: #4ade80; --ok-bg: #12301f; --warn: #fbbf24; --warn-bg: #33270d; --bad: #f87171; --bad-bg: #3a1614;
+  --oauth: #a78bfa; --card: #2dd4bf; --a2a: #6b93ff; --mcp: #fb923c; --local: #9aa4b2;
+  --code-bg: #0f1216; --shadow: none;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+header { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
+header h1 { font-size: 16px; margin: 0; font-weight: 650; }
+header .sub { color: var(--muted); font-size: 13px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); color: var(--muted); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.dot.on { background: var(--ok); } .dot.off { background: var(--bad); }
+.spacer { flex: 1; }
+select, button, textarea, input { font: inherit; color: inherit; }
+select { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; max-width: 100%; }
+main { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; padding: 16px 20px; height: calc(100% - 58px); }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; height: auto; padding: 12px 16px; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 0; }
+.panel-head { padding: 12px 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.panel-head h2 { font-size: 14px; margin: 0; font-weight: 650; }
+.scroll { overflow: auto; flex: 1; min-height: 240px; }
+#thread { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 92%; padding: 10px 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 4px; }
+.msg.agent { align-self: flex-start; background: var(--soft); border-bottom-left-radius: 4px; }
+.msg.agent .who, .card-block .who { font-size: 12px; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+.card-block { align-self: stretch; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--panel); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin: 8px 0; }
+.stat { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.stat .k { color: var(--muted); font-size: 12px; } .stat .v { font-weight: 650; overflow-wrap: anywhere; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.table-wrap { overflow-x: auto; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.chip.recommended { background: var(--ok-bg); color: var(--ok); }
+.chip.optional { background: var(--warn-bg); color: var(--warn); }
+.chip.not_recommended { background: var(--bad-bg); color: var(--bad); }
+details summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+ul.reasons { margin: 4px 0 0 16px; padding: 0; color: var(--muted); font-size: 12px; }
+.scenarios { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 16px 0; }
+.scenarios button { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; font-size: 12px; cursor: pointer; text-align: left; }
+.scenarios button:hover { border-color: var(--accent); color: var(--accent); }
+form#ask { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--line); margin-top: 10px; }
+form#ask textarea { flex: 1; resize: none; height: 44px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg); min-width: 0; }
+.btn { border: 0; border-radius: 10px; padding: 8px 14px; background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn:disabled { opacity: .5; cursor: default; }
+.consent label { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.consent label:last-of-type { border-bottom: 0; }
+.consent .cls { font-size: 11px; color: var(--muted); }
+.consent .preview { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.consent .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.tabs { display: flex; gap: 4px; }
+.tabs button { border: 1px solid transparent; background: transparent; border-radius: 8px; padding: 4px 10px; cursor: pointer; color: var(--muted); font-weight: 600; }
+.tabs button[aria-selected="true"] { background: var(--soft); color: var(--ink); border-color: var(--line); }
+#wire, #audit, #profile { padding: 8px 12px; }
+.ev { border: 1px solid var(--line); border-radius: 10px; margin: 6px 0; overflow: hidden; animation: pop .25s ease-out both; }
+@keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ev { animation: none; } }
+.ev summary { list-style: none; display: flex; gap: 8px; align-items: center; padding: 6px 10px; cursor: pointer; color: var(--ink); font-size: 13px; }
+.ev summary::-webkit-details-marker { display: none; }
+.badge { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 6px; color: #fff; white-space: nowrap; }
+.b-OAuth2 { background: var(--oauth); } .b-A2Acard { background: var(--card); } .b-A2A { background: var(--a2a); }
+.b-MCP { background: var(--mcp); } .b-local { background: var(--local); }
+.dir { width: 18px; text-align: center; color: var(--muted); font-weight: 700; }
+.ev .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ev .ms { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+pre { margin: 0; padding: 10px; background: var(--code-bg); border-top: 1px solid var(--line); font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; overflow: auto; max-height: 360px; }
+.empty { color: var(--muted); padding: 16px; text-align: center; }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 12px 0; }
+.kv { display: grid; grid-template-columns: 160px 1fr; gap: 4px 12px; font-size: 13px; }
+.kv .k { color: var(--muted); }
+.lock { font-size: 12px; }
+.note { color: var(--muted); font-size: 12px; padding: 8px 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Champions Group ⇄ Personal Agent</h1>
+  <span class="sub">Agent-to-Agent demo · A2A 1.0 · MCP · OAuth2 · consent</span>
+  <span class="spacer"></span>
+  <span class="pill"><span id="dot-personal" class="dot on"></span>Personal Agent :9200</span>
+  <span class="pill"><span id="dot-champions" class="dot"></span>Champions Agent :9100</span>
+  <label class="sub" for="persona">User</label>
+  <select id="persona" aria-label="Choose the user"></select>
+</header>
+
+<main>
+  <section class="panel" aria-label="Conversation with your Personal Agent">
+    <div class="panel-head"><h2>Your Personal Agent</h2><span class="sub" id="persona-line"></span></div>
+    <div class="scroll" id="thread-scroll"><div id="thread"></div></div>
+    <div class="scenarios" id="scenarios" aria-label="Example questions"></div>
+    <form id="ask">
+      <textarea id="q" placeholder="Ask your agent, e.g. find mid-size healthcare companies in Europe switching HR platforms" aria-label="Your question"></textarea>
+      <button class="btn" id="send" type="submit">Send</button>
+    </form>
+  </section>
+
+  <section class="panel" aria-label="Agent traffic and privacy">
+    <div class="panel-head">
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="wire">Agent wire</button>
+        <button role="tab" aria-selected="false" data-tab="audit">Champions audit</button>
+        <button role="tab" aria-selected="false" data-tab="profile">Profile &amp; consent</button>
+      </div>
+    </div>
+    <div class="legend" id="legend">
+      <span class="badge b-local">Local</span><span class="badge b-OAuth2">OAuth2</span>
+      <span class="badge b-A2Acard">A2A card</span><span class="badge b-A2A">A2A</span><span class="badge b-MCP">MCP</span>
+      <span class="sub">→ sent to Champions · ← received · • stayed inside your agent</span>
+    </div>
+    <div class="scroll"><div id="wire"><div class="empty">Ask a question to watch the agents talk.</div></div>
+      <div id="audit" hidden></div><div id="profile" hidden></div></div>
+  </section>
+</main>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const SCENARIOS = [
+  ["priya", "Find mid-size healthcare companies in Europe that are switching HR platforms"],
+  ["marcus", "Which fintech and tech companies in the UK are researching payroll? I need their tech stack"],
+  ["aiko", "Size the APAC manufacturing market for ERP upgrades, with revenue and tech stack"],
+  [null, "What data can Champions provide?"],
+  ["priya", "Get me the emails of HR decision makers at those healthcare companies"],
+];
+let persona = "priya", pending = null, busy = false;
+
+async function api(path, opts = {}) {
+  const res = await fetch(path, { headers: { "Content-Type": "application/json" }, ...opts });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || res.statusText);
+  return body;
+}
+
+function add(html, cls) {
+  const div = document.createElement("div");
+  div.className = cls; div.innerHTML = html;
+  $("#thread").appendChild(div);
+  $("#thread-scroll").scrollTop = $("#thread-scroll").scrollHeight;
+  return div;
+}
+
+function renderWire(events, reset = true) {
+  const box = $("#wire");
+  if (reset) box.innerHTML = "";
+  events.forEach((e, i) => {
+    const proto = e.direction === "local" ? "local" : e.protocol;
+    const label = e.direction === "local" ? e.protocol : e.protocol;
+    const arrow = { out: "→", in: "←", local: "•" }[e.direction];
+    const payload = e.direction === "local" ? e.detail : { headers: e.headers, body: e.body };
+    const el = document.createElement("details");
+    el.className = "ev";
+    el.style.animationDelay = `${i * 70}ms`;
+    el.innerHTML = `<summary><span class="dir" aria-hidden="true">${arrow}</span>
+      <span class="badge b-${esc(proto.replace(/\s/g, ""))}">${esc(label)}</span>
+      <span class="t">${esc(e.title)}</span>${e.ms != null ? `<span class="ms">${e.ms} ms</span>` : ""}</summary>
+      <pre>${esc(JSON.stringify(payload, null, 2))}</pre>`;
+    box.appendChild(el);
+  });
+}
+
+function renderResult(r) {
+  const cat = r.catalog, rec = r.recommendation;
+  const stats = cat.insights.map((i) => `<div class="stat"><div class="k">${esc(i.label)}</div>
+    <div class="v">${esc(i.value)}</div>${i.detail ? `<div class="k">${esc(i.detail)}</div>` : ""}</div>`).join("");
+  const rows = rec.options.map((o) => `<tr><td><strong>${esc(o.name)}</strong>
+      <details><summary>why</summary><ul class="reasons">${o.reasons.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details></td>
+      <td><span class="chip ${o.verdict}">${o.verdict.replace("_", " ")}</span></td>
+      <td class="num">${o.score}</td><td class="num">${o.est_monthly_credits}</td></tr>`).join("");
+  const sample = cat.sample.length ? `<details><summary>Sample from Champions (${cat.sample.length} rows, no personal data)</summary>
+    <div class="table-wrap"><table><tr>${Object.keys(cat.sample[0]).map((k) => `<th>${esc(k)}</th>`).join("")}</tr>
+    ${cat.sample.map((row) => `<tr>${Object.values(row).map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</table></div></details>` : "";
+  add(`<div class="who">Personal Agent · recommendation</div>
+    <div>${esc(rec.summary)}</div>
+    <div class="grid">${stats}</div>
+    <div class="table-wrap"><table><tr><th>Data card</th><th>Verdict</th><th>Score</th><th>Credits/mo</th></tr>${rows}</table></div>
+    ${sample}
+    <div class="note">Scored inside your agent against your private budget, must-have fields and policy. Champions never saw those.</div>`, "card-block");
+}
+
+function renderConsent(r, question) {
+  pending = { question, purpose: r.purpose };
+  const rows = r.fields.map((f) => {
+    const locked = f.class === "private";
+    const preview = locked ? "never leaves your agent" : (typeof f.preview === "object" ? JSON.stringify(f.preview) : f.preview);
+    return `<label><input type="checkbox" name="f" value="${esc(f.name)}" ${f.default ? "checked" : ""} ${locked ? "disabled" : ""}>
+      <span><strong>${esc(f.label)}</strong> <span class="cls">${locked ? "🔒 private" : f.class === "opt_in" ? "optional" : "shareable"}</span>
+      <div class="preview">${esc(preview)}</div></span></label>`;
+  }).join("");
+  add(`<div class="who">Personal Agent · consent needed</div>
+    <div>To ask Champions, I need your permission for <strong>${esc(r.purpose_label.toLowerCase())}</strong>.
+    Choose what I may share. Everything else stays with me.</div>
+    <form class="consent">${rows}<div class="actions">
+      <button class="btn" type="submit">Share selected &amp; continue</button>
+      <button class="btn ghost" type="button" data-decline>Don't share</button></div></form>`, "card-block");
+  const form = $("#thread").lastElementChild.querySelector("form");
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const fields = [...form.querySelectorAll("input[name=f]:checked")].map((i) => i.value);
+    form.querySelectorAll("button,input").forEach((b) => b.disabled = true);
+    await api("/api/consent", { method: "POST", body: JSON.stringify({ persona, purpose: pending.purpose, fields }) });
+    loadProfile();
+    send(pending.question, true);
+  });
+  form.querySelector("[data-decline]").addEventListener("click", () => {
+    form.querySelectorAll("button,input").forEach((b) => b.disabled = true);
+    add(`<div class="who">Personal Agent</div>Understood. Nothing was sent to Champions.`, "msg agent");
+  });
+}
+
+async function send(question, resumed = false) {
+  if (busy || !question.trim()) return;
+  busy = true; $("#send").disabled = true;
+  if (!resumed) add(esc(question), "msg user");
+  const thinking = add(`<div class="who">Personal Agent</div>Working…`, "msg agent");
+  try {
+    const r = await api("/api/chat", { method: "POST", body: JSON.stringify({ persona, message: question }) });
+    thinking.remove();
+    renderWire(r.wire);
+    if (r.status === "consent_required") renderConsent(r, question);
+    else if (r.status === "error") add(`<div class="who">Personal Agent</div>Champions refused or failed: ${esc(r.error)}`, "msg agent");
+    else { add(`<div class="who">Personal Agent</div>${esc(r.answer)}`, "msg agent"); renderResult(r); }
+    if (!$("#audit").hidden) loadAudit();
+  } catch (err) {
+    thinking.innerHTML = `<div class="who">Personal Agent</div>Something went wrong: ${esc(err.message)}`;
+  } finally { busy = false; $("#send").disabled = false; }
+}
+
+async function loadAudit() {
+  const box = $("#audit");
+  try {
+    const { entries } = await api("/api/champions/audit");
+    box.innerHTML = `<div class="note">Champions' own log of this client's calls. It records consent ids, purposes and <em>which</em> fields were shared, not their values.</div>` +
+      (entries.length ? entries.slice().reverse().map((e) => `<details class="ev"><summary><span class="badge b-A2A">${esc(e.event)}</span>
+        <span class="t">${esc(e.at)}${e.consent_id ? " · " + esc(e.consent_id) : ""}</span></summary><pre>${esc(JSON.stringify(e, null, 2))}</pre></details>`).join("")
+        : `<div class="empty">No entries yet.</div>`);
+  } catch (err) { box.innerHTML = `<div class="empty">${esc(err.message)}</div>`; }
+}
+
+async function loadProfile() {
+  const p = await api(`/api/profile/${persona}`);
+  const fieldRows = p.fields.map((f) => {
+    const v = p.profile[f.name];
+    return `<div class="k">${esc(f.label)} <span class="cls lock">${f.class === "private" ? "🔒" : ""}</span></div>
+      <div>${esc(typeof v === "object" ? JSON.stringify(v) : v)}</div>`;
+  }).join("");
+  const consentRows = p.consents.length ? p.consents.map((c) => `<tr><td>${esc(p.purposes[c.purpose])}</td>
+      <td>${c.fields.map(esc).join(", ")}</td><td class="num">${esc(c.consent_id)}</td>
+      <td><button class="btn ghost" data-revoke="${esc(c.purpose)}">Revoke</button></td></tr>`).join("")
+    : `<tr><td colspan="4" class="sub">No consent given yet. Your agent will ask before sharing anything.</td></tr>`;
+  $("#profile").innerHTML = `<h3 style="font-size:13px;margin:8px 0">Private profile (held only by your agent)</h3>
+    <div class="kv">${fieldRows}</div>
+    <h3 style="font-size:13px;margin:16px 0 4px">Consents</h3>
+    <div class="table-wrap"><table><tr><th>Purpose</th><th>Fields shared</th><th>Consent id</th><th></th></tr>${consentRows}</table></div>`;
+  $("#profile").querySelectorAll("[data-revoke]").forEach((b) => b.addEventListener("click", async () => {
+    await api(`/api/consent/${persona}/${b.dataset.revoke}`, { method: "DELETE" });
+    loadProfile();
+  }));
+}
+
+function selectTab(name) {
+  document.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+  ["wire", "audit", "profile"].forEach((id) => $("#" + id).hidden = id !== name);
+  $("#legend").hidden = name !== "wire";
+  if (name === "audit") loadAudit();
+  if (name === "profile") loadProfile();
+}
+
+async function init() {
+  const people = await api("/api/personas");
+  $("#persona").innerHTML = people.map((p) => `<option value="${p.id}">${esc(p.display)}</option>`).join("");
+  $("#persona").addEventListener("change", (e) => {
+    persona = e.target.value;
+    $("#persona-line").textContent = people.find((p) => p.id === persona).display;
+    $("#thread").innerHTML = ""; renderWire([]); $("#wire").innerHTML = `<div class="empty">Ask a question to watch the agents talk.</div>`;
+    loadProfile();
+  });
+  $("#persona-line").textContent = people[0].display;
+  $("#scenarios").innerHTML = SCENARIOS.map(([who, q], i) => `<button type="button" data-i="${i}">${esc(q)}</button>`).join("");
+  $("#scenarios").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    const [who, q] = SCENARIOS[b.dataset.i];
+    if (who && who !== persona) { $("#persona").value = who; $("#persona").dispatchEvent(new Event("change")); }
+    send(q);
+  });
+  $("#ask").addEventListener("submit", (e) => { e.preventDefault(); const q = $("#q").value; $("#q").value = ""; send(q); });
+  $("#q").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#ask").requestSubmit(); } });
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => selectTab(b.dataset.tab)));
+  add(`<div class="who">Personal Agent</div>Hi! I know your role, goals and budget. Ask me what data you need. I'll check with the Champions Group Agent, share only what you allow, and recommend what to buy.`, "msg agent");
+  loadProfile();
+  try { const h = await api("/api/health"); $("#dot-champions").className = "dot " + (h.champions.status === "ok" ? "on" : "off"); }
+  catch { $("#dot-champions").className = "dot off"; }
+}
+init();
+</script>
+</body>
+</html>
