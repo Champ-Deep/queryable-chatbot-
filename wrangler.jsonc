@@ -3,9 +3,9 @@
 // Lab password: npx wrangler secret put LAB_PASSWORD
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "champions-a2a",
+  "name": "queryable-chatbot",
   "main": "worker/index.js",
-  "account_id": "b24cc98f3aeb0a33161dff396c5f8c25",
+  "account_id": "ae03bce34fb2cd34756be0003196572f",
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
   "observability": { "enabled": true },

@@ -4,7 +4,7 @@ The demo runs on Cloudflare as **one Worker in front of one Container**. The con
 
 ```mermaid
 flowchart LR
-    B([Browser / partner agent]) -->|https| W[Worker champions-a2a<br/>worker/index.js]
+    B([Browser / partner agent]) -->|https| W[Worker queryable-chatbot<br/>worker/index.js]
     W -->|"/lab, /.well-known, /a2a, /mcp,<br/>/oauth, /api/v1, /audit, /health"| C9100
     W -->|"everything else: /, /api/*"| C9200
     subgraph Container["Container (standard-1, single instance)"]
@@ -16,7 +16,7 @@ flowchart LR
 |---|---|---|
 | Worker + Durable Object | `worker/index.js`, `worker/routes.js` | Starts the container on the first request, waits for both agents, then routes each path to its port |
 | Container image | `Dockerfile`, `deploy/run.sh` | Python 3.12 slim, non-root user. Runs both uvicorn servers, and the container exits if either one dies |
-| Configuration | `wrangler.jsonc` | Worker `champions-a2a`, `durable_object` scheduling policy, image built from the Dockerfile |
+| Configuration | `wrangler.jsonc` | Worker `queryable-chatbot`, `durable_object` scheduling policy, image built from the Dockerfile |
 
 ## Runtime settings
 
@@ -45,7 +45,7 @@ The first deploy takes a few minutes while Cloudflare provisions the container. 
 
 ## Deploy automatically from GitHub (Workers Builds)
 
-1. Cloudflare dashboard → **Workers & Pages** → **champions-a2a** → **Settings** → **Builds** → **Connect**.
+1. Cloudflare dashboard → **Workers & Pages** → **queryable-chatbot** → **Settings** → **Builds** → **Connect**.
 2. Choose the GitHub repository `Champ-Deep/queryable-chatbot-` and branch `main`.
 3. Leave the build command empty, set the deploy command to `npx wrangler deploy`, and the root directory to `/`.
 4. Save. Every push to `main` now rebuilds the image and rolls out the container.
@@ -54,7 +54,7 @@ The first deploy takes a few minutes while Cloudflare provisions the container. 
 
 | Task | Command / place |
 |---|---|
-| Live logs | `npx wrangler tail`, or Dashboard → Workers & Pages → champions-a2a → Logs |
+| Live logs | `npx wrangler tail`, or Dashboard → Workers & Pages → queryable-chatbot → Logs |
 | Container status | `npx wrangler containers list`, or Dashboard → Workers & Pages → Containers |
 | Change the Lab password | `npx wrangler secret put LAB_PASSWORD`. It applies on the next container start |
 | Check health | `GET /health` (Champions) and `GET /api/health` (Personal Agent, also reports Champions) |
