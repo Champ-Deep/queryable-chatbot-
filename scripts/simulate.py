@@ -36,6 +36,8 @@ if __name__ == "__main__":
     parser.add_argument("--in-process", action="store_true", help="run Champions inside this process")
     parser.add_argument("--persona", action="append", help="limit to these personas (repeatable)")
     args = parser.parse_args()
+    # The report contains arrows and other non-ASCII text; Windows consoles default to cp1252.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
     report = asyncio.run(main(args.in_process, args.persona))
     out = ROOT / "reports"
