@@ -2,7 +2,6 @@
 
 **A working agent-to-agent (A2A) demo.** A user's *Personal Agent* talks to the *Champions Group Agent* over open protocols (A2A 1.0, MCP and OAuth 2.0). It asks for the user's consent before sharing anything and returns personalised data insights. The **Agent Lab** shows what agents ask, which answers they find useful, and where the data offering falls short.
 
-![CI](https://github.com/Champ-Deep/queryable-chatbot-/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)
 ![Protocols](https://img.shields.io/badge/protocols-A2A%201.0%20%C2%B7%20MCP%20%C2%B7%20OAuth2-6f42c1)
 ![Tests](https://img.shields.io/badge/tests-74%20passing-brightgreen)
@@ -162,7 +161,7 @@ All settings are optional environment variables, and the defaults work for local
 python -m pytest
 ```
 
-**74 tests** cover personalised ranking, the query log and feedback, the MCP → REST wrapper, the simulator, OAuth scopes, the public Agent Card, A2A and MCP with and without tokens, consent enforcement (private data never on the wire), the evaluator, and complete turns over A2A + MCP. GitHub Actions runs them on every push.
+**74 tests** cover personalised ranking, the query log and feedback, the MCP → REST wrapper, the simulator, OAuth scopes, the public Agent Card, A2A and MCP with and without tokens, consent enforcement (private data never on the wire), the evaluator, and complete turns over A2A + MCP.
 
 ## Project layout
 
