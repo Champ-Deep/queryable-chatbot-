@@ -4,7 +4,7 @@
 
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)
 ![Protocols](https://img.shields.io/badge/protocols-A2A%201.0%20%C2%B7%20MCP%20%C2%B7%20OAuth2-6f42c1)
-![Tests](https://img.shields.io/badge/tests-74%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-82%20passing-brightgreen)
 
 | Agent Lab: what agents ask and what they find useful | Personal Agent: consent before anything is shared |
 |---|---|
@@ -153,6 +153,8 @@ All settings are optional environment variables, and the defaults work for local
 | `CHAMPIONS_API_URL` | in-process | Point the MCP tools at a remote or real REST API |
 | `CHAMPIONS_QUERY_LOG` | `data/query_log.db` | SQLite query-log location |
 | `CHAMPIONS_URL` | `http://127.0.0.1:9100` | Where the Personal Agent finds Champions |
+| `CHAMPIONS_PUBLIC_URL` | unset | Public URL shown in the Agent Card and allowed by MCP (hosted only) |
+| `CHAMPIONS_LAB_PASSWORD` | unset | Enables a password login for the Agent Lab (hosted only); unset = local-only |
 | `PERSONAL_AGENT_CLIENT_ID` / `_SECRET` | demo values | OAuth client credentials of the Personal Agent |
 
 ## Tests
@@ -161,7 +163,7 @@ All settings are optional environment variables, and the defaults work for local
 python -m pytest
 ```
 
-**74 tests** cover personalised ranking, the query log and feedback, the MCP → REST wrapper, the simulator, OAuth scopes, the public Agent Card, A2A and MCP with and without tokens, consent enforcement (private data never on the wire), the evaluator, and complete turns over A2A + MCP.
+**80 Python tests** (plus Worker routing tests: `npm run test:worker`) cover personalised ranking, the query log and feedback, the MCP → REST wrapper, the simulator, OAuth scopes, the public Agent Card, A2A and MCP with and without tokens, consent enforcement (private data never on the wire), the evaluator, complete turns over A2A + MCP, and hosted mode (Lab login, public URL, internal agent traffic).
 
 ## Project layout
 
@@ -184,6 +186,8 @@ personal/           Personal Agent (port 9200)
   champions_client.py           A2A/MCP client with wire recorder
 common/             shared JSON contracts (schemas.py), OAuth2/JWT (auth.py), HTTP client (http.py)
 scripts/simulate.py command-line simulator
+worker/             Cloudflare Worker that routes the public URL to the two agents in the container
+Dockerfile, deploy/ container image (both agents); wrangler.jsonc is the Cloudflare config
 tests/              pytest suite
 docs/               architecture model, design notes, demo script, screenshots
 reports/            latest simulation report
@@ -195,6 +199,7 @@ reports/            latest simulation report
 |---|---|
 | [docs/MODEL.md](docs/MODEL.md) | Architecture model, protocol research (A2A vs MCP vs REST), JSON contracts, auth, consent, evaluation logic, demo vs production, findings |
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | A step-by-step script for presenting the demo |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Cloudflare Workers + Containers deployment, auto-deploy from GitHub, operations |
 | [docs/design/agent-testing.md](docs/design/agent-testing.md) | Design of the agent-testing upgrade |
 | [reports/simulation.md](reports/simulation.md) | Latest simulation results |
 

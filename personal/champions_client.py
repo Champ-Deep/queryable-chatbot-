@@ -9,9 +9,10 @@ import json
 import os
 import time
 import uuid
+from urllib.parse import urlsplit
 
 import httpx
-from a2a.client import ClientConfig, create_client
+from a2a.client import A2ACardResolver, ClientConfig, create_client
 from a2a.helpers import new_data_part
 from a2a.types.a2a_pb2 import Message, Role, SendMessageRequest
 from google.protobuf.json_format import MessageToDict
@@ -145,11 +146,21 @@ class ChampionsClient:
         task = await self._send(json.loads(fb.model_dump_json(by_alias=True)))
         return task["artifacts"][0]["parts"][0]["data"]
 
+    def _pin_interfaces(self, card):
+        """Call the agent where we were configured to reach it, not where its card says.
+
+        Hosted, the card advertises the public URL; the Personal Agent runs next to
+        Champions and keeps its traffic on the internal address (same path).
+        """
+        for interface in card.supported_interfaces:
+            interface.url = self.base_url + urlsplit(interface.url).path
+
     async def _send(self, payload):
         headers = await self._bearer()
         async with self._http(headers) as http:
-            client = await create_client(
-                self.base_url, client_config=ClientConfig(streaming=False, httpx_client=http))
+            card = await A2ACardResolver(http, self.base_url).get_agent_card()
+            self._pin_interfaces(card)
+            client = await create_client(card, client_config=ClientConfig(streaming=False, httpx_client=http))
             message = Message(message_id=str(uuid.uuid4()), role=Role.ROLE_USER,
                               parts=[new_data_part(payload)])
             task = None

@@ -142,7 +142,7 @@ pre { margin: 0; padding: 10px; background: var(--code-bg); border-top: 1px soli
   <span class="spacer"></span>
   <span class="pill"><span id="dot-personal" class="dot on"></span>Personal Agent :9200</span>
   <span class="pill"><span id="dot-champions" class="dot"></span>Champions Agent :9100</span>
-  <a class="pill" href="http://127.0.0.1:9100/lab" target="_blank" rel="noopener">Agent Lab ↗</a>
+  <a class="pill" id="lab-link" href="/lab" target="_blank" rel="noopener">Agent Lab ↗</a>
   <label class="sub" for="persona">User</label>
   <select id="persona" aria-label="Choose the user"></select>
 </header>
@@ -180,6 +180,9 @@ pre { margin: 0; padding: 10px; background: var(--code-bg); border-top: 1px soli
 <script>
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+// Locally the agents run on separate ports; hosted, one site serves both.
+const LAB_URL = location.port === "9200" ? `${location.protocol}//${location.hostname}:9100/lab` : "/lab";
+$("#lab-link").href = LAB_URL;
 const GAP_TEXT = {
   contacts_not_available: "Gap: contacts can't be delivered over A2A (needs the Contacts card and a DPA).",
   segment_not_understood: "Gap: Champions couldn't tell which segment you meant, so this covers every company.",
@@ -347,7 +350,7 @@ function loadTesting(report) {
   const total = Object.values(scenarios).flat().length;
   $("#testing").innerHTML = `<div class="testing-head">
       <button class="btn" id="run-sim" type="button">Run simulation</button>
-      <a class="btn ghost" href="http://127.0.0.1:9100/lab" target="_blank" rel="noopener">Open Agent Lab ↗</a></div>
+      <a class="btn ghost" href="${LAB_URL}" target="_blank" rel="noopener">Open Agent Lab ↗</a></div>
     <div class="note">Runs ${Object.keys(scenarios).length} personal agents (${total} questions) against the Champions agent over the real OAuth → A2A → MCP → feedback path. Every query lands in Champions' query log, tagged <em>simulator</em>.</div>
     <div id="sim-out">${report ? renderReport(report) : `<div class="empty">No run yet.</div>`}</div>`;
   $("#run-sim").addEventListener("click", async (e) => {

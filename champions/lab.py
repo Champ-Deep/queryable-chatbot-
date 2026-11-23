@@ -1,11 +1,16 @@
 """Agent Lab: the Champions operator's view of what partner agents ask.
 
-It shows every partner's questions, so it only answers loopback callers that
-use a local host name (the Host check stops DNS-rebinding pages; production:
-put it behind the company's SSO instead). Clearing the log also
-needs a custom header, so a cross-site form post cannot trigger it.
+It shows every partner's questions, so by default it only answers loopback
+callers that use a local host name (the Host check stops DNS-rebinding pages).
+When hosted, set CHAMPIONS_LAB_PASSWORD: the Lab then asks for an HTTP Basic
+login (user "admin") instead (production: the company's SSO). Clearing the log
+also needs a custom header, so a cross-site form post cannot trigger it.
 """
 
+import base64
+import binascii
+import os
+import secrets
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -33,8 +38,36 @@ def _local_only(request: Request):
         raise HTTPException(403, "open the Agent Lab as http://127.0.0.1:9100/lab")
 
 
+LAB_USER = "admin"
+
+
+def _password_login(request: Request, password):
+    """Hosted mode: HTTP Basic login (user ``admin``)."""
+    scheme, _, encoded = request.headers.get("authorization", "").partition(" ")
+    try:
+        user, _, given = base64.b64decode(encoded, validate=True).decode("utf-8").partition(":")
+    except (binascii.Error, UnicodeDecodeError):
+        user, given = "", ""
+    user_ok = secrets.compare_digest(user.encode(), LAB_USER.encode())
+    password_ok = secrets.compare_digest(given.encode(), password.encode())
+    if scheme.lower() != "basic" or not (user_ok and password_ok):
+        raise HTTPException(401, "log in to the Agent Lab",
+                            headers={"WWW-Authenticate": 'Basic realm="Champions Agent Lab", charset="UTF-8"'})
+
+
+def _lab_access(request: Request):
+    password = os.getenv("CHAMPIONS_LAB_PASSWORD")
+    if password:
+        _password_login(request, password)
+    elif os.getenv("CHAMPIONS_PUBLIC_URL"):
+        # Hosted without a password: fail closed instead of trusting "local" callers.
+        raise HTTPException(403, "the Agent Lab needs CHAMPIONS_LAB_PASSWORD when hosted")
+    else:
+        _local_only(request)
+
+
 def router(log):
-    lab = APIRouter(tags=["Agent Lab"], dependencies=[Depends(_local_only)])
+    lab = APIRouter(tags=["Agent Lab"], dependencies=[Depends(_lab_access)])
 
     @lab.get("/lab", include_in_schema=False)
     def page():

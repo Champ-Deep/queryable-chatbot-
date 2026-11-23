@@ -1,0 +1,14 @@
+{
+  "name": "champions-a2a",
+  "private": true,
+  "description": "Cloudflare deployment of the Champions Group <-> Personal Agent A2A demo",
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test:worker": "node --test worker/routes.test.js"
+  },
+  "devDependencies": {
+    "wrangler": "4.166.0"
+  }
+}

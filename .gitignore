@@ -6,3 +6,6 @@ logs/
 .env
 data/
 reports/*.json
+node_modules/
+.wrangler/
+.dev.vars

@@ -18,7 +18,7 @@ import json
 import os
 import threading
 import time
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 
 import httpx
 from a2a.helpers import get_data_parts, new_data_part, new_task_from_user_message, new_text_message
@@ -45,8 +45,25 @@ from common import auth
 from common.http import tls_context
 from common.schemas import CapabilityRequest, Feedback
 
-PUBLIC_URL = os.getenv("CHAMPIONS_URL", "http://127.0.0.1:9100")
-ALLOWED_HOSTS = ["127.0.0.1:*", "localhost:*", "champions", "champions:*"]
+LOCAL_HOSTS = ["127.0.0.1:*", "localhost:*", "champions", "champions:*"]
+LOCAL_ORIGINS = ["http://127.0.0.1:*", "http://localhost:*"]
+
+
+def public_url():
+    """The URL partners reach this agent at: CHAMPIONS_PUBLIC_URL when hosted."""
+    url = os.getenv("CHAMPIONS_PUBLIC_URL") or os.getenv("CHAMPIONS_URL") or "http://127.0.0.1:9100"
+    return url.rstrip("/")
+
+
+def allowed_hosts_and_origins():
+    """MCP DNS-rebinding allow-lists: local names, plus the public host when hosted."""
+    hosts, origins = list(LOCAL_HOSTS), list(LOCAL_ORIGINS)
+    public = os.getenv("CHAMPIONS_PUBLIC_URL")
+    if public:
+        parsed = urlsplit(public)
+        hosts.append(parsed.netloc)
+        origins.append(f"{parsed.scheme}://{parsed.netloc}")
+    return hosts, origins
 
 # Claims of the authenticated caller for the current request.
 current_claims = contextvars.ContextVar("current_claims", default=None)
@@ -82,9 +99,10 @@ def audit(event, **fields):
 # ------------------------------------------------------------------ A2A agent
 
 def agent_card():
+    url = public_url()
     bearer = SecurityScheme(http_auth_security_scheme=HTTPAuthSecurityScheme(
         scheme="Bearer", bearer_format="JWT",
-        description=f"OAuth2 client credentials: POST {PUBLIC_URL}/oauth/token",
+        description=f"OAuth2 client credentials: POST {url}/oauth/token",
     ))
     return AgentCard(
         name="Champions Group Agent",
@@ -94,7 +112,7 @@ def agent_card():
         version="1.0.0",
         provider=AgentProvider(organization="Champions Group (demo)", url="https://champions.example"),
         supported_interfaces=[AgentInterface(
-            url=f"{PUBLIC_URL}/a2a", protocol_binding="JSONRPC", protocol_version="1.0")],
+            url=f"{url}/a2a", protocol_binding="JSONRPC", protocol_version="1.0")],
         capabilities=AgentCapabilities(streaming=False, push_notifications=False),
         security_schemes={"bearer": bearer},
         security_requirements=[SecurityRequirement(schemes={"bearer": StringList(list=["catalog:read"])})],
@@ -350,6 +368,7 @@ def create_app(log_path=None):
     handler = DefaultRequestHandler(
         agent_executor=ChampionsExecutor(), task_store=InMemoryTaskStore(), agent_card=card)
 
+    allowed_hosts, allowed_origins = allowed_hosts_and_origins()
     # Each app gets its own MCP transport: its session manager can run once.
     mcp_app = mcp.streamable_http_app(
         streamable_http_path="/mcp",
@@ -357,8 +376,8 @@ def create_app(log_path=None):
         json_response=True,
         transport_security=TransportSecuritySettings(
             enable_dns_rebinding_protection=True,
-            allowed_hosts=ALLOWED_HOSTS,
-            allowed_origins=["http://127.0.0.1:*", "http://localhost:*"],
+            allowed_hosts=allowed_hosts,
+            allowed_origins=allowed_origins,
         ),
     )
 

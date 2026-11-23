@@ -1,0 +1,27 @@
+// Cloudflare Workers + Containers deployment of the Champions A2A demo.
+// Deploy: npx wrangler deploy   (Docker must be running; Workers Builds can build it too)
+// Lab password: npx wrangler secret put LAB_PASSWORD
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "champions-a2a",
+  "main": "worker/index.js",
+  "account_id": "b24cc98f3aeb0a33161dff396c5f8c25",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "containers": [
+    {
+      "class_name": "ChampionsDemo",
+      "scheduling_policy": "durable_object",
+      "images": {
+        "base": { "dockerfile": "./Dockerfile" }
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "CHAMPIONS_DEMO", "class_name": "ChampionsDemo" }]
+  },
+  "exports": {
+    "ChampionsDemo": { "type": "durable-object", "storage": "sqlite" }
+  }
+}
