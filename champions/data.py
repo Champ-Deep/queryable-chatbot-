@@ -53,8 +53,14 @@ def size_band(employees):
     return "Enterprise"
 
 
+RENEWAL_QUARTERS = ["2026-Q4", "2027-Q1", "2027-Q2", "2027-Q3", "2027-Q4"]
+UPCOMING_RENEWALS = RENEWAL_QUARTERS[:2]
+
+
 def _companies():
     rng = random.Random(SEED)
+    # Columns added later use their own generator, so the original values stay the same.
+    extra = random.Random(SEED + 1)
     rows = []
     for i in range(1, N_COMPANIES + 1):
         industry = rng.choice(list(INDUSTRIES))
@@ -74,6 +80,7 @@ def _companies():
                 round(employees * rng.uniform(0.08, 0.35), 1),
                 rng.choice(FUNDING), round(employees * rng.uniform(250, 900)),
                 rng.choice(["SaaS", "Hybrid", "On-premise"]),
+                extra.choice(RENEWAL_QUARTERS), round(extra.gauss(9, 14), 1),
             )
         )
     return rows
@@ -94,9 +101,10 @@ def connection():
                     hq_country VARCHAR, region VARCHAR, employee_count INTEGER, size_band VARCHAR,
                     hr_platform VARCHAR, crm VARCHAR, erp VARCHAR, cloud_provider VARCHAR,
                     intent_topic VARCHAR, intent_score INTEGER, revenue_usd_m DOUBLE,
-                    funding_stage VARCHAR, annual_hr_tech_spend_usd DOUBLE, deployment_type VARCHAR)"""
+                    funding_stage VARCHAR, annual_hr_tech_spend_usd DOUBLE, deployment_type VARCHAR,
+                    renewal_quarter VARCHAR, revenue_growth_pct DOUBLE)"""
             )
-            conn.executemany(f"INSERT INTO companies VALUES ({', '.join(['?'] * 18)})", _companies())
+            conn.executemany(f"INSERT INTO companies VALUES ({', '.join(['?'] * 20)})", _companies())
             _conn = conn
         return _conn
 

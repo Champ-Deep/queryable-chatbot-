@@ -3,20 +3,30 @@
     uvicorn personal.app:app --port 9200      ->  http://127.0.0.1:9200
 """
 
+import asyncio
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from personal import agent
+from personal import agent, simulator
+from common.http import tls_context
 from personal.champions_client import CHAMPIONS_URL, ChampionsClient, ChampionsError, Wire
 from personal.profile import FIELDS, PERSONAS, PURPOSES, ConsentStore, get_profile
+from personal.scenarios import SCENARIOS
 
 STATIC = Path(__file__).resolve().parent / "static"
 
+REPORTS = Path(__file__).resolve().parent.parent / "reports"
+
 app = FastAPI(title="Personal Agent")
+# The Champions Agent Lab (:9100/lab) may start a simulation run here.
+app.add_middleware(CORSMiddleware, allow_origins=["http://127.0.0.1:9100", "http://localhost:9100"],
+                   allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 consents = ConsentStore()
+_simulating = asyncio.Lock()
 
 
 class ChatIn(BaseModel):
@@ -43,7 +53,28 @@ def index():
 
 @app.get("/api/personas")
 def personas():
-    return [{"id": key, "display": value["display"]} for key, value in PERSONAS.items()]
+    return [{"id": key, "display": value["display"], "role": value["role"]} for key, value in PERSONAS.items()]
+
+
+@app.get("/api/scenarios")
+def scenarios():
+    return SCENARIOS
+
+
+@app.post("/api/simulate")
+async def simulate():
+    """Run every persona's questions through the real A2A path; returns the report."""
+
+    if _simulating.locked():
+        raise HTTPException(409, "a simulation is already running")
+    async with _simulating:
+        try:
+            report = await simulator.run()
+        except (ChampionsError, OSError) as error:
+            raise HTTPException(502, f"Champions unavailable: {error}") from error
+    REPORTS.mkdir(exist_ok=True)
+    (REPORTS / "simulation.md").write_text(simulator.markdown(report), encoding="utf-8")
+    return report
 
 
 @app.get("/api/profile/{persona}")
@@ -92,7 +123,7 @@ async def health():
     import httpx
 
     try:
-        async with httpx.AsyncClient(timeout=3) as http:
+        async with httpx.AsyncClient(timeout=3, verify=tls_context()) as http:
             champions = (await http.get(f"{CHAMPIONS_URL}/health")).json()
     except httpx.HTTPError:
         champions = {"status": "unavailable"}

@@ -44,6 +44,8 @@ class CapabilityRequest(BaseModel):
     filters: Filters = Field(default_factory=Filters)
     desired_outputs: list[str] = Field(default_factory=list)
     context: UserContext | None = None
+    # Who generated the traffic: a real user, or the agent-testing simulator.
+    source: Literal["live", "simulator"] = "live"
 
     model_config = {"populate_by_name": True}
 
@@ -86,6 +88,13 @@ class Insight(BaseModel):
     label: str
     value: str | int | float
     detail: str = ""
+    # Personalisation (empty for generic insights).
+    id: str = ""
+    themes: list[str] = Field(default_factory=list)
+    score: float = 0.0
+    why_for_you: str = ""
+    evidence: str = ""
+    follow_ups: list[str] = Field(default_factory=list)
 
     @field_validator("value")
     @classmethod
@@ -104,6 +113,24 @@ class CatalogResult(BaseModel):
     sample: list[dict] = Field(default_factory=list)
     method: str
     consent_id: str | None = None
+    query_id: str | None = None
+    personalised_for: list[str] = Field(default_factory=list)
+    gaps: list[str] = Field(default_factory=list)
+
+    model_config = {"populate_by_name": True}
+
+
+class InsightRating(BaseModel):
+    insight_id: str
+    useful: bool
+
+
+class Feedback(BaseModel):
+    """Personal Agent -> Champions: which insights were useful. Ratings only, never reasons."""
+
+    schema_: str = Field(schema_id("feedback"), alias="schema")
+    query_id: str
+    ratings: list[InsightRating]
 
     model_config = {"populate_by_name": True}
 

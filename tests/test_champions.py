@@ -54,7 +54,8 @@ def test_token_refuses_bad_secret_or_ungranted_scope(champions, secret, scope, s
 def test_agent_card_is_public_and_declares_bearer(champions):
     card = champions.get("/.well-known/agent-card.json").json()
     assert card["name"] == "Champions Group Agent"
-    assert {s["id"] for s in card["skills"]} == {"describe_capabilities", "find_data_cards", "get_insights"}
+    assert {s["id"] for s in card["skills"]} == {"describe_capabilities", "find_data_cards", "get_insights",
+                                                    "submit_feedback"}
     assert card["securitySchemes"]["bearer"]["httpAuthSecurityScheme"]["scheme"] == "Bearer"
     assert card["supportedInterfaces"][0]["url"].endswith("/a2a")
 
@@ -110,7 +111,8 @@ def test_mcp_lists_and_calls_tools(champions, bearer):
     assert init.status_code == 200, init.text
 
     tools = mcp_call(champions, bearer, "tools/list").json()["result"]["tools"]
-    assert {t["name"] for t in tools} == {"list_data_cards", "get_vaf_fields", "get_insights"}
+    assert {t["name"] for t in tools} == {"list_data_cards", "get_vaf_fields", "find_data_cards",
+                                          "get_insights", "get_query_stats"}
 
     called = mcp_call(champions, bearer, "tools/call",
                       {"name": "get_vaf_fields", "arguments": {"card_id": "intent_signals"}}).json()

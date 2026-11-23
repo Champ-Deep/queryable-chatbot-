@@ -1,9 +1,13 @@
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
+# Tests never touch the real query log.
+os.environ["CHAMPIONS_QUERY_LOG"] = os.path.join(tempfile.mkdtemp(), "q.db")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from champions.app import create_app  # noqa: E402
@@ -14,8 +18,8 @@ SECRET = auth.CLIENTS[CLIENT_ID]["secret"]
 
 
 @pytest.fixture()
-def champions():
-    with TestClient(create_app(), base_url="http://champions") as client:
+def champions(tmp_path):
+    with TestClient(create_app(log_path=tmp_path / "q.db"), base_url="http://champions") as client:
         yield client
 
 

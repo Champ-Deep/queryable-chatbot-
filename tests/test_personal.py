@@ -153,3 +153,10 @@ def test_capability_question_lists_catalog_instead_of_a_shopping_list():
 def test_budget_wording_when_bundle_uses_all_of_it():
     rec = evaluator.evaluate(_catalog(_m("technographics", 0.9, "weekly", 75)), get_profile("marcus"))
     assert "uses your full 300-credit budget" in rec.summary
+
+
+def test_hospitals_is_not_italy_and_hiring_people_is_not_contacts():
+    request, purpose = planner.plan("Which cloud do North American banks and hospitals use?", get_profile("noor"), [])
+    assert request.filters.countries == []
+    _, purpose = planner.plan("Which companies are hiring HR systems people?", get_profile("priya"), [])
+    assert purpose != "outreach"

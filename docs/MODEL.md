@@ -205,3 +205,50 @@ All payloads carry a versioned `schema` id (`champions.<name>/v1`) and are defin
 | Synthetic catalog and companies | Real Champions catalog, coverage stats, pricing |
 | Non-streaming A2A | Streaming and push notifications for long jobs (list builds, enrichment) |
 | Both agents on localhost | Separate trust domains, TLS, signed Agent Cards, rate limiting |
+
+## 10. Agent-to-agent testing: what we learned
+
+Setup: 10 personal agents (sales, channel sales, customer success, marketing ops, product marketing, RevOps, strategy, investor, talent acquisition), 41 realistic questions, all sent over the real path (OAuth → Agent Card → A2A → MCP → feedback). Each personal agent judges every insight against its person's **private** profile and sends back only *useful / not useful*. Everything lands in the Champions query log (Agent Lab: `http://127.0.0.1:9100/lab`, export CSV/JSONL). Re-run any time: **Run simulation** in the Lab or `scripts\simulate.py`.
+
+### Q1. Can Champions find insights that matter to the person?
+Yes, once the person's agent shares **role and goals** (consented, never budget or notes):
+- Every question was answered with data (100%), and **52% of insights were judged useful** by the asking agent's private judgement. That rose to **72% for a Head of Sales**, whose goal matches our data best.
+- Ranking is explained to the user in a "why for you" line, e.g. *"As Head of Sales, these look like switchers away from a competing platform; it answers what you asked."*
+- What the question asks for explicitly (renewals, spend, cloud migration…) goes first; role and goals order the rest.
+
+### Q2. What do agents ask?
+By intent, from the log: tech stack (9), growth & funding (7), market sizing (6), switching/displacement (5), who is researching X (4), account discovery (3), contacts (2), timing/renewals (2), catalog (1). Buyers' agents mostly ask **"who uses what"**, **"who is growing"** and **"how big is it"**, not for raw lists.
+
+### Q3. Which responses are actually useful?
+| Insight type | Useful when shown |
+|---|---|
+| Topic surge (who is researching X) | 95% |
+| Top topics in a segment | 100% (3 shown) |
+| Fast growers (20%+ growth) | 79% |
+| Funding mix | 70% |
+| Legacy-platform switchers | 57% |
+| Hot accounts (surge ≥ 80) | 50% |
+| CRM mix / overall intent | 50% |
+| ERP mix, HR-tech spend, country hotspot, cloud mix | 33–41% |
+| Segment size | 31% |
+| Renewals soon | 16% |
+
+**Reading:** *actionable, specific* insights (who is researching, who is growing, who is switching) beat *descriptive* ones (segment size, mixes). "Renewals soon" is shown often but rarely useful: the data only has the **HR** contract renewal, so ERP and cloud buyers can't use it.
+
+### Q4. How the real queries improve the agent next
+The Lab turns gaps into a to-do list:
+1. **Signals not tracked** (hiring/job postings, ESG): add them to the catalog, or say clearly that they aren't covered.
+2. **Contacts requested over A2A**: offer a consented outreach flow (Contacts card + DPA + `contacts:read`), or return a count of reachable personas.
+3. **Renewal data is HR-only**: add ERP/CRM/cloud contract renewal windows (the most-shown, least-useful insight).
+4. **Vague questions** ("what's hot?"): ask back with A2A `INPUT_REQUIRED` instead of answering for every company.
+5. Use the exported query log as a **golden set**: replay it after each change and compare usefulness, then swap the rule-based planner/ranker for an LLM and measure against the same set.
+
+### MCP = a wrapper around our API (the boss's point)
+Champions now has a plain REST API (`/api/v1/cards`, `/cards/{id}/fields`, `/search`, `/insights`, `/feedback`, `/query-stats`) protected by an **internal API key**. The MCP server's tools (`list_data_cards`, `get_vaf_fields`, `find_data_cards`, `get_insights`, `get_query_stats`) **call that API with the key the server holds**. An MCP client (a partner agent, Claude Desktop…) presents only its own OAuth token and calls tools by name. It never needs API credentials or endpoint knowledge. Set `CHAMPIONS_API_URL` to point the same MCP server at a remote/real API.
+
+```mermaid
+flowchart LR
+    C[Any MCP client] -- "OAuth bearer, tools/call get_insights" --> M[Champions MCP server]
+    M -- "X-API-Key (held by server), POST /api/v1/insights" --> API[Champions REST API]
+    API --> E[Insight engine + query log]
+```

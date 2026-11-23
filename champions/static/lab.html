@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Champions Agent Lab</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --ink: #1b1f24; --muted: #5d6673; --line: #e3e6ea;
+  --accent: #1f5eff; --accent-ink: #ffffff; --soft: #eef2ff;
+  --ok: #127a43; --ok-bg: #e5f5ec; --warn: #9a5b00; --warn-bg: #fff3dc; --bad: #b42318; --bad-bg: #fde8e6;
+  --a2a: #1f5eff; --mcp: #c2410c; --rest: #0b7a8a; --sim: #7a3cff;
+  --track: #eef0f3; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1216; --panel: #171b21; --ink: #e8ebef; --muted: #9aa4b2; --line: #2a313a;
+    --accent: #6b93ff; --accent-ink: #0f1216; --soft: #1d2740;
+    --ok: #4ade80; --ok-bg: #12301f; --warn: #fbbf24; --warn-bg: #33270d; --bad: #f87171; --bad-bg: #3a1614;
+    --a2a: #6b93ff; --mcp: #fb923c; --rest: #2dd4bf; --sim: #a78bfa; --track: #222831; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1216; --panel: #171b21; --ink: #e8ebef; --muted: #9aa4b2; --line: #2a313a;
+  --accent: #6b93ff; --accent-ink: #0f1216; --soft: #1d2740;
+  --ok: #4ade80; --ok-bg: #12301f; --warn: #fbbf24; --warn-bg: #33270d; --bad: #f87171; --bad-bg: #3a1614;
+  --a2a: #6b93ff; --mcp: #fb923c; --rest: #2dd4bf; --sim: #a78bfa; --track: #222831; --shadow: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; position: sticky; top: 0; z-index: 2; }
+header h1 { font-size: 17px; margin: 0; font-weight: 700; }
+.sub { color: var(--muted); font-size: 12.5px; }
+.spacer { flex: 1; }
+.btn { border: 0; border-radius: 10px; padding: 7px 13px; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; font-size: 13px; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn.danger { background: transparent; color: var(--bad); border: 1px solid var(--line); }
+.btn:disabled { opacity: .5; cursor: default; }
+main { padding: 16px 20px 40px; max-width: 1280px; margin: 0 auto; display: grid; gap: 16px; }
+@media (max-width: 700px) { main { padding: 12px 16px 32px; } header { padding: 12px 16px; } }
+.intro { color: var(--muted); font-size: 13px; margin: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow); }
+.kpi .k { color: var(--muted); font-size: 12px; font-weight: 600; }
+.kpi .v { font-size: 26px; font-weight: 750; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.kpi .d { color: var(--muted); font-size: 12px; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+@media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; }
+.panel h2 { font-size: 14px; margin: 0 0 2px; font-weight: 700; }
+.panel .q { color: var(--muted); font-size: 12.5px; margin: 0 0 10px; }
+.bars { display: grid; gap: 8px; }
+.barrow { display: grid; grid-template-columns: minmax(110px, 160px) 1fr 70px; gap: 10px; align-items: center; font-size: 13px; }
+.barrow .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.track { height: 10px; border-radius: 5px; background: var(--track); overflow: hidden; }
+.track > span { display: block; height: 100%; border-radius: 5px; background: var(--accent); }
+.track.good > span { background: var(--ok); }
+.barrow .num { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12.5px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; white-space: nowrap; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.table-wrap { overflow-x: auto; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 650; white-space: nowrap; border: 1px solid var(--line); }
+.chip.a2a { color: var(--a2a); } .chip.mcp { color: var(--mcp); } .chip.rest { color: var(--rest); } .chip.simulator { color: var(--sim); }
+.chip.gap { background: var(--warn-bg); color: var(--warn); border-color: transparent; }
+.chip.intent { background: var(--soft); border-color: transparent; }
+.gap-card { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+.gap-card .t { display: flex; justify-content: space-between; gap: 8px; font-weight: 650; }
+.gap-card .fix { font-size: 12.5px; margin-top: 4px; }
+.gap-card .ex { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.empty { color: var(--muted); padding: 20px; text-align: center; }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+label.auto { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); }
+#status { font-size: 12.5px; color: var(--muted); }
+.need { max-width: 420px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Champions Agent Lab</h1>
+  <span class="sub">What partner agents ask the Champions agent, what we answer, and what they find useful</span>
+  <span class="spacer"></span>
+  <div class="toolbar">
+    <button class="btn" id="simulate" type="button">Run simulation</button>
+    <a class="btn ghost" href="/lab/api/export.csv">Export CSV</a>
+    <a class="btn ghost" href="/lab/api/export.jsonl">Export JSONL</a>
+    <a class="btn ghost" href="http://127.0.0.1:9200" target="_blank" rel="noopener">Personal Agent demo ↗</a>
+    <button class="btn danger" id="clear" type="button">Clear log</button>
+    <label class="auto"><input type="checkbox" id="auto" checked> auto-refresh</label>
+  </div>
+</header>
+
+<main>
+  <p class="intro">Every question a personal agent sends over A2A or MCP is logged here with its intent, the insights we returned and the usefulness rating that agent sent back (yes/no only; its reasons stay private). <span id="status"></span></p>
+
+  <section class="kpis" id="kpis" aria-label="Key numbers"></section>
+
+  <div class="row">
+    <section class="panel"><h2>What do agents ask?</h2><p class="q">Queries by intent, with the share of insights rated useful</p><div class="bars" id="intents"></div></section>
+    <section class="panel"><h2>Which insights are actually useful?</h2><p class="q">Useful rate per insight type (rated by the asking agent)</p><div class="bars" id="insights"></div></section>
+  </div>
+
+  <div class="row">
+    <section class="panel"><h2>Who is asking?</h2><p class="q">Roles the asking agents chose to share</p><div class="bars" id="roles"></div></section>
+    <section class="panel"><h2>Where we fall short (improve next)</h2><p class="q">Gaps found in real queries, with the fix they point to</p><div id="gaps"></div></section>
+  </div>
+
+  <section class="panel">
+    <h2>Recent queries</h2><p class="q">The raw dataset for improving the agent (export above)</p>
+    <div class="table-wrap"><table id="recent"></table></div>
+  </section>
+</main>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const PERSONAL = "http://127.0.0.1:9200";
+const LABELS = {
+  catalog: "Catalog / capabilities", contacts: "Contacts", timing_renewals: "Timing & renewals",
+  tech_displacement: "Switching / displacement", growth_signals: "Growth & funding", market_sizing: "Market sizing",
+  account_discovery: "Account discovery", tech_stack: "Tech stack", intent_research: "Who is researching X", other: "Other",
+  segment_size: "Segment size", topic_surge: "Topic surge", top_topics: "Top topics", hot_accounts: "Hot accounts",
+  legacy_platform_switchers: "Legacy-platform switchers", renewals_soon: "Renewals soon", spend_profile: "HR tech spend",
+  growth_leaders: "Fast growers", funding_mix: "Funding mix", country_hotspot: "Country hotspot", crm_mix: "CRM mix",
+  erp_mix: "ERP mix", cloud_mix: "Cloud mix", intent_share: "Overall intent",
+};
+const FIX = {
+  contacts_not_available: "Offer a consented outreach flow: Contacts card behind a DPA and the contacts:read scope, or return a count of reachable personas instead.",
+  segment_not_understood: "Ask the caller a clarifying question (A2A INPUT_REQUIRED) or use an LLM to parse the segment instead of returning everything.",
+  topic_not_tracked: "Add the signal to the catalog (hiring / job postings, ESG) or say plainly that it isn't covered.",
+  no_results: "Suggest the nearest segment that has data (widen region or size band).",
+};
+const label = (k) => LABELS[k] || k;
+
+async function get(path) { const r = await fetch(path); if (!r.ok) throw new Error(r.statusText); return r.json(); }
+
+function bars(rows, nameKey, countKey, pctKey, max) {
+  if (!rows.length) return `<div class="empty">No data yet. Run a simulation or ask a question in the demo.</div>`;
+  const top = max || Math.max(...rows.map((r) => r[countKey]));
+  return rows.map((r) => `<div class="barrow"><span class="name" title="${esc(label(r[nameKey]))}">${esc(label(r[nameKey]))}</span>
+      <div class="track ${pctKey ? "good" : ""}"><span style="width:${pctKey ? r[pctKey] : (100 * r[countKey] / top)}%"></span></div>
+      <span class="num">${pctKey ? `${r[pctKey]}%` : r[countKey]}${pctKey ? ` · ${r[countKey]}` : r.useful_pct != null ? ` · ${r.useful_pct}%` : ""}</span></div>`).join("");
+}
+
+function kpi(k, v, d = "") { return `<div class="kpi"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="d">${d}</div></div>`; }
+
+async function refresh() {
+  try {
+    const [s, { queries }] = await Promise.all([get("/lab/api/stats"), get("/lab/api/recent?limit=60")]);
+    const src = Object.entries(s.by_source).map(([k, v]) => `${esc(k)} ${v}`).join(" · ") || "none yet";
+    const ch = Object.entries(s.by_channel).map(([k, v]) => `${esc(k.toUpperCase())} ${v}`).join(" · ") || "-";
+    $("#kpis").innerHTML = kpi("Queries from agents", s.total, src)
+      + kpi("Answered with data", `${s.answered_pct}%`, "matching companies found")
+      + kpi("Insights rated useful", `${s.useful_pct}%`, `${s.rated} ratings received`)
+      + kpi("Unmet needs found", s.gaps.reduce((n, g) => n + g.count, 0), `${s.gaps.length} gap types · via ${ch}`)
+      + kpi("Avg answer time", `${s.avg_latency_ms} ms`, "inside the Champions agent");
+    $("#intents").innerHTML = bars(s.by_intent.map((r) => ({ ...r, intent: r.intent })), "intent", "queries");
+    $("#insights").innerHTML = bars(s.insights.filter((r) => r.rated), "insight", "shown", "useful_pct");
+    $("#roles").innerHTML = bars(s.by_role.slice(0, 10), "role", "queries");
+    $("#gaps").innerHTML = s.gaps.length ? s.gaps.map((g) => `<div class="gap-card">
+        <div class="t"><span>${esc(g.gap.replaceAll("_", " "))}</span><span class="chip gap">${g.count}×</span></div>
+        <div class="fix">→ ${esc(FIX[g.gap] || "Review these queries.")}</div>
+        <div class="ex">e.g. ${g.examples.map((e) => `“${esc(e)}”`).join(", ")}</div></div>`).join("")
+      : `<div class="empty">No gaps found yet.</div>`;
+    $("#recent").innerHTML = `<tr><th>Time</th><th>Source</th><th>Via</th><th>Role</th><th>Intent</th><th>Question</th><th class="num">Companies</th><th class="num">Useful</th><th>Gaps</th></tr>`
+      + (queries.length ? queries.map((q) => `<tr><td class="num">${esc(q.at.slice(11))}</td>
+        <td><span class="chip ${esc(q.source)}">${esc(q.source)}</span></td><td><span class="chip ${esc(q.channel)}">${esc(q.channel.toUpperCase())}</span></td>
+        <td>${esc(q.shared_role || "–")}</td><td><span class="chip intent">${esc(label(q.intent))}</span></td>
+        <td class="need">${esc(q.need)}</td><td class="num">${q.matching}</td>
+        <td class="num">${q.rated ? `${q.useful}/${q.rated}` : "–"}</td>
+        <td>${q.gaps.map((g) => `<span class="chip gap">${esc(g.replaceAll("_", " "))}</span>`).join(" ")}</td></tr>`).join("")
+        : `<tr><td colspan="9" class="empty">No queries yet.</td></tr>`);
+    $("#status").textContent = `Updated ${new Date().toLocaleTimeString()}.`;
+  } catch (err) { $("#status").textContent = `Could not load: ${err.message}`; }
+}
+
+$("#simulate").addEventListener("click", async (e) => {
+  e.target.disabled = true; e.target.textContent = "Running…";
+  try {
+    const r = await fetch(`${PERSONAL}/api/simulate`, { method: "POST" });
+    const body = await r.json();
+    if (!r.ok) throw new Error(body.detail || r.statusText);
+    $("#status").textContent = `Simulation done: ${body.conversations} conversations, ${body.useful_pct}% useful.`;
+  } catch (err) { $("#status").textContent = `Simulation failed: ${err.message}. Is the Personal Agent (:9200) running?`; }
+  e.target.disabled = false; e.target.textContent = "Run simulation";
+  refresh();
+});
+$("#clear").addEventListener("click", async () => {
+  if (!confirm("Delete every logged query?")) return;
+  await fetch("/lab/api/clear", { method: "POST", headers: { "X-Requested-With": "lab" } }); refresh();
+});
+setInterval(() => { if ($("#auto").checked && !document.hidden) refresh(); }, 5000);
+refresh();
+</script>
+</body>
+</html>

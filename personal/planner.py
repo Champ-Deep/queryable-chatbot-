@@ -35,6 +35,13 @@ COUNTRIES = {
     r"japan\w*": "Japan",
     r"singapore": "Singapore",
     r"australia\w*": "Australia",
+    r"ireland|irish": "Ireland",
+    r"netherlands|dutch": "Netherlands",
+    r"spain|spanish": "Spain",
+    r"sweden|swedish": "Sweden",
+    r"\bital(y|ian)\b": "Italy",
+    r"brazil\w*": "Brazil",
+    r"mexic\w*": "Mexico",
 }
 
 SIZES = {
@@ -54,7 +61,7 @@ TOPICS = {
 }
 
 OUTPUTS = {
-    r"contacts?|emails?|decision[- ]makers?|people|outreach": "contacts",
+    r"contacts?|emails?|decision[- ]makers?|people to (contact|reach)|outreach": "contacts",
     r"tech\w*|stack|platform|crm|erp|cloud": "technographics",
     r"intent|switch\w*|replac\w*|in[- ]market|buying": "intent_signals",
     r"budget|spend|renewal": "hr_tech_spend",

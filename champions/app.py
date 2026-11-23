@@ -8,6 +8,8 @@ Endpoints
   POST /a2a                           A2A JSON-RPC (SendMessage, GetTask, ...)  [Bearer]
   POST /mcp                           MCP Streamable HTTP (tools)               [Bearer]
   GET  /audit                         this client's audit entries               [Bearer, audit:read]
+  *    /api/v1/...                      REST API that the MCP tools wrap          [X-API-Key, internal]
+  GET  /lab                             Agent Lab: what partner agents ask         [operator, localhost]
 """
 
 import contextlib
@@ -16,7 +18,9 @@ import json
 import os
 import threading
 import time
+from urllib.parse import quote
 
+import httpx
 from a2a.helpers import get_data_parts, new_data_part, new_task_from_user_message, new_text_message
 from a2a.server.agent_execution import AgentExecutor
 from a2a.server.request_handlers import DefaultRequestHandler
@@ -33,10 +37,13 @@ from mcp.server.mcpserver.exceptions import ToolError
 from mcp.server.transport_security import TransportSecuritySettings
 from pydantic import ValidationError
 
-from champions import matcher
-from champions.catalog import BY_ID, CARDS
+from champions import api as rest_api
+from champions import lab, service
+from champions.catalog import CARDS
+from champions.querylog import QueryLog
 from common import auth
-from common.schemas import CapabilityRequest, Filters
+from common.http import tls_context
+from common.schemas import CapabilityRequest, Feedback
 
 PUBLIC_URL = os.getenv("CHAMPIONS_URL", "http://127.0.0.1:9100")
 ALLOWED_HOSTS = ["127.0.0.1:*", "localhost:*", "champions", "champions:*"]
@@ -48,7 +55,13 @@ SKILL_SCOPES = {
     "describe_capabilities": "catalog:read",
     "find_data_cards": "catalog:read",
     "get_insights": "insights:read",
+    "submit_feedback": "catalog:read",
 }
+
+# Set by create_app: the query log, and the app the MCP tools call the REST API on.
+_log = None
+_api_app = None
+API_URL = os.getenv("CHAMPIONS_API_URL")  # wrap a remote API instead of this process
 
 # ------------------------------------------------------------------ audit log
 
@@ -105,6 +118,12 @@ def agent_card():
                 "(needs insights:read).",
                 tags=["insights"], examples=["How many fintechs in the UK are researching payroll?"],
                 input_modes=["application/json"], output_modes=["application/json"]),
+            AgentSkill(
+                id="submit_feedback", name="Submit feedback",
+                description="Rate which insights from an earlier answer were useful "
+                "(champions.feedback/v1: query_id + insight ratings, no reasons).",
+                tags=["feedback", "quality"], examples=["insight hot_accounts was useful"],
+                input_modes=["application/json"], output_modes=["application/json"]),
         ],
     )
 
@@ -123,20 +142,44 @@ class ChampionsExecutor(AgentExecutor):
         if not parts:
             await fail("Send a DataPart with a champions.capability_request/v1 payload.")
             return
+        claims = current_claims.get() or {}
+
+        if str(parts[0].get("schema", "")).startswith("champions.feedback/"):
+            try:
+                fb = Feedback.model_validate(parts[0])
+            except ValidationError as error:
+                await fail(f"Invalid feedback: {error.errors()[0]['msg']}")
+                return
+            try:
+                auth.require_scope(claims, SKILL_SCOPES["submit_feedback"])
+            except auth.AuthError as error:
+                await fail(error.message)
+                return
+            # Callers can only rate their own queries.
+            recorded = service.feedback(fb, log=_log, client=claims.get("sub"))
+            if recorded is None:
+                await fail(f"Unknown query_id {fb.query_id}")
+                return
+            audit("a2a.submit_feedback", task_id=task.id, query_id=fb.query_id, ratings=recorded)
+            await updater.add_artifact([new_data_part({"schema": "champions.feedback_ack/v1",
+                                                       "query_id": fb.query_id, "recorded": recorded})],
+                                       name="feedback_ack")
+            await updater.complete()
+            return
+
         try:
             request = CapabilityRequest.model_validate(parts[0])
         except ValidationError as error:
             await fail(f"Invalid capability_request: {error.errors()[0]['msg']}")
             return
 
-        claims = current_claims.get() or {}
         try:
             auth.require_scope(claims, SKILL_SCOPES[request.skill])
         except auth.AuthError as error:
             await fail(error.message)
             return
 
-        result = matcher.answer(request)
+        result = service.answer(request, log=_log, channel="a2a", client=claims.get("sub"))
         audit(
             "a2a." + request.skill,
             task_id=task.id,
@@ -145,6 +188,7 @@ class ChampionsExecutor(AgentExecutor):
             shared_fields=sorted(request.context.shared) if request.context else [],
             cards=[m.card_id for m in result.matches],
             matching_companies=result.matching_companies,
+            query_id=result.query_id,
         )
         payload = json.loads(result.model_dump_json(by_alias=True))
         await updater.add_artifact([new_data_part(payload)], name="catalog_result")
@@ -155,57 +199,116 @@ class ChampionsExecutor(AgentExecutor):
 
 
 # ------------------------------------------------------------------ MCP tools
+#
+# The MCP server wraps the Champions REST API. It holds the internal API key
+# and knows the endpoints; an MCP client (a partner agent, Claude Desktop...)
+# only presents its own OAuth token and calls tools by name.
 
 mcp = MCPServer(
     name="champions-catalog",
-    instructions="Champions Group data catalog: data cards, VAF field definitions and "
-    "aggregate insights. All tools are read-only.",
+    instructions="Champions Group data catalog: data cards, VAF field definitions, personalised "
+    "aggregate insights and query statistics. All tools are read-only. Pass role and goals to "
+    "get_insights for insights ranked for that person.",
 )
 
 
+def _api_client():
+    claims = current_claims.get() or {}
+    headers = {"X-API-Key": auth.API_KEY, "X-Champions-Channel": "mcp",
+               "X-On-Behalf-Of": claims.get("sub", "")}
+    if API_URL:
+        return httpx.AsyncClient(base_url=API_URL, headers=headers, timeout=20, verify=tls_context())
+    return httpx.AsyncClient(base_url="http://champions-api", headers=headers, timeout=20, verify=tls_context(),
+                             transport=httpx.ASGITransport(app=_api_app))
+
+
+async def _call(method, path, body=None):
+    async with _api_client() as http:
+        response = await http.request(method, f"/api/v1{path}", json=body)
+    if response.status_code != 200:
+        is_json = "json" in response.headers.get("content-type", "")
+        detail = response.json().get("detail") if is_json else response.text[:200]
+        raise ToolError(f"Champions API {response.status_code}: {detail}")
+    return response.json()
+
+
+def _request(skill, need, industries, regions, countries, size_bands, intent_topics, shared=None):
+    body = {"skill": skill, "need": need or "", "filters": {
+        "industries": industries or [], "regions": regions or [], "countries": countries or [],
+        "size_bands": size_bands or [], "intent_topics": intent_topics or []}}
+    if shared:
+        body["context"] = {"consent_id": "mcp-caller-declared", "purpose": "market_insights", "shared": shared}
+    return body
+
+
 @mcp.tool()
-def list_data_cards() -> list[dict]:
+async def list_data_cards() -> list[dict]:
     """List Champions data cards with description, refresh, price and field count."""
 
     audit("mcp.list_data_cards")
-    return [
-        {"id": c.id, "name": c.name, "description": c.description, "refresh": c.refresh,
-         "credits_per_1k_records": c.credits_per_1k_records, "vaf_field_count": len(c.vaf_fields),
-         "contains_personal_data": c.contains_personal_data}
-        for c in CARDS
-    ]
+    return await _call("GET", "/cards")
 
 
 @mcp.tool()
-def get_vaf_fields(card_id: str) -> dict:
+async def get_vaf_fields(card_id: str) -> dict:
     """VAF field definitions (type, coverage %, refresh, example) for one data card."""
 
-    card = BY_ID.get(card_id)
-    if card is None:
-        raise ToolError(f"Unknown card_id {card_id!r}. Known: {', '.join(BY_ID)}")
+    result = await _call("GET", f"/cards/{card_id}/fields")
     audit("mcp.get_vaf_fields", card_id=card_id)
-    return {"card_id": card.id, "name": card.name,
-            "vaf_fields": [f.model_dump() for f in card.vaf_fields]}
+    return result
 
 
 @mcp.tool()
-def get_insights(
+async def find_data_cards(
+    need: str,
     industries: list[str] | None = None,
     regions: list[str] | None = None,
+    countries: list[str] | None = None,
     size_bands: list[str] | None = None,
     intent_topics: list[str] | None = None,
 ) -> dict:
-    """Aggregate insights for a segment (needs the insights:read scope)."""
+    """Rank data cards and VAF fields for a described need and segment."""
+
+    result = await _call("POST", "/search", _request(
+        "find_data_cards", need, industries, regions, countries, size_bands, intent_topics))
+    audit("mcp.find_data_cards", query_id=result["query_id"])
+    return result
+
+
+@mcp.tool()
+async def get_insights(
+    need: str = "",
+    industries: list[str] | None = None,
+    regions: list[str] | None = None,
+    countries: list[str] | None = None,
+    size_bands: list[str] | None = None,
+    intent_topics: list[str] | None = None,
+    role: str = "",
+    goals: list[str] | None = None,
+    industry: str = "",
+) -> dict:
+    """Aggregate insights for a segment, ranked for the person (role, goals, industry).
+    Needs the insights:read scope."""
 
     try:
         auth.require_scope(current_claims.get() or {}, "insights:read")
     except auth.AuthError as error:
         raise ToolError(error.message) from error
-    filters = Filters(industries=industries or [], regions=regions or [],
-                      size_bands=size_bands or [], intent_topics=intent_topics or [])
-    total, insights, _ = matcher.insights_for(filters)
-    audit("mcp.get_insights", matching_companies=total)
-    return {"matching_companies": total, "insights": [i.model_dump() for i in insights]}
+    shared = {k: v for k, v in (("role", role), ("goals", goals), ("industry", industry)) if v}
+    result = await _call("POST", "/insights", _request(
+        "get_insights", need, industries, regions, countries, size_bands, intent_topics, shared))
+    audit("mcp.get_insights", matching_companies=result["matching_companies"], query_id=result["query_id"])
+    return result
+
+
+@mcp.tool()
+async def get_query_stats() -> dict:
+    """Your own queries to Champions: totals, intents, useful insights and gaps."""
+
+    audit("mcp.get_query_stats")
+    # Partners only ever see their own queries; the cross-partner view is the operator Lab.
+    client = (current_claims.get() or {}).get("sub", "")
+    return await _call("GET", f"/query-stats?client={quote(client)}")
 
 
 # ------------------------------------------------------------------ app
@@ -238,7 +341,9 @@ class BearerAuth:
             current_claims.reset(token)
 
 
-def create_app():
+def create_app(log_path=None):
+    global _log, _api_app
+    _log = QueryLog(log_path)
     card = agent_card()
     handler = DefaultRequestHandler(
         agent_executor=ChampionsExecutor(), task_store=InMemoryTaskStore(), agent_card=card)
@@ -300,9 +405,12 @@ def create_app():
         jsonrpc_routes=create_jsonrpc_routes(handler, rpc_url="/a2a"),
     )
 
+    app.include_router(rest_api.router(_log))
+    app.include_router(lab.router(_log))
     app.router.routes.extend(mcp_app.routes)
 
     app.add_middleware(BearerAuth)
+    _api_app = app
     return app
 
 

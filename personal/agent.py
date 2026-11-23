@@ -1,6 +1,6 @@
-"""The Personal Agent's turn: plan -> consent gate -> A2A -> MCP -> evaluate."""
+"""The Personal Agent's turn: plan -> consent gate -> A2A -> MCP -> evaluate -> judge -> feedback."""
 
-from personal import evaluator, planner
+from personal import evaluator, judge, planner
 from personal.champions_client import ChampionsClient, ChampionsError, Wire
 from personal.profile import FIELDS, PURPOSES, default_shared_fields, get_profile, shared_context
 from common.schemas import UserContext
@@ -21,7 +21,7 @@ def _consent_prompt(purpose, profile, wire):
             "purpose_label": PURPOSES[purpose], "fields": fields, "wire": wire.events}
 
 
-def _answer_text(request, catalog, recommendation):
+def _answer_text(request, catalog, recommendation, insights):
     if request.skill == "describe_capabilities":
         names = ", ".join(m.name for m in catalog.matches)
         best = [o.name for o in recommendation.options[:2]]
@@ -29,13 +29,40 @@ def _answer_text(request, catalog, recommendation):
                 f"{catalog.insights[1].value} VAF fields in total. "
                 f"Best fits for your profile: {' and '.join(best)}. "
                 "Ask about a specific segment and I'll check what fits your budget.")
-    lines = [f"Champions found {catalog.matching_companies} matching companies."]
-    lines += [f"{i.label}: {i.value}" + (f" ({i.detail})" if i.detail else "") for i in catalog.insights[1:4]]
+    useful = [i for i in insights if i["useful"]]
+    lines = [f"Champions found {catalog.matching_companies} matching companies and ranked "
+             f"{len(insights)} insights for you. {len(useful)} look useful to you:"]
+    lines += [f"• {i['label']}: {i['value']}" + (f" ({i['detail']})" if i["detail"] else "") for i in useful[:3]]
+    if "segment_not_understood" in catalog.gaps:
+        lines.append("I couldn't tell which segment you mean, so this covers every company. "
+                     "Name an industry, region or size to narrow it.")
+    if "contacts_not_available" in catalog.gaps:
+        lines.append("Champions doesn't hand out contacts over this channel; that needs the Contacts card "
+                     "with a data processing agreement.")
+    if "topic_not_tracked" in catalog.gaps:
+        lines.append("Champions doesn't track that signal yet, so these are the closest insights it has.")
     lines.append(recommendation.summary)
     return "\n".join(lines)
 
 
-async def run_turn(persona, question, consents, transport=None):
+def _judged_insights(catalog, judged):
+    by_id = {j["insight_id"]: j for j in judged}
+    rows = [{**i.model_dump(), "useful": by_id[i.id]["useful"], "reason": by_id[i.id]["reason"]}
+            for i in catalog.insights if i.id in by_id]
+    rows.sort(key=lambda r: not r["useful"])  # useful first, Champions' order within
+    return rows
+
+
+def _follow_ups(insights):
+    seen = []
+    for i in insights:
+        for q in i["follow_ups"]:
+            if q not in seen:
+                seen.append(q)
+    return seen[:3]
+
+
+async def run_turn(persona, question, consents, transport=None, source="live"):
     wire = Wire()
     profile = get_profile(persona)
 
@@ -45,6 +72,7 @@ async def run_turn(persona, question, consents, transport=None):
         return _consent_prompt(purpose, profile, wire)
 
     request, _ = planner.plan(question, profile, consent["fields"])
+    request.source = source
     shared = shared_context(profile, consent)
     request.context = UserContext(consent_id=consent["consent_id"], purpose=purpose, shared=shared)
     wire.local("Consent", f"Consent {consent['consent_id']} covers '{purpose}'", {
@@ -69,6 +97,21 @@ async def run_turn(persona, question, consents, transport=None):
         wire.local("Error", str(error))
         return {"status": "error", "error": str(error), "wire": wire.events}
 
+    judged = []
+    if request.skill != "describe_capabilities" and catalog.insights:
+        judged = judge.judge(catalog.insights, profile, question)
+        useful = sum(j["useful"] for j in judged)
+        wire.local("Judge", f"{useful} of {len(judged)} insights are useful to you (reasons stay private)", {
+            "ratings": {j["insight_id"]: j["useful"] for j in judged},
+            "reasons": "(private, not sent)",
+        })
+        if catalog.query_id:
+            try:
+                await client.feedback(catalog.query_id, {j["insight_id"]: j["useful"] for j in judged})
+            except ChampionsError as error:
+                wire.local("Error", f"Feedback not delivered: {error}")
+    insights = _judged_insights(catalog, judged)
+
     recommendation = evaluator.evaluate(catalog, profile, vaf_details)
     if request.skill == "describe_capabilities":
         recommendation.summary = ("How each Champions data card fits your profile. "
@@ -77,7 +120,10 @@ async def run_turn(persona, question, consents, transport=None):
                {"bundle": recommendation.bundle, "credits": recommendation.bundle_monthly_credits})
     return {
         "status": "ok",
-        "answer": _answer_text(request, catalog, recommendation),
+        "answer": _answer_text(request, catalog, recommendation, insights),
+        "insights": insights,
+        "follow_ups": _follow_ups(insights),
+        "skill": request.skill,
         "catalog": catalog.model_dump(by_alias=True),
         "recommendation": recommendation.model_dump(by_alias=True),
         "consent": consent,

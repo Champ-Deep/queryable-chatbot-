@@ -16,7 +16,8 @@ from a2a.helpers import new_data_part
 from a2a.types.a2a_pb2 import Message, Role, SendMessageRequest
 from google.protobuf.json_format import MessageToDict
 
-from common.schemas import CatalogResult
+from common.http import tls_context
+from common.schemas import CatalogResult, Feedback, InsightRating
 
 CHAMPIONS_URL = os.getenv("CHAMPIONS_URL", "http://127.0.0.1:9100")
 CLIENT_ID = os.getenv("PERSONAL_AGENT_CLIENT_ID", "personal-agent-demo")
@@ -117,7 +118,7 @@ class ChampionsClient:
 
     def _http(self, headers=None):
         return httpx.AsyncClient(
-            base_url=self.base_url, transport=self.transport, timeout=20, headers=headers or {},
+            base_url=self.base_url, transport=self.transport, timeout=20, headers=headers or {}, verify=tls_context(),
             event_hooks={"request": [self.wire.on_request], "response": [self.wire.on_response]})
 
     async def _bearer(self):
@@ -134,8 +135,18 @@ class ChampionsClient:
     async def ask(self, capability_request):
         """A2A SendMessage with one DataPart; returns the CatalogResult artifact."""
 
+        task = await self._send(json.loads(capability_request.model_dump_json(by_alias=True)))
+        return CatalogResult.model_validate(task["artifacts"][0]["parts"][0]["data"])
+
+    async def feedback(self, query_id, ratings):
+        """A2A SendMessage with champions.feedback/v1: insight ids and useful yes/no, nothing else."""
+
+        fb = Feedback(query_id=query_id, ratings=[InsightRating(insight_id=k, useful=v) for k, v in ratings.items()])
+        task = await self._send(json.loads(fb.model_dump_json(by_alias=True)))
+        return task["artifacts"][0]["parts"][0]["data"]
+
+    async def _send(self, payload):
         headers = await self._bearer()
-        payload = json.loads(capability_request.model_dump_json(by_alias=True))
         async with self._http(headers) as http:
             client = await create_client(
                 self.base_url, client_config=ClientConfig(streaming=False, httpx_client=http))
@@ -153,7 +164,7 @@ class ChampionsClient:
             parts = task["status"].get("message", {}).get("parts", [])
             reason = " ".join(p.get("text", "") for p in parts) or state
             raise ChampionsError(f"Champions task {state}: {reason}")
-        return CatalogResult.model_validate(task["artifacts"][0]["parts"][0]["data"])
+        return task
 
     async def mcp_tool(self, name, arguments):
         """MCP tools/call over Streamable HTTP (stateless JSON mode)."""

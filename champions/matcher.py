@@ -5,7 +5,7 @@ the same answer every time and needs no LLM.
 
 import re
 
-from champions import data
+from champions import data, insights as insight_engine
 from champions.catalog import BY_ID, CARDS, card_coverage
 from common.schemas import CardMatch, CatalogResult, Filters, Insight
 
@@ -164,16 +164,20 @@ def answer(request):
         result = capabilities()
     else:
         matches = match_cards(request.need, request.filters, request.desired_outputs)
-        total, insights, sample = insights_for(request.filters)
+        shared = request.context.shared if request.context else {}
+        total, _, sample = insights_for(request.filters)
+        ranked = insight_engine.personalised(
+            request.filters, request.need, shared, top=3 if request.skill == "find_data_cards" else 6)
         if request.skill == "find_data_cards":
-            insights, sample = insights[:2], []
+            sample = []
         result = CatalogResult(
             matches=matches,
             matching_companies=total,
-            insights=insights,
+            insights=ranked,
             sample=sample,
-            method="Keyword and filter match over the catalog; aggregates over "
-            f"{data.N_COMPANIES} synthetic companies. No records exported.",
+            personalised_for=sorted(k for k in shared if k in ("role", "goals", "industry")),
+            method="Keyword and filter match over the catalog; insights ranked for the shared role, goals "
+            f"and industry; aggregates over {data.N_COMPANIES} synthetic companies. No records exported.",
         )
     if request.context:
         result.consent_id = request.context.consent_id

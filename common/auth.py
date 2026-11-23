@@ -23,6 +23,11 @@ TOKEN_TTL_SECONDS = 300
 # simply expire on restart, which is fine for a demo).
 SIGNING_KEY = os.getenv("CHAMPIONS_SIGNING_KEY") or secrets.token_urlsafe(32)
 
+# Internal key for the Champions REST API (/api/v1). Held only by Champions'
+# own services, e.g. the MCP server that wraps the API: MCP callers never see it.
+# No hard-coded default: random per process unless set (only this process needs it).
+API_KEY = os.getenv("CHAMPIONS_API_KEY") or secrets.token_urlsafe(32)
+
 # Registered partner clients: id -> (secret, scopes it may be granted).
 CLIENTS = {
     "personal-agent-demo": {

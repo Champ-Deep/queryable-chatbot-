@@ -31,16 +31,19 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
 body { background: var(--bg); color: var(--ink); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
 header { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
 header h1 { font-size: 16px; margin: 0; font-weight: 650; }
 header .sub { color: var(--muted); font-size: 13px; }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); color: var(--muted); }
+.sub { color: var(--muted); font-size: 12px; font-weight: 400; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); color: var(--muted); text-decoration: none; }
+a.pill:hover { border-color: var(--accent); color: var(--accent); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
 .dot.on { background: var(--ok); } .dot.off { background: var(--bad); }
 .spacer { flex: 1; }
 select, button, textarea, input { font: inherit; color: inherit; }
 select { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; max-width: 100%; }
-main { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; padding: 16px 20px; height: calc(100% - 58px); }
+main { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; padding: 16px 20px; height: calc(100% - 58px); }
 @media (max-width: 900px) { main { grid-template-columns: 1fr; height: auto; padding: 12px 16px; } }
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 0; }
 .panel-head { padding: 12px 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -50,28 +53,54 @@ main { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); g
 .msg { max-width: 92%; padding: 10px 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 4px; }
 .msg.agent { align-self: flex-start; background: var(--soft); border-bottom-left-radius: 4px; }
-.msg.agent .who, .card-block .who { font-size: 12px; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+.who { font-size: 12px; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
 .card-block { align-self: stretch; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--panel); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin: 8px 0; }
+.card-block h3 { font-size: 13px; margin: 14px 0 6px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 8px 0; }
 .stat { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
-.stat .k { color: var(--muted); font-size: 12px; } .stat .v { font-weight: 650; overflow-wrap: anywhere; }
+.stat .k { color: var(--muted); font-size: 12px; } .stat .v { font-weight: 700; font-size: 20px; overflow-wrap: anywhere; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { color: var(--muted); font-weight: 600; font-size: 12px; }
 td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .table-wrap { overflow-x: auto; }
 .chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-.chip.recommended { background: var(--ok-bg); color: var(--ok); }
+.chip.recommended, .chip.useful { background: var(--ok-bg); color: var(--ok); }
 .chip.optional { background: var(--warn-bg); color: var(--warn); }
 .chip.not_recommended { background: var(--bad-bg); color: var(--bad); }
+.chip.less { background: var(--code-bg); color: var(--muted); }
 details summary { cursor: pointer; color: var(--muted); font-size: 12px; }
 ul.reasons { margin: 4px 0 0 16px; padding: 0; color: var(--muted); font-size: 12px; }
+ul.list { margin: 4px 0 0 18px; padding: 0; font-size: 13px; }
+ul.list li { margin: 4px 0; }
+
+/* insights */
+.insights { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.ins { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; animation: pop .25s ease-out both; }
+.ins.useful { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); background: color-mix(in srgb, var(--ok-bg) 45%, var(--panel)); }
+.ins .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.ins .label { font-size: 12px; color: var(--muted); font-weight: 600; }
+.ins .value { font-size: 20px; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.ins .detail { font-size: 12px; color: var(--muted); }
+.ins .why { font-size: 12.5px; }
+.ins .private { font-size: 11.5px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 4px; margin-top: auto; }
+.followups { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.followups button, .scenarios button { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; font-size: 12px; cursor: pointer; text-align: left; }
+.followups button { border-color: var(--accent); color: var(--accent); }
+.followups button:hover, .scenarios button:hover { border-color: var(--accent); color: var(--accent); background: var(--soft); }
+.gapnote { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 6px 10px; font-size: 12.5px; margin: 6px 0; }
+
+/* protocol timeline */
+.steps { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 2px 0 6px; }
+.step { display: inline-flex; gap: 5px; align-items: center; font-size: 11.5px; border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px 1px 3px; white-space: nowrap; }
+.step .badge { font-size: 10.5px; }
+.step .ms { color: var(--muted); font-variant-numeric: tabular-nums; }
+.arrow { color: var(--muted); font-size: 11px; }
+
 .scenarios { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 16px 0; }
-.scenarios button { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; font-size: 12px; cursor: pointer; text-align: left; }
-.scenarios button:hover { border-color: var(--accent); color: var(--accent); }
 form#ask { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--line); margin-top: 10px; }
 form#ask textarea { flex: 1; resize: none; height: 44px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg); min-width: 0; }
-.btn { border: 0; border-radius: 10px; padding: 8px 14px; background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; }
+.btn { border: 0; border-radius: 10px; padding: 8px 14px; background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
 .btn:disabled { opacity: .5; cursor: default; }
 .consent label { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid var(--line); }
@@ -79,13 +108,14 @@ form#ask textarea { flex: 1; resize: none; height: 44px; border: 1px solid var(-
 .consent .cls { font-size: 11px; color: var(--muted); }
 .consent .preview { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
 .consent .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-.tabs { display: flex; gap: 4px; }
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; }
 .tabs button { border: 1px solid transparent; background: transparent; border-radius: 8px; padding: 4px 10px; cursor: pointer; color: var(--muted); font-weight: 600; }
 .tabs button[aria-selected="true"] { background: var(--soft); color: var(--ink); border-color: var(--line); }
-#wire, #audit, #profile { padding: 8px 12px; }
+#wire, #audit, #profile, #testing { padding: 8px 12px; }
+#testing h3 { font-size: 13px; margin: 14px 0 4px; }
 .ev { border: 1px solid var(--line); border-radius: 10px; margin: 6px 0; overflow: hidden; animation: pop .25s ease-out both; }
 @keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .ev { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .ev, .ins { animation: none; } }
 .ev summary { list-style: none; display: flex; gap: 8px; align-items: center; padding: 6px 10px; cursor: pointer; color: var(--ink); font-size: 13px; }
 .ev summary::-webkit-details-marker { display: none; }
 .badge { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 6px; color: #fff; white-space: nowrap; }
@@ -99,17 +129,20 @@ pre { margin: 0; padding: 10px; background: var(--code-bg); border-top: 1px soli
 .legend { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 12px 0; }
 .kv { display: grid; grid-template-columns: 160px 1fr; gap: 4px 12px; font-size: 13px; }
 .kv .k { color: var(--muted); }
-.lock { font-size: 12px; }
-.note { color: var(--muted); font-size: 12px; padding: 8px 12px; }
+.note { color: var(--muted); font-size: 12px; padding: 8px 0; }
+.bar { height: 6px; border-radius: 3px; background: var(--code-bg); overflow: hidden; min-width: 60px; }
+.bar > span { display: block; height: 100%; background: var(--ok); }
+.testing-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 4px 0 4px; }
 </style>
 </head>
 <body>
 <header>
   <h1>Champions Group ⇄ Personal Agent</h1>
-  <span class="sub">Agent-to-Agent demo · A2A 1.0 · MCP · OAuth2 · consent</span>
+  <span class="sub">Agent-to-agent testing · A2A 1.0 · MCP · OAuth2 · consent</span>
   <span class="spacer"></span>
   <span class="pill"><span id="dot-personal" class="dot on"></span>Personal Agent :9200</span>
   <span class="pill"><span id="dot-champions" class="dot"></span>Champions Agent :9100</span>
+  <a class="pill" href="http://127.0.0.1:9100/lab" target="_blank" rel="noopener">Agent Lab ↗</a>
   <label class="sub" for="persona">User</label>
   <select id="persona" aria-label="Choose the user"></select>
 </header>
@@ -125,10 +158,11 @@ pre { margin: 0; padding: 10px; background: var(--code-bg); border-top: 1px soli
     </form>
   </section>
 
-  <section class="panel" aria-label="Agent traffic and privacy">
+  <section class="panel" aria-label="Agent traffic, privacy and testing">
     <div class="panel-head">
       <div class="tabs" role="tablist">
         <button role="tab" aria-selected="true" data-tab="wire">Agent wire</button>
+        <button role="tab" aria-selected="false" data-tab="testing">Agent testing</button>
         <button role="tab" aria-selected="false" data-tab="audit">Champions audit</button>
         <button role="tab" aria-selected="false" data-tab="profile">Profile &amp; consent</button>
       </div>
@@ -139,21 +173,20 @@ pre { margin: 0; padding: 10px; background: var(--code-bg); border-top: 1px soli
       <span class="sub">→ sent to Champions · ← received · • stayed inside your agent</span>
     </div>
     <div class="scroll"><div id="wire"><div class="empty">Ask a question to watch the agents talk.</div></div>
-      <div id="audit" hidden></div><div id="profile" hidden></div></div>
+      <div id="testing" hidden></div><div id="audit" hidden></div><div id="profile" hidden></div></div>
   </section>
 </main>
 
 <script>
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const SCENARIOS = [
-  ["priya", "Find mid-size healthcare companies in Europe that are switching HR platforms"],
-  ["marcus", "Which fintech and tech companies in the UK are researching payroll? I need their tech stack"],
-  ["aiko", "Size the APAC manufacturing market for ERP upgrades, with revenue and tech stack"],
-  [null, "What data can Champions provide?"],
-  ["priya", "Get me the emails of HR decision makers at those healthcare companies"],
-];
-let persona = "priya", pending = null, busy = false;
+const GAP_TEXT = {
+  contacts_not_available: "Gap: contacts can't be delivered over A2A (needs the Contacts card and a DPA).",
+  segment_not_understood: "Gap: Champions couldn't tell which segment you meant, so this covers every company.",
+  topic_not_tracked: "Gap: Champions doesn't track that signal yet; these are the closest insights.",
+  no_results: "Gap: no companies match this segment.",
+};
+let persona = "priya", pending = null, busy = false, scenarios = {}, people = [];
 
 async function api(path, opts = {}) {
   const res = await fetch(path, { headers: { "Content-Type": "application/json" }, ...opts });
@@ -170,29 +203,62 @@ function add(html, cls) {
   return div;
 }
 
-function renderWire(events, reset = true) {
+function renderWire(events) {
   const box = $("#wire");
-  if (reset) box.innerHTML = "";
+  box.innerHTML = "";
   events.forEach((e, i) => {
     const proto = e.direction === "local" ? "local" : e.protocol;
-    const label = e.direction === "local" ? e.protocol : e.protocol;
     const arrow = { out: "→", in: "←", local: "•" }[e.direction];
     const payload = e.direction === "local" ? e.detail : { headers: e.headers, body: e.body };
     const el = document.createElement("details");
     el.className = "ev";
-    el.style.animationDelay = `${i * 70}ms`;
+    el.style.animationDelay = `${i * 50}ms`;
     el.innerHTML = `<summary><span class="dir" aria-hidden="true">${arrow}</span>
-      <span class="badge b-${esc(proto.replace(/\s/g, ""))}">${esc(label)}</span>
+      <span class="badge b-${esc(proto.replace(/\s/g, ""))}">${esc(e.protocol)}</span>
       <span class="t">${esc(e.title)}</span>${e.ms != null ? `<span class="ms">${e.ms} ms</span>` : ""}</summary>
       <pre>${esc(JSON.stringify(payload, null, 2))}</pre>`;
     box.appendChild(el);
   });
 }
 
+// Compact protocol timeline: one chip per outbound call or private step.
+function timeline(events) {
+  const steps = [];
+  events.forEach((e, i) => {
+    if (e.direction === "out") {
+      const reply = events.slice(i + 1).find((x) => x.direction === "in");
+      let name = e.protocol === "OAuth2" ? "token" : e.protocol === "A2A card" ? "discover" : "";
+      if (e.protocol === "A2A") name = JSON.stringify(e.body || {}).includes("champions.feedback/v1") ? "feedback" : "SendMessage";
+      if (e.protocol === "MCP") { const m = e.title.match(/tools\/call (\S+)/); if (!m) return; name = m[1]; }
+      steps.push(`<span class="step"><span class="badge b-${esc(e.protocol.replace(/\s/g, ""))}">${esc(e.protocol)}</span>${esc(name)}${reply && reply.ms != null ? ` <span class="ms">${reply.ms}ms</span>` : ""}</span>`);
+    } else if (e.direction === "local" && ["Judge", "Evaluate"].includes(e.protocol)) {
+      steps.push(`<span class="step"><span class="badge b-local">private</span>${esc(e.protocol.toLowerCase())}</span>`);
+    }
+  });
+  return `<div class="steps" aria-label="Protocol steps">${steps.join('<span class="arrow">›</span>')}</div>`;
+}
+
+function renderInsights(r) {
+  if (!r.insights || !r.insights.length) return "";
+  const useful = r.insights.filter((i) => i.useful).length;
+  const cards = r.insights.map((i, n) => `<div class="ins ${i.useful ? "useful" : ""}" style="animation-delay:${n * 60}ms">
+      <div class="top"><span class="label">${esc(i.label)}</span>
+        <span class="chip ${i.useful ? "useful" : "less"}">${i.useful ? "useful" : "less useful"}</span></div>
+      <div class="value">${esc(i.value)}</div>
+      ${i.detail ? `<div class="detail">${esc(i.detail)}</div>` : ""}
+      <div class="why"><strong>Why for you:</strong> ${esc(i.why_for_you)}</div>
+      <div class="private" title="Your agent's own judgement. Only useful / not useful is sent back to Champions.">🔒 ${esc(i.reason)}</div>
+    </div>`).join("");
+  const follow = (r.follow_ups || []).map((q) => `<button type="button" data-follow="${esc(q)}">${esc(q)} →</button>`).join("");
+  const gaps = (r.catalog.gaps || []).map((g) => `<div class="gapnote">${esc(GAP_TEXT[g] || g)}</div>`).join("");
+  const shared = r.catalog.personalised_for || [];
+  return `<h3>Insights for you <span class="sub">· ${useful} of ${r.insights.length} useful · ranked by Champions using your ${shared.length ? esc(shared.join(", ")) : "question only (nothing shared)"}</span></h3>
+    ${gaps}<div class="insights">${cards}</div>
+    ${follow ? `<div class="followups" aria-label="Suggested follow-up questions">${follow}</div>` : ""}`;
+}
+
 function renderResult(r) {
   const cat = r.catalog, rec = r.recommendation;
-  const stats = cat.insights.map((i) => `<div class="stat"><div class="k">${esc(i.label)}</div>
-    <div class="v">${esc(i.value)}</div>${i.detail ? `<div class="k">${esc(i.detail)}</div>` : ""}</div>`).join("");
   const rows = rec.options.map((o) => `<tr><td><strong>${esc(o.name)}</strong>
       <details><summary>why</summary><ul class="reasons">${o.reasons.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details></td>
       <td><span class="chip ${o.verdict}">${o.verdict.replace("_", " ")}</span></td>
@@ -200,12 +266,15 @@ function renderResult(r) {
   const sample = cat.sample.length ? `<details><summary>Sample from Champions (${cat.sample.length} rows, no personal data)</summary>
     <div class="table-wrap"><table><tr>${Object.keys(cat.sample[0]).map((k) => `<th>${esc(k)}</th>`).join("")}</tr>
     ${cat.sample.map((row) => `<tr>${Object.values(row).map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</table></div></details>` : "";
-  add(`<div class="who">Personal Agent · recommendation</div>
+  const block = add(`<div class="who">Personal Agent · ${esc(cat.matching_companies)} matching companies${cat.query_id ? ` · query ${esc(cat.query_id)}` : ""}</div>
+    ${timeline(r.wire)}
+    ${renderInsights(r)}
+    <h3>Which data to buy</h3>
     <div>${esc(rec.summary)}</div>
-    <div class="grid">${stats}</div>
     <div class="table-wrap"><table><tr><th>Data card</th><th>Verdict</th><th>Score</th><th>Credits/mo</th></tr>${rows}</table></div>
     ${sample}
-    <div class="note">Scored inside your agent against your private budget, must-have fields and policy. Champions never saw those.</div>`, "card-block");
+    <div class="note">Usefulness and the bundle are judged inside your agent against your private notes, must-have fields, budget and policy. Champions only receives useful / not useful per insight.</div>`, "card-block");
+  block.querySelectorAll("[data-follow]").forEach((b) => b.addEventListener("click", () => send(b.dataset.follow)));
 }
 
 function renderConsent(r, question) {
@@ -219,7 +288,7 @@ function renderConsent(r, question) {
   }).join("");
   add(`<div class="who">Personal Agent · consent needed</div>
     <div>To ask Champions, I need your permission for <strong>${esc(r.purpose_label.toLowerCase())}</strong>.
-    Choose what I may share. Everything else stays with me.</div>
+    Sharing your role and goals lets Champions rank insights for you. Everything else stays with me.</div>
     <form class="consent">${rows}<div class="actions">
       <button class="btn" type="submit">Share selected &amp; continue</button>
       <button class="btn ghost" type="button" data-decline>Don't share</button></div></form>`, "card-block");
@@ -242,7 +311,7 @@ async function send(question, resumed = false) {
   if (busy || !question.trim()) return;
   busy = true; $("#send").disabled = true;
   if (!resumed) add(esc(question), "msg user");
-  const thinking = add(`<div class="who">Personal Agent</div>Working…`, "msg agent");
+  const thinking = add(`<div class="who">Personal Agent</div>Asking Champions…`, "msg agent");
   try {
     const r = await api("/api/chat", { method: "POST", body: JSON.stringify({ persona, message: question }) });
     thinking.remove();
@@ -254,6 +323,38 @@ async function send(question, resumed = false) {
   } catch (err) {
     thinking.innerHTML = `<div class="who">Personal Agent</div>Something went wrong: ${esc(err.message)}`;
   } finally { busy = false; $("#send").disabled = false; }
+}
+
+// ------------------------------------------------------------ agent testing
+function renderReport(r) {
+  const personas = r.by_persona.map((g) => `<tr><td><strong>${esc(g.persona)}</strong><div class="sub">${esc(g.role)}</div></td>
+      <td class="num">${g.questions}</td><td class="num">${g.useful}/${g.insights}</td>
+      <td style="width:32%"><div class="bar"><span style="width:${g.useful_pct}%"></span></div><div class="sub">${g.useful_pct}%</div></td></tr>`).join("");
+  const gaps = r.gaps.length ? r.gaps.map((g) => `<li><strong>${esc(g.gap)}</strong> (${g.count}), e.g. “${esc(g.examples[0])}”</li>`).join("") : "<li>none</li>";
+  const examples = r.examples.map((x) => `<li><strong>${esc(x.persona)}</strong>: “${esc(x.question)}” → ${esc(x.top_useful.join("; "))}<div class="sub">${esc(x.why)}</div></li>`).join("");
+  return `<div class="grid">
+      <div class="stat"><div class="k">Conversations</div><div class="v">${r.conversations}</div></div>
+      <div class="stat"><div class="k">Answered with data</div><div class="v">${r.answered_pct}%</div></div>
+      <div class="stat"><div class="k">Insights judged useful</div><div class="v">${r.useful_pct}%</div></div>
+      <div class="stat"><div class="k">Run time</div><div class="v">${r.seconds}s</div></div></div>
+    <h3>Usefulness by persona</h3>
+    <div class="table-wrap"><table><tr><th>Persona</th><th>Questions</th><th>Useful</th><th></th></tr>${personas}</table></div>
+    <h3>Where the Champions agent falls short</h3><ul class="list">${gaps}</ul>
+    <h3>Examples of useful answers</h3><ul class="list">${examples}</ul>`;
+}
+
+function loadTesting(report) {
+  const total = Object.values(scenarios).flat().length;
+  $("#testing").innerHTML = `<div class="testing-head">
+      <button class="btn" id="run-sim" type="button">Run simulation</button>
+      <a class="btn ghost" href="http://127.0.0.1:9100/lab" target="_blank" rel="noopener">Open Agent Lab ↗</a></div>
+    <div class="note">Runs ${Object.keys(scenarios).length} personal agents (${total} questions) against the Champions agent over the real OAuth → A2A → MCP → feedback path. Every query lands in Champions' query log, tagged <em>simulator</em>.</div>
+    <div id="sim-out">${report ? renderReport(report) : `<div class="empty">No run yet.</div>`}</div>`;
+  $("#run-sim").addEventListener("click", async (e) => {
+    e.target.disabled = true; e.target.textContent = "Running…";
+    try { loadTesting(await api("/api/simulate", { method: "POST" })); }
+    catch (err) { $("#sim-out").innerHTML = `<div class="empty">${esc(err.message)}</div>`; e.target.disabled = false; e.target.textContent = "Run simulation"; }
+  });
 }
 
 async function loadAudit() {
@@ -271,7 +372,7 @@ async function loadProfile() {
   const p = await api(`/api/profile/${persona}`);
   const fieldRows = p.fields.map((f) => {
     const v = p.profile[f.name];
-    return `<div class="k">${esc(f.label)} <span class="cls lock">${f.class === "private" ? "🔒" : ""}</span></div>
+    return `<div class="k">${esc(f.label)} <span class="cls">${f.class === "private" ? "🔒" : ""}</span></div>
       <div>${esc(typeof v === "object" ? JSON.stringify(v) : v)}</div>`;
   }).join("");
   const consentRows = p.consents.length ? p.consents.map((c) => `<tr><td>${esc(p.purposes[c.purpose])}</td>
@@ -290,34 +391,42 @@ async function loadProfile() {
 
 function selectTab(name) {
   document.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
-  ["wire", "audit", "profile"].forEach((id) => $("#" + id).hidden = id !== name);
+  ["wire", "testing", "audit", "profile"].forEach((id) => $("#" + id).hidden = id !== name);
   $("#legend").hidden = name !== "wire";
   if (name === "audit") loadAudit();
   if (name === "profile") loadProfile();
+  if (name === "testing" && !$("#testing").innerHTML) loadTesting();
+}
+
+function renderScenarios() {
+  const qs = [...(scenarios[persona] || []), "What data can Champions provide?"];
+  $("#scenarios").innerHTML = qs.map((q) => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join("");
+}
+
+function choosePersona(id) {
+  persona = id;
+  const p = people.find((x) => x.id === id);
+  $("#persona").value = id;
+  $("#persona-line").textContent = p.display;
+  $("#thread").innerHTML = "";
+  $("#wire").innerHTML = `<div class="empty">Ask a question to watch the agents talk.</div>`;
+  add(`<div class="who">Personal Agent</div>Hi! I know your role (${esc(p.role)}), goals, budget and private notes. Ask me what you need: I'll ask the Champions Group Agent, share only what you allow, and tell you which of its insights actually matter to you.`, "msg agent");
+  renderScenarios();
+  loadProfile();
 }
 
 async function init() {
-  const people = await api("/api/personas");
+  [people, scenarios] = await Promise.all([api("/api/personas"), api("/api/scenarios")]);
   $("#persona").innerHTML = people.map((p) => `<option value="${p.id}">${esc(p.display)}</option>`).join("");
-  $("#persona").addEventListener("change", (e) => {
-    persona = e.target.value;
-    $("#persona-line").textContent = people.find((p) => p.id === persona).display;
-    $("#thread").innerHTML = ""; renderWire([]); $("#wire").innerHTML = `<div class="empty">Ask a question to watch the agents talk.</div>`;
-    loadProfile();
-  });
-  $("#persona-line").textContent = people[0].display;
-  $("#scenarios").innerHTML = SCENARIOS.map(([who, q], i) => `<button type="button" data-i="${i}">${esc(q)}</button>`).join("");
-  $("#scenarios").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b) return;
-    const [who, q] = SCENARIOS[b.dataset.i];
-    if (who && who !== persona) { $("#persona").value = who; $("#persona").dispatchEvent(new Event("change")); }
-    send(q);
-  });
+  $("#persona").addEventListener("change", (e) => choosePersona(e.target.value));
+  $("#scenarios").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) send(b.dataset.q); });
   $("#ask").addEventListener("submit", (e) => { e.preventDefault(); const q = $("#q").value; $("#q").value = ""; send(q); });
   $("#q").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#ask").requestSubmit(); } });
   document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => selectTab(b.dataset.tab)));
-  add(`<div class="who">Personal Agent</div>Hi! I know your role, goals and budget. Ask me what data you need. I'll check with the Champions Group Agent, share only what you allow, and recommend what to buy.`, "msg agent");
-  loadProfile();
+  // Deep link: #persona=priya&ask=... opens that user and asks the question.
+  const link = new URLSearchParams(location.hash.slice(1));
+  choosePersona(people.some((p) => p.id === link.get("persona")) ? link.get("persona") : "priya");
+  if (link.get("ask")) send(link.get("ask"));
   try { const h = await api("/api/health"); $("#dot-champions").className = "dot " + (h.champions.status === "ok" ? "on" : "off"); }
   catch { $("#dot-champions").className = "dot off"; }
 }
