@@ -1,7 +1,8 @@
 """Agent Lab: the Champions operator's view of what partner agents ask.
 
-It shows every partner's questions, so it only answers loopback callers
-(production: put it behind the company's SSO instead). Clearing the log also
+It shows every partner's questions, so it only answers loopback callers that
+use a local host name (the Host check stops DNS-rebinding pages; production:
+put it behind the company's SSO instead). Clearing the log also
 needs a custom header, so a cross-site form post cannot trigger it.
 """
 
@@ -14,11 +15,22 @@ STATIC = Path(__file__).resolve().parent / "static"
 
 # "testclient" is the host Starlette's TestClient reports; no real socket has it.
 LOCAL_HOSTS = {"127.0.0.1", "::1", "localhost", "testclient"}
+# Host header names the Lab answers to ("champions" is the test client's base URL).
+LOCAL_HOST_NAMES = {"127.0.0.1", "[::1]", "localhost", "champions"}
+
+
+def _host_name(host_header):
+    host = host_header.strip().lower()
+    if host.startswith("["):
+        return host.split("]")[0] + "]"
+    return host.split(":")[0]
 
 
 def _local_only(request: Request):
     if request.client is None or request.client.host not in LOCAL_HOSTS:
         raise HTTPException(403, "the Agent Lab is only available on this machine")
+    if _host_name(request.headers.get("host", "")) not in LOCAL_HOST_NAMES:
+        raise HTTPException(403, "open the Agent Lab as http://127.0.0.1:9100/lab")
 
 
 def router(log):

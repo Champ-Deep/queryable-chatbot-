@@ -39,7 +39,7 @@ from pydantic import ValidationError
 
 from champions import api as rest_api
 from champions import lab, service
-from champions.catalog import CARDS
+from champions.catalog import BY_ID, CARDS
 from champions.querylog import QueryLog
 from common import auth
 from common.http import tls_context
@@ -253,7 +253,9 @@ async def list_data_cards() -> list[dict]:
 async def get_vaf_fields(card_id: str) -> dict:
     """VAF field definitions (type, coverage %, refresh, example) for one data card."""
 
-    result = await _call("GET", f"/cards/{card_id}/fields")
+    if card_id not in BY_ID:
+        raise ToolError(f"Unknown card_id {card_id!r}. Known: {', '.join(BY_ID)}")
+    result = await _call("GET", f"/cards/{quote(card_id, safe='')}/fields")
     audit("mcp.get_vaf_fields", card_id=card_id)
     return result
 
@@ -308,7 +310,7 @@ async def get_query_stats() -> dict:
     audit("mcp.get_query_stats")
     # Partners only ever see their own queries; the cross-partner view is the operator Lab.
     client = (current_claims.get() or {}).get("sub", "")
-    return await _call("GET", f"/query-stats?client={quote(client)}")
+    return await _call("GET", "/query-stats")  # the API scopes it to X-On-Behalf-Of
 
 
 # ------------------------------------------------------------------ app

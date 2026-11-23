@@ -68,7 +68,9 @@ def router(log):
         return {"recorded": recorded}
 
     @api.get("/query-stats")
-    def query_stats(client: str | None = None):
-        return log.stats(client=client)
+    def query_stats(request: Request, client: str | None = None):
+        # Called on behalf of a partner: only that partner's queries, whatever ?client= says.
+        on_behalf = _who(request)[1]
+        return log.stats(client=on_behalf if on_behalf != "internal" else client)
 
     return api

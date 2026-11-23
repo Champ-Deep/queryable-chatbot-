@@ -147,3 +147,34 @@ def test_api_key_has_no_hardcoded_default():
     from common import auth
 
     assert auth.API_KEY != "champions-internal-demo-key" and len(auth.API_KEY) >= 32
+
+
+def test_lab_refuses_foreign_host_headers(champions):
+    # DNS rebinding: a local browser reaches 127.0.0.1 under an attacker's host name.
+    assert champions.get("/lab/api/recent", headers={"Host": "evil.example"}).status_code == 403
+    assert champions.get("/lab/api/recent", headers={"Host": "127.0.0.1:9100"}).status_code == 200
+    assert champions.get("/lab/api/recent", headers={"Host": "localhost:9100"}).status_code == 200
+
+
+def test_mcp_vaf_fields_rejects_unknown_card_ids(champions, bearer):
+    _init_mcp(champions, bearer)
+    for card_id in ("../query-stats", "..%2Fquery-stats", "nope"):
+        result = mcp_call(champions, bearer, "tools/call",
+                          {"name": "get_vaf_fields", "arguments": {"card_id": card_id}}).json()["result"]
+        assert result.get("isError"), card_id
+        assert "total" not in result["content"][0]["text"]
+
+
+def test_rest_query_stats_are_scoped_to_the_partner_called_for(champions):
+    from champions import app as champions_app
+    from common.schemas import CapabilityRequest
+
+    for client in ("partner-a", "partner-b", "partner-b"):
+        champions_app._log.record(CapabilityRequest(skill="get_insights", need=f"{client} plan"),
+                                  channel="a2a", client=client, shared={}, cards=[], insight_ids=[],
+                                  matching=1, latency_ms=1)
+    headers = {"X-API-Key": API_KEY, "X-On-Behalf-Of": "partner-a"}
+    assert champions.get("/api/v1/query-stats", headers=headers).json()["total"] == 1
+    assert champions.get("/api/v1/query-stats?client=partner-b", headers=headers).json()["total"] == 1
+    internal = champions.get("/api/v1/query-stats", headers={"X-API-Key": API_KEY}).json()
+    assert internal["total"] == 3

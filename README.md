@@ -23,7 +23,7 @@ python -m venv .venv
 ```
 Open **http://127.0.0.1:9200** (demo) and **http://127.0.0.1:9100/lab** (Agent Lab).
 
-## Agent-to-agent testing (what the boss asked for)
+## Agent-to-agent testing
 
 - **Personalised insights:** Champions ranks about 12 insight types (who is researching X, legacy-platform switchers, hot accounts, renewals, growth, spend, tech mix…) for the person's shared role and goals, and explains each with "why for you".
 - **Private usefulness:** the personal agent judges each insight against private notes, must-have fields and goals, then sends Champions only *useful / not useful* (A2A `champions.feedback/v1`).
