@@ -1,10 +1,10 @@
 # Agent-to-agent testing, personalised insights and MCP-as-API-wrapper
 
-Date: 2026-11-23 · Status: approved by user (chat, 2026-11-23)
+Date: 2026-11-23 · Status: implemented
 
 ## Goal
 
-Answer the four questions the boss asked, with a working demo:
+Answer four product questions about agent-to-agent use, with a working demo:
 
 1. When a personal agent (knows the person) talks to the Champions agent (knows the data cards), does it find insights that matter to that person?
 2. What queries do agents send to the Champions agent?

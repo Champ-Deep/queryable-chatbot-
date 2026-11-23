@@ -243,7 +243,7 @@ The Lab turns gaps into a to-do list:
 4. **Vague questions** ("what's hot?"): ask back with A2A `INPUT_REQUIRED` instead of answering for every company.
 5. Use the exported query log as a **golden set**: replay it after each change and compare usefulness, then swap the rule-based planner/ranker for an LLM and measure against the same set.
 
-### MCP = a wrapper around our API (the boss's point)
+### MCP as a wrapper around our API
 Champions now has a plain REST API (`/api/v1/cards`, `/cards/{id}/fields`, `/search`, `/insights`, `/feedback`, `/query-stats`) protected by an **internal API key**. The MCP server's tools (`list_data_cards`, `get_vaf_fields`, `find_data_cards`, `get_insights`, `get_query_stats`) **call that API with the key the server holds**. An MCP client (a partner agent, Claude Desktop…) presents only its own OAuth token and calls tools by name. It never needs API credentials or endpoint knowledge. Set `CHAMPIONS_API_URL` to point the same MCP server at a remote/real API.
 
 ```mermaid

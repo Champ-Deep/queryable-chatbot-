@@ -28,5 +28,6 @@ $deadline = (Get-Date).AddSeconds(30)
 while ((Get-Date) -lt $deadline) {
     try { Invoke-RestMethod "http://127.0.0.1:9200/api/health" -TimeoutSec 2 | Out-Null; break } catch { Start-Sleep 1 }
 }
-Write-Host "Demo: http://127.0.0.1:9200" -ForegroundColor Green
+Write-Host "Demo:      http://127.0.0.1:9200" -ForegroundColor Green
+Write-Host "Agent Lab: http://127.0.0.1:9100/lab" -ForegroundColor Green
 Start-Process "http://127.0.0.1:9200"
