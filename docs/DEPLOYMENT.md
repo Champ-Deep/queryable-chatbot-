@@ -27,7 +27,7 @@ The Worker passes these to the container when it starts:
 | `CHAMPIONS_PUBLIC_URL` | The public origin of the first request, for example `https://champions-a2a.<subdomain>.workers.dev`. It appears in the Agent Card and is allowed by the MCP host check |
 | `CHAMPIONS_URL` | `http://127.0.0.1:9100`. The Personal Agent reaches Champions inside the container |
 | `CHAMPIONS_LAB_PASSWORD` | From the Worker secret `LAB_PASSWORD`. With it set, `/lab` requires HTTP Basic login (user `admin`). Without it, a hosted Lab fails closed and refuses everyone |
-| `PERSONAL_AGENT_CLIENT_SECRET` | Optional Worker secret. If set, it overrides the demo client secret |
+| `PERSONAL_AGENT_CLIENT_SECRET` | From the required Worker secret of the same name. When hosted, Champions refuses the public demo secret, and the Worker returns 503 until both secrets are set |
 
 ## Deploy from a machine
 
@@ -37,6 +37,7 @@ Requirements: Node.js 20+, Docker running, and the Workers Paid plan (needed for
 npm install
 npx wrangler login
 npx wrangler secret put LAB_PASSWORD     # choose the Agent Lab password
+npx wrangler secret put PERSONAL_AGENT_CLIENT_SECRET   # any long random string
 npx wrangler deploy                      # builds the image, pushes it, deploys the Worker
 ```
 

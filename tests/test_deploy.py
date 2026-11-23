@@ -8,11 +8,20 @@ import httpx
 from fastapi.testclient import TestClient
 
 from champions.app import create_app
-from personal import agent
+from common import auth
+from personal import agent, champions_client
 from personal.profile import ConsentStore
 
 PUBLIC = "https://champions-a2a.example.workers.dev"
 QUESTION = "Find mid-size healthcare companies in Europe that are switching HR platforms"
+HOSTED_SECRET = "a-real-secret-set-by-the-worker"
+
+
+def _hosted(monkeypatch):
+    """Hosted mode with a real (non-default) client secret, as the Worker sets it."""
+    monkeypatch.setenv("CHAMPIONS_PUBLIC_URL", PUBLIC)
+    monkeypatch.setitem(auth.CLIENTS["personal-agent-demo"], "secret", HOSTED_SECRET)
+    monkeypatch.setattr(champions_client, "CLIENT_SECRET", HOSTED_SECRET)
 
 
 def _basic(user, password):
@@ -71,11 +80,11 @@ def test_agent_card_advertises_the_public_url(tmp_path, monkeypatch):
 
 
 def test_mcp_accepts_the_public_host(tmp_path, monkeypatch):
-    monkeypatch.setenv("CHAMPIONS_PUBLIC_URL", PUBLIC)
+    _hosted(monkeypatch)
     with TestClient(create_app(log_path=tmp_path / "q.db"), base_url=PUBLIC) as client:
         token = client.post("/oauth/token", data={
             "grant_type": "client_credentials", "client_id": "personal-agent-demo",
-            "client_secret": "demo-secret-change-me", "scope": "catalog:read"}).json()["access_token"]
+            "client_secret": HOSTED_SECRET, "scope": "catalog:read"}).json()["access_token"]
         response = client.post("/mcp", headers={
             "Authorization": f"Bearer {token}", "Accept": "application/json, text/event-stream",
             "Content-Type": "application/json"},
@@ -98,7 +107,7 @@ class _HostRecorder(httpx.AsyncBaseTransport):
 def test_personal_agent_keeps_a2a_on_its_configured_endpoint(monkeypatch):
     # The card advertises the public URL, but inside the container the Personal
     # Agent must keep talking to Champions over 127.0.0.1, not via the internet.
-    monkeypatch.setenv("CHAMPIONS_PUBLIC_URL", PUBLIC)
+    _hosted(monkeypatch)
     store = ConsentStore()
     store.grant("priya", "market_insights", ["industry", "role"])
 
@@ -112,3 +121,26 @@ def test_personal_agent_keeps_a2a_on_its_configured_endpoint(monkeypatch):
     result, hosts = asyncio.run(turn())
     assert result["status"] == "ok", result
     assert set(hosts) == {"127.0.0.1"}, hosts
+
+
+# ------------------------------------------------------------------ client secret
+
+def test_hosted_champions_refuses_the_public_demo_secret(tmp_path, monkeypatch):
+    # The default secret is in the public repo, so a hosted deployment must not accept it.
+    monkeypatch.setenv("CHAMPIONS_PUBLIC_URL", PUBLIC)
+    monkeypatch.setitem(auth.CLIENTS["personal-agent-demo"], "secret", auth.DEMO_CLIENT_SECRET)
+    with TestClient(create_app(log_path=tmp_path / "q.db"), base_url=PUBLIC) as client:
+        response = client.post("/oauth/token", data={
+            "grant_type": "client_credentials", "client_id": "personal-agent-demo",
+            "client_secret": auth.DEMO_CLIENT_SECRET})
+    assert response.status_code == 401
+
+
+def test_local_demo_still_accepts_the_demo_secret(tmp_path, monkeypatch):
+    monkeypatch.delenv("CHAMPIONS_PUBLIC_URL", raising=False)
+    monkeypatch.setitem(auth.CLIENTS["personal-agent-demo"], "secret", auth.DEMO_CLIENT_SECRET)
+    with TestClient(create_app(log_path=tmp_path / "q.db"), base_url="http://champions") as client:
+        response = client.post("/oauth/token", data={
+            "grant_type": "client_credentials", "client_id": "personal-agent-demo",
+            "client_secret": auth.DEMO_CLIENT_SECRET})
+    assert response.status_code == 200

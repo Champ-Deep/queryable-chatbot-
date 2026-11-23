@@ -34,8 +34,6 @@ export class ChampionsDemo extends DurableObject {
     const url = new URL(incoming);
     url.protocol = "http:";
     const forwarded = new Request(url, request);
-    forwarded.headers.set("X-Forwarded-Proto", "https");
-    forwarded.headers.set("X-Forwarded-Host", incoming.host);
     return this.ctx.container.getTcpPort(portFor(incoming.pathname)).fetch(forwarded);
   }
 
@@ -45,9 +43,10 @@ export class ChampionsDemo extends DurableObject {
       const env = {
         CHAMPIONS_PUBLIC_URL: publicOrigin,
         CHAMPIONS_URL: `http://127.0.0.1:${CHAMPIONS_PORT}`,
+        PERSONAL_AGENT_CLIENT_SECRET: this.env.PERSONAL_AGENT_CLIENT_SECRET,
       };
+      // Without LAB_PASSWORD the hosted Agent Lab fails closed (refuses everyone).
       if (this.env.LAB_PASSWORD) env.CHAMPIONS_LAB_PASSWORD = this.env.LAB_PASSWORD;
-      if (this.env.PERSONAL_AGENT_CLIENT_SECRET) env.PERSONAL_AGENT_CLIENT_SECRET = this.env.PERSONAL_AGENT_CLIENT_SECRET;
       container.start({
         image: container.images.base,
         instance: "standard-1",
@@ -94,8 +93,19 @@ export class ChampionsDemo extends DurableObject {
   }
 }
 
+// Secrets the deployment needs: `npx wrangler secret put <NAME>`.
+const REQUIRED_SECRETS = ["PERSONAL_AGENT_CLIENT_SECRET", "LAB_PASSWORD"];
+
 export default {
   async fetch(request, env) {
+    const missing = REQUIRED_SECRETS.filter((name) => !env[name]);
+    if (missing.length) {
+      // Fail closed: never run with the demo secret that is published in the repo.
+      console.error(`Missing Worker secrets: ${missing.join(", ")}`);
+      return new Response("This deployment is not configured yet.", {
+        status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" },
+      });
+    }
     try {
       // A single instance: the demo keeps its query log and consents in memory and SQLite.
       return await env.CHAMPIONS_DEMO.getByName("main").fetch(request);

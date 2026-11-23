@@ -28,10 +28,14 @@ SIGNING_KEY = os.getenv("CHAMPIONS_SIGNING_KEY") or secrets.token_urlsafe(32)
 # No hard-coded default: random per process unless set (only this process needs it).
 API_KEY = os.getenv("CHAMPIONS_API_KEY") or secrets.token_urlsafe(32)
 
+# The local demo's client secret. It is in the public repo, so a hosted deployment
+# (CHAMPIONS_PUBLIC_URL set) refuses it: set PERSONAL_AGENT_CLIENT_SECRET there.
+DEMO_CLIENT_SECRET = "demo-secret-change-me"
+
 # Registered partner clients: id -> (secret, scopes it may be granted).
 CLIENTS = {
     "personal-agent-demo": {
-        "secret": os.getenv("PERSONAL_AGENT_CLIENT_SECRET", "demo-secret-change-me"),
+        "secret": os.getenv("PERSONAL_AGENT_CLIENT_SECRET") or DEMO_CLIENT_SECRET,
         "scopes": {"catalog:read", "insights:read", "audit:read"},
     },
 }
@@ -48,6 +52,8 @@ def issue_token(client_id, client_secret, requested_scopes):
     client = CLIENTS.get(client_id)
     if not client or not secrets.compare_digest(client["secret"], client_secret or ""):
         raise AuthError(401, "invalid_client")
+    if os.getenv("CHAMPIONS_PUBLIC_URL") and client["secret"] == DEMO_CLIENT_SECRET:
+        raise AuthError(401, "invalid_client: the public demo secret is disabled when hosted")
 
     requested = set(requested_scopes.split()) if requested_scopes else set(client["scopes"])
     denied = requested - client["scopes"]
