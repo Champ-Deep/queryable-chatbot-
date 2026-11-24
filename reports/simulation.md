@@ -1,6 +1,6 @@
 # Agent-to-agent simulation
 
-41 conversations from 10 personal agents in 9.4 s.
+41 conversations from 10 personal agents in 9.6 s.
 
 | Metric | Value |
 |---|---|

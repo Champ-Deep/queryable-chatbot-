@@ -144,7 +144,7 @@ Full report: [reports/simulation.md](reports/simulation.md). Analysis and next s
 
 ## Configuration
 
-All settings are optional environment variables, and the defaults work for local demos. [`.env.example`](.env.example) lists them. `start.sh` loads a `.env` file if one exists. On Windows, set them in the shell before running `start.ps1`.
+All settings are optional environment variables, and the defaults work for local demos. [`.env.example`](.env.example) lists them. `start.sh` and `start.ps1` load a `.env` file if one exists (variables already set in the shell win).
 
 | Variable | Default | Purpose |
 |---|---|---|
@@ -154,7 +154,10 @@ All settings are optional environment variables, and the defaults work for local
 | `CHAMPIONS_QUERY_LOG` | `data/query_log.db` | SQLite query-log location |
 | `CHAMPIONS_URL` | `http://127.0.0.1:9100` | Where the Personal Agent finds Champions |
 | `CHAMPIONS_PUBLIC_URL` | unset | Public URL shown in the Agent Card and allowed by MCP (hosted only) |
-| `CHAMPIONS_LAB_PASSWORD` | unset | Enables a password login for the Agent Lab (hosted only); unset = local-only |
+| `CHAMPIONS_LAB_PASSWORD` | unset | Enables a password login for the Agent Lab (required when hosted); unset = local-only |
+| `CHAMPIONS_LAB_USER` | `admin` | Agent Lab login user name |
+| `PERSONAL_DEMO_PASSWORD` | unset | Enables a password login for the whole demo page (:9200) except `/api/health`; unset = open |
+| `PERSONAL_DEMO_USER` | `admin` | Demo page login user name |
 | `PERSONAL_AGENT_CLIENT_ID` / `_SECRET` | demo values | OAuth client credentials of the Personal Agent |
 
 ## Tests

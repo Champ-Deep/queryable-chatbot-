@@ -16,6 +16,18 @@ if (-not (Test-Path $Python)) {
     & $Python -m pip install -q -r (Join-Path $Root "requirements.txt")
 }
 
+# Load .env (git-ignored) into this process; both agents inherit it. Values already set win.
+$EnvFile = Join-Path $Root ".env"
+if (Test-Path $EnvFile) {
+    foreach ($line in Get-Content $EnvFile) {
+        if ($line -match '^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$' -and $Matches[2] -ne "") {
+            if (-not [Environment]::GetEnvironmentVariable($Matches[1])) {
+                [Environment]::SetEnvironmentVariable($Matches[1], $Matches[2])
+            }
+        }
+    }
+}
+
 function Start-Agent($module, $port) {
     Start-Process -FilePath $Python -WorkingDirectory $Root -WindowStyle Minimized `
         -ArgumentList "-m", "uvicorn", "$module`:app", "--host", "127.0.0.1", "--port", "$port"

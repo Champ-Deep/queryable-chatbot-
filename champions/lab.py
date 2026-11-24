@@ -2,19 +2,19 @@
 
 It shows every partner's questions, so by default it only answers loopback
 callers that use a local host name (the Host check stops DNS-rebinding pages).
-When hosted, set CHAMPIONS_LAB_PASSWORD: the Lab then asks for an HTTP Basic
-login (user "admin") instead (production: the company's SSO). Clearing the log
+Set CHAMPIONS_LAB_PASSWORD (required when hosted) and the Lab asks for an HTTP
+Basic login instead, user CHAMPIONS_LAB_USER (default "admin"); production would
+use the company's SSO. Clearing the log
 also needs a custom header, so a cross-site form post cannot trigger it.
 """
 
-import base64
-import binascii
 import os
-import secrets
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import FileResponse, Response
+
+from common.basic_auth import challenge, credentials_ok
 
 STATIC = Path(__file__).resolve().parent / "static"
 
@@ -38,21 +38,14 @@ def _local_only(request: Request):
         raise HTTPException(403, "open the Agent Lab as http://127.0.0.1:9100/lab")
 
 
-LAB_USER = "admin"
+DEFAULT_LAB_USER = "admin"
 
 
 def _password_login(request: Request, password):
-    """Hosted mode: HTTP Basic login (user ``admin``)."""
-    scheme, _, encoded = request.headers.get("authorization", "").partition(" ")
-    try:
-        user, _, given = base64.b64decode(encoded, validate=True).decode("utf-8").partition(":")
-    except (binascii.Error, UnicodeDecodeError):
-        user, given = "", ""
-    user_ok = secrets.compare_digest(user.encode(), LAB_USER.encode())
-    password_ok = secrets.compare_digest(given.encode(), password.encode())
-    if scheme.lower() != "basic" or not (user_ok and password_ok):
-        raise HTTPException(401, "log in to the Agent Lab",
-                            headers={"WWW-Authenticate": 'Basic realm="Champions Agent Lab", charset="UTF-8"'})
+    """HTTP Basic login; the user is CHAMPIONS_LAB_USER (default ``admin``)."""
+    user = os.getenv("CHAMPIONS_LAB_USER") or DEFAULT_LAB_USER
+    if not credentials_ok(request.headers.get("authorization"), user, password):
+        raise HTTPException(401, "log in to the Agent Lab", headers=challenge("Champions Agent Lab"))
 
 
 def _lab_access(request: Request):

@@ -75,6 +75,15 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; text-align: ri
 label.auto { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); }
 #status { font-size: 12.5px; color: var(--muted); }
 .need { max-width: 420px; }
+.chip.yes { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
+.chip.no { background: var(--bad-bg); color: var(--bad); border-color: transparent; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+table.all th, table.all td { white-space: nowrap; }
+table.all td.wrap { white-space: normal; min-width: 260px; max-width: 360px; }
+table.all td.list { white-space: normal; min-width: 200px; }
+table.all .chip { margin: 0 3px 3px 0; }
+.mono { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+.kv { color: var(--muted); }
 </style>
 </head>
 <body>
@@ -108,7 +117,10 @@ label.auto { display: inline-flex; gap: 6px; align-items: center; font-size: 12.
   </div>
 
   <section class="panel">
-    <h2>Recent queries</h2><p class="q">The raw dataset for improving the agent (export above)</p>
+    <div class="panel-head">
+      <div><h2>Recent queries</h2><p class="q">The raw dataset for improving the agent (export above). <span id="recent-count"></span></p></div>
+      <label class="auto"><input type="checkbox" id="all-cols" checked> All columns</label>
+    </div>
     <div class="table-wrap"><table id="recent"></table></div>
   </section>
 </main>
@@ -146,6 +158,63 @@ function bars(rows, nameKey, countKey, pctKey, max) {
       <span class="num">${pctKey ? `${r[pctKey]}%` : r[countKey]}${pctKey ? ` · ${r[countKey]}` : r.useful_pct != null ? ` · ${r.useful_pct}%` : ""}</span></div>`).join("");
 }
 
+// ---- Recent queries: compact view, or every field the query log keeps.
+const chips = (items, cls = "", fmt = (x) => x) =>
+  (items || []).map((x) => `<span class="chip ${cls}">${esc(fmt(x))}</span>`).join("") || "–";
+const gapName = (g) => g.replaceAll("_", " ");
+function filtersText(f) {
+  const parts = Object.entries(f || {}).filter(([, v]) => v != null && v !== "" && !(Array.isArray(v) && !v.length))
+    .map(([k, v]) => `<span class="kv">${esc(k.replaceAll("_", " "))}:</span> ${esc(Array.isArray(v) ? v.join(", ") : v)}`);
+  return parts.join("<br>") || "–";
+}
+function ratingsChips(r) {
+  const entries = Object.entries(r || {});
+  return entries.length ? entries.map(([k, ok]) => `<span class="chip ${ok ? "yes" : "no"}">${ok ? "✓" : "✗"} ${esc(label(k))}</span>`).join("") : "–";
+}
+// [header, cell class, render]
+const ALL_COLUMNS = [
+  ["Query ID", "mono", (q) => esc(q.query_id)],
+  ["Time", "num", (q) => esc(q.at.replace("T", " "))],
+  ["Client", "", (q) => esc(q.client)],
+  ["Source", "", (q) => `<span class="chip ${esc(q.source)}">${esc(q.source)}</span>`],
+  ["Via", "", (q) => `<span class="chip ${esc(q.channel)}">${esc(q.channel.toUpperCase())}</span>`],
+  ["Skill", "mono", (q) => esc(q.skill)],
+  ["Role (shared)", "", (q) => esc(q.shared_role || "–")],
+  ["Industry (shared)", "", (q) => esc(q.shared_industry || "–")],
+  ["Fields shared", "list", (q) => chips(q.shared_fields)],
+  ["Intent", "", (q) => `<span class="chip intent">${esc(label(q.intent))}</span>`],
+  ["Question", "wrap", (q) => esc(q.need)],
+  ["Filters", "wrap", (q) => filtersText(q.filters)],
+  ["Companies", "num", (q) => esc(q.matching)],
+  ["Data cards", "list", (q) => chips(q.cards)],
+  ["Insights returned", "list", (q) => chips(q.insight_ids, "", label)],
+  ["Ratings", "list", (q) => ratingsChips(q.ratings)],
+  ["Rated", "num", (q) => esc(q.rated)],
+  ["Useful", "num", (q) => esc(q.useful)],
+  ["Gaps", "list", (q) => chips(q.gaps, "gap", gapName)],
+  ["Latency", "num", (q) => `${esc(q.latency_ms)} ms`],
+];
+const COMPACT_COLUMNS = [
+  ["Time", "num", (q) => esc(q.at.slice(11))], ALL_COLUMNS[3], ALL_COLUMNS[4], ALL_COLUMNS[6], ALL_COLUMNS[9],
+  ["Question", "need", (q) => esc(q.need)], ALL_COLUMNS[12],
+  ["Useful", "num", (q) => q.rated ? `${q.useful}/${q.rated}` : "–"], ALL_COLUMNS[18],
+];
+let lastQueries = [];
+function renderRecent(queries) {
+  lastQueries = queries;
+  const all = $("#all-cols").checked;
+  const cols = all ? ALL_COLUMNS : COMPACT_COLUMNS;
+  $("#recent").className = all ? "all" : "";
+  $("#recent").innerHTML = `<tr>${cols.map(([h, c]) => `<th class="${c === "num" ? "num" : ""}">${h}</th>`).join("")}</tr>`
+    + (queries.length ? queries.map((q) => `<tr>${cols.map(([, c, f]) => `<td class="${c}">${f(q)}</td>`).join("")}</tr>`).join("")
+      : `<tr><td colspan="${cols.length}" class="empty">No queries yet.</td></tr>`);
+}
+try { const saved = localStorage.getItem("lab.allColumns"); if (saved !== null) $("#all-cols").checked = saved === "1"; } catch {}
+$("#all-cols").addEventListener("change", (e) => {
+  try { localStorage.setItem("lab.allColumns", e.target.checked ? "1" : "0"); } catch {}
+  renderRecent(lastQueries);
+});
+
 function kpi(k, v, d = "") { return `<div class="kpi"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div><div class="d">${d}</div></div>`; }
 
 async function refresh() {
@@ -166,14 +235,8 @@ async function refresh() {
         <div class="fix">→ ${esc(FIX[g.gap] || "Review these queries.")}</div>
         <div class="ex">e.g. ${g.examples.map((e) => `“${esc(e)}”`).join(", ")}</div></div>`).join("")
       : `<div class="empty">No gaps found yet.</div>`;
-    $("#recent").innerHTML = `<tr><th>Time</th><th>Source</th><th>Via</th><th>Role</th><th>Intent</th><th>Question</th><th class="num">Companies</th><th class="num">Useful</th><th>Gaps</th></tr>`
-      + (queries.length ? queries.map((q) => `<tr><td class="num">${esc(q.at.slice(11))}</td>
-        <td><span class="chip ${esc(q.source)}">${esc(q.source)}</span></td><td><span class="chip ${esc(q.channel)}">${esc(q.channel.toUpperCase())}</span></td>
-        <td>${esc(q.shared_role || "–")}</td><td><span class="chip intent">${esc(label(q.intent))}</span></td>
-        <td class="need">${esc(q.need)}</td><td class="num">${q.matching}</td>
-        <td class="num">${q.rated ? `${q.useful}/${q.rated}` : "–"}</td>
-        <td>${q.gaps.map((g) => `<span class="chip gap">${esc(g.replaceAll("_", " "))}</span>`).join(" ")}</td></tr>`).join("")
-        : `<tr><td colspan="9" class="empty">No queries yet.</td></tr>`);
+    $("#recent-count").textContent = `Showing the latest ${queries.length} of ${s.total}.`;
+    renderRecent(queries);
     $("#status").textContent = `Updated ${new Date().toLocaleTimeString()}.`;
   } catch (err) { $("#status").textContent = `Could not load: ${err.message}`; }
 }
@@ -181,7 +244,9 @@ async function refresh() {
 $("#simulate").addEventListener("click", async (e) => {
   e.target.disabled = true; e.target.textContent = "Running…";
   try {
-    const r = await fetch(`${PERSONAL}/api/simulate`, { method: "POST" });
+    // credentials: send the demo page's login along, if the demo has one.
+    const r = await fetch(`${PERSONAL}/api/simulate`, { method: "POST", credentials: "include" });
+    if (r.status === 401) throw new Error("log in to the demo page first (it has its own login)");
     const body = await r.json();
     if (!r.ok) throw new Error(body.detail || r.statusText);
     $("#status").textContent = `Simulation done: ${body.conversations} conversations, ${body.useful_pct}% useful.`;

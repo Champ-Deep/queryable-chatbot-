@@ -4,12 +4,16 @@
 """
 
 import asyncio
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
+from starlette.middleware.base import BaseHTTPMiddleware
+
+from common.basic_auth import challenge, credentials_ok
 
 from personal import agent, simulator
 from common.http import tls_context
@@ -21,10 +25,31 @@ STATIC = Path(__file__).resolve().parent / "static"
 
 REPORTS = Path(__file__).resolve().parent.parent / "reports"
 
+DEFAULT_DEMO_USER = "admin"
+# Left open even with a login: start.ps1 polls it to know the server is up.
+OPEN_PATHS = {"/api/health"}
+
+
+class DemoLogin(BaseHTTPMiddleware):
+    """When PERSONAL_DEMO_PASSWORD is set, the whole demo needs an HTTP Basic login
+    (user PERSONAL_DEMO_USER, default ``admin``). Unset = open, as before."""
+
+    async def dispatch(self, request, call_next):
+        password = os.getenv("PERSONAL_DEMO_PASSWORD")
+        if password and request.url.path not in OPEN_PATHS:
+            user = os.getenv("PERSONAL_DEMO_USER") or DEFAULT_DEMO_USER
+            if not credentials_ok(request.headers.get("authorization"), user, password):
+                return JSONResponse({"detail": "log in to the Personal Agent demo"}, status_code=401,
+                                    headers=challenge("Personal Agent demo"))
+        return await call_next(request)
+
+
 app = FastAPI(title="Personal Agent")
-# The Champions Agent Lab (:9100/lab) may start a simulation run here.
+# Added first so CORS wraps it: a 401 still carries CORS headers the Lab page can read.
+app.add_middleware(DemoLogin)
+# The Champions Agent Lab (:9100/lab) may start a simulation run here, sending the demo login.
 app.add_middleware(CORSMiddleware, allow_origins=["http://127.0.0.1:9100", "http://localhost:9100"],
-                   allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+                   allow_methods=["GET", "POST"], allow_headers=["Content-Type"], allow_credentials=True)
 consents = ConsentStore()
 _simulating = asyncio.Lock()
 
