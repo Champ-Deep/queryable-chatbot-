@@ -1,0 +1,24 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "capabilities": {
+      "prompts": {
+        "listChanged": false
+      },
+      "resources": {
+        "listChanged": false,
+        "subscribe": false
+      },
+      "tools": {
+        "listChanged": false
+      }
+    },
+    "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "champions-catalog",
+      "version": ""
+    }
+  }
+}

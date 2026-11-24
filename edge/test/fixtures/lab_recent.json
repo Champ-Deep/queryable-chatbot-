@@ -1,0 +1,177 @@
+{
+  "queries": [
+    {
+      "query_id": "q-1b96c698eb80",
+      "at": "2026-11-24T00:16:30",
+      "client": "personal-agent-demo",
+      "channel": "a2a",
+      "source": "simulator",
+      "skill": "get_insights",
+      "intent": "intent_research",
+      "need": "Retail companies in Latin America researching analytics",
+      "filters": {
+        "industries": [
+          "Retail"
+        ],
+        "regions": [
+          "LATAM"
+        ],
+        "countries": [],
+        "size_bands": [],
+        "intent_topics": [
+          "Data Analytics"
+        ]
+      },
+      "shared_role": "Sales Director",
+      "shared_industry": "Cloud Consulting",
+      "shared_fields": [
+        "goals",
+        "industry",
+        "region",
+        "role",
+        "target_segment.industries",
+        "target_segment.regions"
+      ],
+      "cards": [
+        "firmographics",
+        "intent_signals"
+      ],
+      "insight_ids": [
+        "topic_surge",
+        "hot_accounts",
+        "legacy_platform_switchers",
+        "renewals_soon",
+        "cloud_mix",
+        "country_hotspot"
+      ],
+      "matching": 12,
+      "gaps": [],
+      "latency_ms": 130.5,
+      "ratings": {
+        "topic_surge": true,
+        "hot_accounts": true,
+        "legacy_platform_switchers": false,
+        "renewals_soon": false,
+        "cloud_mix": true,
+        "country_hotspot": false
+      },
+      "rated": 6,
+      "useful": 3
+    },
+    {
+      "query_id": "q-2227a727e9d1",
+      "at": "2026-11-24T00:16:29",
+      "client": "personal-agent-demo",
+      "channel": "a2a",
+      "source": "simulator",
+      "skill": "get_insights",
+      "intent": "tech_displacement",
+      "need": "How many e-commerce companies in the US are researching cloud migration?",
+      "filters": {
+        "industries": [
+          "Retail"
+        ],
+        "regions": [
+          "NA"
+        ],
+        "countries": [],
+        "size_bands": [],
+        "intent_topics": [
+          "Cloud Migration"
+        ]
+      },
+      "shared_role": "Sales Director",
+      "shared_industry": "Cloud Consulting",
+      "shared_fields": [
+        "goals",
+        "industry",
+        "region",
+        "role",
+        "target_segment.industries",
+        "target_segment.regions"
+      ],
+      "cards": [
+        "intent_signals",
+        "firmographics",
+        "technographics"
+      ],
+      "insight_ids": [
+        "topic_surge",
+        "legacy_platform_switchers",
+        "hot_accounts",
+        "cloud_mix",
+        "renewals_soon",
+        "country_hotspot"
+      ],
+      "matching": 110,
+      "gaps": [],
+      "latency_ms": 134.0,
+      "ratings": {
+        "topic_surge": true,
+        "legacy_platform_switchers": true,
+        "hot_accounts": true,
+        "cloud_mix": true,
+        "renewals_soon": false,
+        "country_hotspot": false
+      },
+      "rated": 6,
+      "useful": 4
+    },
+    {
+      "query_id": "q-e3050880a9bc",
+      "at": "2026-11-24T00:16:29",
+      "client": "personal-agent-demo",
+      "channel": "a2a",
+      "source": "simulator",
+      "skill": "get_insights",
+      "intent": "tech_stack",
+      "need": "Which cloud do US retailers use today?",
+      "filters": {
+        "industries": [
+          "Retail"
+        ],
+        "regions": [
+          "NA"
+        ],
+        "countries": [],
+        "size_bands": [],
+        "intent_topics": []
+      },
+      "shared_role": "Sales Director",
+      "shared_industry": "Cloud Consulting",
+      "shared_fields": [
+        "goals",
+        "industry",
+        "region",
+        "role",
+        "target_segment.industries",
+        "target_segment.regions"
+      ],
+      "cards": [
+        "firmographics",
+        "technographics"
+      ],
+      "insight_ids": [
+        "cloud_mix",
+        "hot_accounts",
+        "legacy_platform_switchers",
+        "renewals_soon",
+        "growth_leaders",
+        "country_hotspot"
+      ],
+      "matching": 110,
+      "gaps": [],
+      "latency_ms": 143.0,
+      "ratings": {
+        "cloud_mix": true,
+        "hot_accounts": true,
+        "legacy_platform_switchers": false,
+        "renewals_soon": false,
+        "growth_leaders": false,
+        "country_hotspot": false
+      },
+      "rated": 6,
+      "useful": 2
+    }
+  ]
+}

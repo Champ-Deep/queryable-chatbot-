@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "content": [
+      {
+        "text": "{\n  \"card_id\": \"intent_signals\",\n  \"name\": \"Intent Signals\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"intent_topic\",\n      \"type\": \"enum\",\n      \"description\": \"Topic showing elevated research\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": \"HR Platform Replacement\"\n    },\n    {\n      \"name\": \"intent_score\",\n      \"type\": \"integer\",\n      \"description\": \"0-100 surge score vs. baseline\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": 82\n    },\n    {\n      \"name\": \"surge_start\",\n      \"type\": \"date\",\n      \"description\": \"First day of the current surge\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": \"2026-10-21\"\n    },\n    {\n      \"name\": \"hiring_signal\",\n      \"type\": \"string\",\n      \"description\": \"Related job postings detected\",\n      \"coverage_pct\": 55.3,\n      \"refresh\": \"daily\",\n      \"example\": \"HRIS Project Manager\"\n    },\n    {\n      \"name\": \"competitor_research\",\n      \"type\": \"list\",\n      \"description\": \"Vendors being researched\",\n      \"coverage_pct\": 49.8,\n      \"refresh\": \"daily\",\n      \"example\": \"SAP SuccessFactors, Workday\"\n    }\n  ]\n}",
+        "type": "text"
+      }
+    ],
+    "isError": false
+  }
+}

@@ -1,0 +1,1601 @@
+{
+  "status": "ok",
+  "answer": "Champions found 88 matching companies and ranked 6 insights for you. 4 look useful to you:\n• Researching HR Platform Replacement: 16 (18.2% of the segment, average surge score 73)\n• On a legacy HR platform and researching a switch: 14 (Oracle HCM (6), ADP (5), UKG (2), Dayforce (1))\n• Hot accounts (surge score 80+): 23 (26.1% of the segment is in a strong buying surge)\nBuy Intent Signals + Firmographics for about 520 credits/month (80 under your 600-credit budget).",
+  "insights": [
+    {
+      "label": "Researching HR Platform Replacement",
+      "value": 16,
+      "detail": "18.2% of the segment, average surge score 73",
+      "id": "topic_surge",
+      "themes": [
+        "displacement",
+        "intent",
+        "accounts",
+        "hr"
+      ],
+      "score": 23.5,
+      "why_for_you": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+      "evidence": "intent_topic = 'HR Platform Replacement'",
+      "follow_ups": [
+        "Which platforms do the companies researching HR Platform Replacement use today?"
+      ],
+      "useful": true,
+      "reason": "Useful: covers your must-have field intent_score; serves your goal (accounts, displacement, hr); Champions ranked it highly for your role"
+    },
+    {
+      "label": "On a legacy HR platform and researching a switch",
+      "value": 14,
+      "detail": "Oracle HCM (6), ADP (5), UKG (2), Dayforce (1)",
+      "id": "legacy_platform_switchers",
+      "themes": [
+        "displacement",
+        "accounts",
+        "hr",
+        "intent"
+      ],
+      "score": 21.5,
+      "why_for_you": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+      "evidence": "hr_platform in ['ADP', 'Oracle HCM', 'UKG', 'Dayforce'] and intent_topic in ['HR Platform Replacement', 'Payroll Outsourcing']",
+      "follow_ups": [
+        "When do these switchers' HR contracts renew?"
+      ],
+      "useful": true,
+      "reason": "Useful: mentions ADP, Oracle HCM, which your private notes prioritise; covers your must-have field hr_platform; serves your goal (accounts, displacement, hr); Champions ranked it highly for your role"
+    },
+    {
+      "label": "Hot accounts (surge score 80+)",
+      "value": 23,
+      "detail": "26.1% of the segment is in a strong buying surge",
+      "id": "hot_accounts",
+      "themes": [
+        "accounts",
+        "intent",
+        "timing"
+      ],
+      "score": 7.0,
+      "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+      "evidence": "intent_score >= 80",
+      "follow_ups": [
+        "What are the hot accounts researching, and which HR platform do they run?"
+      ],
+      "useful": true,
+      "reason": "Useful: covers your must-have field intent_score; serves your goal (accounts)"
+    },
+    {
+      "label": "Fast growers (20%+ revenue growth)",
+      "value": 19,
+      "detail": "21.6% of the segment is growing fast",
+      "id": "growth_leaders",
+      "themes": [
+        "growth",
+        "accounts",
+        "sizing"
+      ],
+      "score": 5.5,
+      "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+      "evidence": "revenue_growth_pct >= 20",
+      "follow_ups": [
+        "What are the fast growers researching?"
+      ],
+      "useful": true,
+      "reason": "Useful: covers your must-have field employee_count; serves your goal (accounts, sizing)"
+    },
+    {
+      "label": "HR contract renews in 2026-Q4 or 2027-Q1",
+      "value": 43,
+      "detail": "48.9% of the segment; median HR tech spend $400,224",
+      "id": "renewals_soon",
+      "themes": [
+        "timing",
+        "accounts",
+        "hr",
+        "budget"
+      ],
+      "score": 8.5,
+      "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+      "evidence": "renewal_quarter in ['2026-Q4', '2027-Q1']",
+      "follow_ups": [
+        "Which of the renewing companies are also showing intent?"
+      ],
+      "useful": false,
+      "reason": "Less useful: serves your goal (accounts, hr)"
+    },
+    {
+      "label": "Median HR tech spend",
+      "value": "$344,167",
+      "detail": "Top quarter spends $539,430+ a year; segment total about $30.3M",
+      "id": "spend_profile",
+      "themes": [
+        "budget",
+        "sizing",
+        "hr"
+      ],
+      "score": 7.0,
+      "why_for_you": "Supports your goal \"Build pipeline with companies replacing their HR platform\": it is about HR technology, your market.",
+      "evidence": "median and 75th percentile of annual_hr_tech_spend_usd",
+      "follow_ups": [
+        "Which companies spend the most on HR tech?"
+      ],
+      "useful": false,
+      "reason": "Less useful: serves your goal (hr, sizing)"
+    }
+  ],
+  "follow_ups": [
+    "Which platforms do the companies researching HR Platform Replacement use today?",
+    "When do these switchers' HR contracts renew?",
+    "What are the hot accounts researching, and which HR platform do they run?"
+  ],
+  "skill": "get_insights",
+  "catalog": {
+    "schema": "champions.catalog_result/v1",
+    "matches": [
+      {
+        "card_id": "intent_signals",
+        "name": "Intent Signals",
+        "relevance": 1.0,
+        "why": "Request mentions switching, topic filter",
+        "matched_fields": [
+          "intent_topic",
+          "intent_score",
+          "surge_start"
+        ],
+        "coverage_pct": 61.8,
+        "refresh": "daily",
+        "credits_per_1k_records": 120,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "firmographics",
+        "name": "Firmographics",
+        "relevance": 0.95,
+        "why": "Defines the target segment (industry, region, size_band)",
+        "matched_fields": [
+          "industry",
+          "region",
+          "size_band"
+        ],
+        "coverage_pct": 95.0,
+        "refresh": "monthly",
+        "credits_per_1k_records": 40,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "technographics",
+        "name": "Technographics",
+        "relevance": 0.9,
+        "why": "Request mentions platforms",
+        "matched_fields": [
+          "hr_platform",
+          "crm",
+          "erp",
+          "cloud_provider"
+        ],
+        "coverage_pct": 78.9,
+        "refresh": "weekly",
+        "credits_per_1k_records": 75,
+        "contains_personal_data": false
+      }
+    ],
+    "matching_companies": 88,
+    "insights": [
+      {
+        "label": "Researching HR Platform Replacement",
+        "value": 16,
+        "detail": "18.2% of the segment, average surge score 73",
+        "id": "topic_surge",
+        "themes": [
+          "displacement",
+          "intent",
+          "accounts",
+          "hr"
+        ],
+        "score": 23.5,
+        "why_for_you": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+        "evidence": "intent_topic = 'HR Platform Replacement'",
+        "follow_ups": [
+          "Which platforms do the companies researching HR Platform Replacement use today?"
+        ]
+      },
+      {
+        "label": "On a legacy HR platform and researching a switch",
+        "value": 14,
+        "detail": "Oracle HCM (6), ADP (5), UKG (2), Dayforce (1)",
+        "id": "legacy_platform_switchers",
+        "themes": [
+          "displacement",
+          "accounts",
+          "hr",
+          "intent"
+        ],
+        "score": 21.5,
+        "why_for_you": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+        "evidence": "hr_platform in ['ADP', 'Oracle HCM', 'UKG', 'Dayforce'] and intent_topic in ['HR Platform Replacement', 'Payroll Outsourcing']",
+        "follow_ups": [
+          "When do these switchers' HR contracts renew?"
+        ]
+      },
+      {
+        "label": "HR contract renews in 2026-Q4 or 2027-Q1",
+        "value": 43,
+        "detail": "48.9% of the segment; median HR tech spend $400,224",
+        "id": "renewals_soon",
+        "themes": [
+          "timing",
+          "accounts",
+          "hr",
+          "budget"
+        ],
+        "score": 8.5,
+        "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+        "evidence": "renewal_quarter in ['2026-Q4', '2027-Q1']",
+        "follow_ups": [
+          "Which of the renewing companies are also showing intent?"
+        ]
+      },
+      {
+        "label": "Hot accounts (surge score 80+)",
+        "value": 23,
+        "detail": "26.1% of the segment is in a strong buying surge",
+        "id": "hot_accounts",
+        "themes": [
+          "accounts",
+          "intent",
+          "timing"
+        ],
+        "score": 7.0,
+        "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+        "evidence": "intent_score >= 80",
+        "follow_ups": [
+          "What are the hot accounts researching, and which HR platform do they run?"
+        ]
+      },
+      {
+        "label": "Median HR tech spend",
+        "value": "$344,167",
+        "detail": "Top quarter spends $539,430+ a year; segment total about $30.3M",
+        "id": "spend_profile",
+        "themes": [
+          "budget",
+          "sizing",
+          "hr"
+        ],
+        "score": 7.0,
+        "why_for_you": "Supports your goal \"Build pipeline with companies replacing their HR platform\": it is about HR technology, your market.",
+        "evidence": "median and 75th percentile of annual_hr_tech_spend_usd",
+        "follow_ups": [
+          "Which companies spend the most on HR tech?"
+        ]
+      },
+      {
+        "label": "Fast growers (20%+ revenue growth)",
+        "value": 19,
+        "detail": "21.6% of the segment is growing fast",
+        "id": "growth_leaders",
+        "themes": [
+          "growth",
+          "accounts",
+          "sizing"
+        ],
+        "score": 5.5,
+        "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+        "evidence": "revenue_growth_pct >= 20",
+        "follow_ups": [
+          "What are the fast growers researching?"
+        ]
+      }
+    ],
+    "sample": [
+      {
+        "size_band": "Mid-market",
+        "hq_country": "France",
+        "intent_topic": "HR Platform Replacement",
+        "hr_platform": "Oracle HCM",
+        "company_name": "Evergreenpath Health 0293"
+      },
+      {
+        "size_band": "Mid-market",
+        "hq_country": "Germany",
+        "intent_topic": "HR Platform Replacement",
+        "hr_platform": "Workday",
+        "company_name": "Clearfield Hospitals 2168"
+      },
+      {
+        "size_band": "Mid-market",
+        "hq_country": "Netherlands",
+        "intent_topic": "HR Platform Replacement",
+        "hr_platform": "ADP",
+        "company_name": "Summitwave Medical 0013"
+      },
+      {
+        "size_band": "Mid-market",
+        "hq_country": "Ireland",
+        "intent_topic": "HR Platform Replacement",
+        "hr_platform": "ADP",
+        "company_name": "Apexpoint Medical 1055"
+      },
+      {
+        "size_band": "Mid-market",
+        "hq_country": "Germany",
+        "intent_topic": "HR Platform Replacement",
+        "hr_platform": "Oracle HCM",
+        "company_name": "Pioneerline Health 2089"
+      }
+    ],
+    "method": "Keyword and filter match over the catalog; insights ranked for the shared role, goals and industry; aggregates over 2400 synthetic companies. No records exported.",
+    "consent_id": "cns-b8c389a0fa4e",
+    "query_id": "q-612085a70aad",
+    "personalised_for": [
+      "goals",
+      "industry",
+      "role"
+    ],
+    "gaps": []
+  },
+  "recommendation": {
+    "schema": "champions.recommendation/v1",
+    "summary": "Buy Intent Signals + Firmographics for about 520 credits/month (80 under your 600-credit budget).",
+    "options": [
+      {
+        "card_id": "intent_signals",
+        "name": "Intent Signals",
+        "score": 87.6,
+        "verdict": "recommended",
+        "reasons": [
+          "Champions: request mentions switching, topic filter (relevance 1.00)",
+          "Average field coverage 61.8%, refreshed daily",
+          "About 480 credits/month (fits your budget)",
+          "Has your must-have field(s): intent_score"
+        ],
+        "est_monthly_credits": 480
+      },
+      {
+        "card_id": "technographics",
+        "name": "Technographics",
+        "score": 85.7,
+        "verdict": "optional",
+        "reasons": [
+          "Champions: request mentions platforms (relevance 0.90)",
+          "Average field coverage 78.9%, refreshed weekly",
+          "About 300 credits/month (fits your budget)",
+          "Has your must-have field(s): hr_platform",
+          "Left out of the bundle to stay within budget"
+        ],
+        "est_monthly_credits": 300
+      },
+      {
+        "card_id": "firmographics",
+        "name": "Firmographics",
+        "score": 84.3,
+        "verdict": "recommended",
+        "reasons": [
+          "Champions: defines the target segment (industry, region, size_band) (relevance 0.95)",
+          "Average field coverage 95.0%, refreshed monthly",
+          "Slower than the weekly refresh you need",
+          "About 40 credits/month (fits your budget)",
+          "Has your must-have field(s): employee_count"
+        ],
+        "est_monthly_credits": 40
+      }
+    ],
+    "bundle": [
+      "intent_signals",
+      "firmographics"
+    ],
+    "bundle_monthly_credits": 520,
+    "within_budget": true
+  },
+  "consent": {
+    "consent_id": "cns-b8c389a0fa4e",
+    "persona": "priya",
+    "purpose": "market_insights",
+    "fields": [
+      "goals",
+      "industry",
+      "region",
+      "role"
+    ],
+    "granted_at": "2026-11-24T00:15:59"
+  },
+  "wire": [
+    {
+      "t": 1795459559.0745614,
+      "direction": "local",
+      "protocol": "Consent",
+      "title": "Consent cns-b8c389a0fa4e covers 'market_insights'",
+      "detail": {
+        "sending": [
+          "goals",
+          "industry",
+          "region",
+          "role"
+        ],
+        "kept_private": [
+          "budget_monthly_credits",
+          "company_name",
+          "compliance",
+          "must_have_fields",
+          "private_notes",
+          "target_segment"
+        ]
+      }
+    },
+    {
+      "t": 1795459559.076969,
+      "direction": "local",
+      "protocol": "Plan",
+      "title": "Skill get_insights",
+      "detail": {
+        "schema": "champions.capability_request/v1",
+        "skill": "get_insights",
+        "need": "Find mid-size healthcare companies in Europe that are switching HR platforms",
+        "filters": {
+          "industries": [
+            "Healthcare"
+          ],
+          "regions": [
+            "EMEA"
+          ],
+          "countries": [],
+          "size_bands": [
+            "Mid-market"
+          ],
+          "intent_topics": [
+            "HR Platform Replacement"
+          ]
+        },
+        "desired_outputs": [
+          "intent_signals",
+          "technographics"
+        ],
+        "source": "live"
+      }
+    },
+    {
+      "t": 1795459559.0820632,
+      "direction": "out",
+      "protocol": "OAuth2",
+      "title": "POST /oauth/token",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "accept": "*/*"
+      },
+      "body": {
+        "grant_type": "client_credentials",
+        "client_id": "personal-agent-demo",
+        "client_secret": "***",
+        "scope": "catalog%3Aread+insights%3Aread+audit%3Aread"
+      }
+    },
+    {
+      "t": 1795459559.1123037,
+      "direction": "in",
+      "protocol": "OAuth2",
+      "title": "200 /oauth/token",
+      "status": 200,
+      "ms": 30.4,
+      "body": {
+        "access_token": "eyJhbGciOiJI...(redacted)",
+        "token_type": "Bearer",
+        "expires_in": 300,
+        "scope": "audit:read catalog:read insights:read"
+      }
+    },
+    {
+      "t": 1795459559.114968,
+      "direction": "out",
+      "protocol": "A2A card",
+      "title": "GET /.well-known/agent-card.json",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "accept": "*/*"
+      },
+      "body": null
+    },
+    {
+      "t": 1795459559.132972,
+      "direction": "in",
+      "protocol": "A2A card",
+      "title": "200 /.well-known/agent-card.json",
+      "status": 200,
+      "ms": 18.0,
+      "body": {
+        "name": "Champions Group Agent",
+        "description": "Company data provider. Knows the Champions data cards and VAF fields, matches them to a buyer's need and returns aggregate insights. Never exports records or personal data over A2A.",
+        "supportedInterfaces": [
+          {
+            "url": "http://127.0.0.1:9100/a2a",
+            "protocolBinding": "JSONRPC",
+            "protocolVersion": "1.0"
+          }
+        ],
+        "provider": {
+          "url": "https://champions.example",
+          "organization": "Champions Group (demo)"
+        },
+        "version": "1.0.0",
+        "capabilities": {
+          "streaming": false,
+          "pushNotifications": false
+        },
+        "securitySchemes": {
+          "bearer": {
+            "httpAuthSecurityScheme": {
+              "description": "OAuth2 client credentials: POST http://127.0.0.1:9100/oauth/token",
+              "scheme": "Bearer",
+              "bearerFormat": "JWT"
+            }
+          }
+        },
+        "securityRequirements": [
+          {
+            "schemes": {
+              "bearer": {
+                "list": [
+                  "catalog:read"
+                ]
+              }
+            }
+          }
+        ],
+        "defaultInputModes": [
+          "application/json"
+        ],
+        "defaultOutputModes": [
+          "application/json"
+        ],
+        "skills": [
+          {
+            "id": "describe_capabilities",
+            "name": "Describe capabilities",
+            "description": "Lists every data card with its VAF fields, coverage and refresh.",
+            "tags": [
+              "catalog"
+            ],
+            "examples": [
+              "What data can Champions provide?"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "find_data_cards",
+            "name": "Find data cards",
+            "description": "Ranks data cards and VAF fields for a described need and segment.",
+            "tags": [
+              "catalog",
+              "matching"
+            ],
+            "examples": [
+              "Mid-size healthcare companies in Europe switching HR platforms"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "get_insights",
+            "name": "Get insights",
+            "description": "Card matches plus aggregate insights and a small sample for a segment (needs insights:read).",
+            "tags": [
+              "insights"
+            ],
+            "examples": [
+              "How many fintechs in the UK are researching payroll?"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "submit_feedback",
+            "name": "Submit feedback",
+            "description": "Rate which insights from an earlier answer were useful (champions.feedback/v1: query_id + insight ratings, no reasons).",
+            "tags": [
+              "feedback",
+              "quality"
+            ],
+            "examples": [
+              "insight hot_accounts was useful"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "t": 1795459559.1387992,
+      "direction": "out",
+      "protocol": "A2A",
+      "title": "POST /a2a · SendMessage",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "a2a-version": "1.0",
+        "accept": "*/*"
+      },
+      "body": {
+        "method": "SendMessage",
+        "params": {
+          "message": {
+            "messageId": "cd4ee11a-ff18-4dcc-ac26-53120efb004f",
+            "role": "ROLE_USER",
+            "parts": [
+              {
+                "data": {
+                  "desired_outputs": [
+                    "intent_signals",
+                    "technographics"
+                  ],
+                  "context": {
+                    "schema": "champions.user_context/v1",
+                    "shared": {
+                      "industry": "HR Software",
+                      "role": "Head of Sales",
+                      "goals": [
+                        "Build pipeline with companies replacing their HR platform"
+                      ],
+                      "region": "EMEA"
+                    },
+                    "purpose": "market_insights",
+                    "consent_id": "cns-b8c389a0fa4e"
+                  },
+                  "skill": "get_insights",
+                  "schema": "champions.capability_request/v1",
+                  "source": "live",
+                  "filters": {
+                    "industries": [
+                      "Healthcare"
+                    ],
+                    "countries": [],
+                    "intent_topics": [
+                      "HR Platform Replacement"
+                    ],
+                    "regions": [
+                      "EMEA"
+                    ],
+                    "size_bands": [
+                      "Mid-market"
+                    ]
+                  },
+                  "need": "Find mid-size healthcare companies in Europe that are switching HR platforms"
+                }
+              }
+            ]
+          },
+          "configuration": {}
+        },
+        "id": "47ef394e-bae6-48f3-bc96-c1d674f1bf67",
+        "jsonrpc": "2.0"
+      }
+    },
+    {
+      "t": 1795459571.1729028,
+      "direction": "in",
+      "protocol": "A2A",
+      "title": "200 /a2a",
+      "status": 200,
+      "ms": 12031.8,
+      "body": {
+        "result": {
+          "task": {
+            "id": "68939c8c-d52a-4c14-a53f-084253748146",
+            "contextId": "249cfd09-91d4-4abb-805e-8853008303c9",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "timestamp": "2026-11-23T18:46:11.156570Z"
+            },
+            "artifacts": [
+              {
+                "artifactId": "c4d64a5a-43a0-4fc8-9ff2-7f7e3f9ed610",
+                "name": "catalog_result",
+                "parts": [
+                  {
+                    "data": {
+                      "personalised_for": [
+                        "goals",
+                        "industry",
+                        "role"
+                      ],
+                      "query_id": "q-612085a70aad",
+                      "matches": [
+                        {
+                          "name": "Intent Signals",
+                          "credits_per_1k_records": 120.0,
+                          "card_id": "intent_signals",
+                          "refresh": "daily",
+                          "matched_fields": [
+                            "intent_topic",
+                            "intent_score",
+                            "surge_start"
+                          ],
+                          "coverage_pct": 61.8,
+                          "contains_personal_data": false,
+                          "why": "Request mentions switching, topic filter",
+                          "relevance": 1.0
+                        },
+                        {
+                          "name": "Firmographics",
+                          "credits_per_1k_records": 40.0,
+                          "card_id": "firmographics",
+                          "refresh": "monthly",
+                          "matched_fields": [
+                            "industry",
+                            "region",
+                            "size_band"
+                          ],
+                          "coverage_pct": 95.0,
+                          "contains_personal_data": false,
+                          "why": "Defines the target segment (industry, region, size_band)",
+                          "relevance": 0.95
+                        },
+                        {
+                          "name": "Technographics",
+                          "credits_per_1k_records": 75.0,
+                          "card_id": "technographics",
+                          "refresh": "weekly",
+                          "matched_fields": [
+                            "hr_platform",
+                            "crm",
+                            "erp",
+                            "cloud_provider"
+                          ],
+                          "coverage_pct": 78.9,
+                          "contains_personal_data": false,
+                          "why": "Request mentions platforms",
+                          "relevance": 0.9
+                        }
+                      ],
+                      "schema": "champions.catalog_result/v1",
+                      "matching_companies": 88.0,
+                      "method": "Keyword and filter match over the catalog; insights ranked for the shared role, goals and industry; aggregates over 2400 synthetic companies. No records exported.",
+                      "gaps": [],
+                      "sample": [
+                        {
+                          "size_band": "Mid-market",
+                          "hq_country": "France",
+                          "intent_topic": "HR Platform Replacement",
+                          "hr_platform": "Oracle HCM",
+                          "company_name": "Evergreenpath Health 0293"
+                        },
+                        {
+                          "size_band": "Mid-market",
+                          "hq_country": "Germany",
+                          "intent_topic": "HR Platform Replacement",
+                          "hr_platform": "Workday",
+                          "company_name": "Clearfield Hospitals 2168"
+                        },
+                        {
+                          "size_band": "Mid-market",
+                          "hq_country": "Netherlands",
+                          "intent_topic": "HR Platform Replacement",
+                          "hr_platform": "ADP",
+                          "company_name": "Summitwave Medical 0013"
+                        },
+                        {
+                          "size_band": "Mid-market",
+                          "hq_country": "Ireland",
+                          "intent_topic": "HR Platform Replacement",
+                          "hr_platform": "ADP",
+                          "company_name": "Apexpoint Medical 1055"
+                        },
+                        {
+                          "size_band": "Mid-market",
+                          "hq_country": "Germany",
+                          "intent_topic": "HR Platform Replacement",
+                          "hr_platform": "Oracle HCM",
+                          "company_name": "Pioneerline Health 2089"
+                        }
+                      ],
+                      "insights": [
+                        {
+                          "value": 16.0,
+                          "score": 23.5,
+                          "why_for_you": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+                          "follow_ups": [
+                            "Which platforms do the companies researching HR Platform Replacement use today?"
+                          ],
+                          "evidence": "intent_topic = 'HR Platform Replacement'",
+                          "id": "topic_surge",
+                          "label": "Researching HR Platform Replacement",
+                          "themes": [
+                            "displacement",
+                            "intent",
+                            "accounts",
+                            "hr"
+                          ],
+                          "detail": "18.2% of the segment, average surge score 73"
+                        },
+                        {
+                          "value": 14.0,
+                          "score": 21.5,
+                          "why_for_you": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+                          "follow_ups": [
+                            "When do these switchers' HR contracts renew?"
+                          ],
+                          "evidence": "hr_platform in ['ADP', 'Oracle HCM', 'UKG', 'Dayforce'] and intent_topic in ['HR Platform Replacement', 'Payroll Outsourcing']",
+                          "id": "legacy_platform_switchers",
+                          "label": "On a legacy HR platform and researching a switch",
+                          "themes": [
+                            "displacement",
+                            "accounts",
+                            "hr",
+                            "intent"
+                          ],
+                          "detail": "Oracle HCM (6), ADP (5), UKG (2), Dayforce (1)"
+                        },
+                        {
+                          "value": 43.0,
+                          "score": 8.5,
+                          "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+                          "follow_ups": [
+                            "Which of the renewing companies are also showing intent?"
+                          ],
+                          "evidence": "renewal_quarter in ['2026-Q4', '2027-Q1']",
+                          "id": "renewals_soon",
+                          "label": "HR contract renews in 2026-Q4 or 2027-Q1",
+                          "themes": [
+                            "timing",
+                            "accounts",
+                            "hr",
+                            "budget"
+                          ],
+                          "detail": "48.9% of the segment; median HR tech spend $400,224"
+                        },
+                        {
+                          "value": 23.0,
+                          "score": 7.0,
+                          "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+                          "follow_ups": [
+                            "What are the hot accounts researching, and which HR platform do they run?"
+                          ],
+                          "evidence": "intent_score >= 80",
+                          "id": "hot_accounts",
+                          "label": "Hot accounts (surge score 80+)",
+                          "themes": [
+                            "accounts",
+                            "intent",
+                            "timing"
+                          ],
+                          "detail": "26.1% of the segment is in a strong buying surge"
+                        },
+                        {
+                          "value": "$344,167",
+                          "score": 7.0,
+                          "why_for_you": "Supports your goal \"Build pipeline with companies replacing their HR platform\": it is about HR technology, your market.",
+                          "follow_ups": [
+                            "Which companies spend the most on HR tech?"
+                          ],
+                          "evidence": "median and 75th percentile of annual_hr_tech_spend_usd",
+                          "id": "spend_profile",
+                          "label": "Median HR tech spend",
+                          "themes": [
+                            "budget",
+                            "sizing",
+                            "hr"
+                          ],
+                          "detail": "Top quarter spends $539,430+ a year; segment total about $30.3M"
+                        },
+                        {
+                          "value": 19.0,
+                          "score": 5.5,
+                          "why_for_you": "As Head of Sales, it points to accounts you can act on.",
+                          "follow_ups": [
+                            "What are the fast growers researching?"
+                          ],
+                          "evidence": "revenue_growth_pct >= 20",
+                          "id": "growth_leaders",
+                          "label": "Fast growers (20%+ revenue growth)",
+                          "themes": [
+                            "growth",
+                            "accounts",
+                            "sizing"
+                          ],
+                          "detail": "21.6% of the segment is growing fast"
+                        }
+                      ],
+                      "consent_id": "cns-b8c389a0fa4e"
+                    }
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "messageId": "cd4ee11a-ff18-4dcc-ac26-53120efb004f",
+                "contextId": "249cfd09-91d4-4abb-805e-8853008303c9",
+                "taskId": "68939c8c-d52a-4c14-a53f-084253748146",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "data": {
+                      "desired_outputs": [
+                        "intent_signals",
+                        "technographics"
+                      ],
+                      "context": {
+                        "schema": "champions.user_context/v1",
+                        "shared": {
+                          "industry": "HR Software",
+                          "role": "Head of Sales",
+                          "goals": [
+                            "Build pipeline with companies replacing their HR platform"
+                          ],
+                          "region": "EMEA"
+                        },
+                        "purpose": "market_insights",
+                        "consent_id": "cns-b8c389a0fa4e"
+                      },
+                      "skill": "get_insights",
+                      "schema": "champions.capability_request/v1",
+                      "source": "live",
+                      "filters": {
+                        "industries": [
+                          "Healthcare"
+                        ],
+                        "countries": [],
+                        "intent_topics": [
+                          "HR Platform Replacement"
+                        ],
+                        "regions": [
+                          "EMEA"
+                        ],
+                        "size_bands": [
+                          "Mid-market"
+                        ]
+                      },
+                      "need": "Find mid-size healthcare companies in Europe that are switching HR platforms"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "id": "47ef394e-bae6-48f3-bc96-c1d674f1bf67",
+        "jsonrpc": "2.0"
+      }
+    },
+    {
+      "t": 1795459571.1914084,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · initialize",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-06-18",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "personal-agent",
+            "version": "1.0"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459571.2363083,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 45.0,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "listChanged": false,
+              "subscribe": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+          "protocolVersion": "2025-06-18",
+          "serverInfo": {
+            "name": "champions-catalog",
+            "version": ""
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459571.2373314,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · tools/call get_vaf_fields",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {
+          "name": "get_vaf_fields",
+          "arguments": {
+            "card_id": "intent_signals"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.2070796,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 969.7,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "text": "{\n  \"card_id\": \"intent_signals\",\n  \"name\": \"Intent Signals\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"intent_topic\",\n      \"type\": \"enum\",\n      \"description\": \"Topic showing elevated research\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": \"HR Platform Replacement\"\n    },\n    {\n      \"name\": \"intent_score\",\n      \"type\": \"integer\",\n      \"description\": \"0-100 surge score vs. baseline\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": 82\n    },\n    {\n      \"name\": \"surge_start\",\n      \"type\": \"date\",\n      \"description\": \"First day of the current surge\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": \"2026-10-21\"\n    },\n    {\n      \"name\": \"hiring_signal\",\n      \"type\": \"string\",\n      \"description\": \"Related job postings detected\",\n      \"coverage_pct\": 55.3,\n      \"refresh\": \"daily\",\n      \"example\": \"HRIS Project Manager\"\n    },\n    {\n      \"name\": \"competitor_research\",\n      \"type\": \"list\",\n      \"description\": \"Vendors being researched\",\n      \"coverage_pct\": 49.8,\n      \"refresh\": \"daily\",\n      \"example\": \"SAP SuccessFactors, Workday\"\n    }\n  ]\n}",
+              "type": "text"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "t": 1795459572.2103763,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · initialize",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-06-18",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "personal-agent",
+            "version": "1.0"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.231213,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 20.9,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "listChanged": false,
+              "subscribe": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+          "protocolVersion": "2025-06-18",
+          "serverInfo": {
+            "name": "champions-catalog",
+            "version": ""
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.2319362,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · tools/call get_vaf_fields",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {
+          "name": "get_vaf_fields",
+          "arguments": {
+            "card_id": "firmographics"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.25567,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 23.8,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "text": "{\n  \"card_id\": \"firmographics\",\n  \"name\": \"Firmographics\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"company_name\",\n      \"type\": \"string\",\n      \"description\": \"Registered trading name\",\n      \"coverage_pct\": 99.8,\n      \"refresh\": \"monthly\",\n      \"example\": \"Northwind Health GmbH\"\n    },\n    {\n      \"name\": \"domain\",\n      \"type\": \"string\",\n      \"description\": \"Primary web domain\",\n      \"coverage_pct\": 97.5,\n      \"refresh\": \"monthly\",\n      \"example\": \"northwind-health.example\"\n    },\n    {\n      \"name\": \"industry\",\n      \"type\": \"enum\",\n      \"description\": \"Champions industry taxonomy (L1)\",\n      \"coverage_pct\": 99.1,\n      \"refresh\": \"monthly\",\n      \"example\": \"Healthcare\"\n    },\n    {\n      \"name\": \"sub_industry\",\n      \"type\": \"enum\",\n      \"description\": \"Industry taxonomy (L2)\",\n      \"coverage_pct\": 91.4,\n      \"refresh\": \"monthly\",\n      \"example\": \"Hospitals & Clinics\"\n    },\n    {\n      \"name\": \"hq_country\",\n      \"type\": \"string\",\n      \"description\": \"Headquarters country\",\n      \"coverage_pct\": 99.6,\n      \"refresh\": \"monthly\",\n      \"example\": \"Germany\"\n    },\n    {\n      \"name\": \"region\",\n      \"type\": \"enum\",\n      \"description\": \"Sales region (EMEA, NA, APAC, LATAM)\",\n      \"coverage_pct\": 99.6,\n      \"refresh\": \"monthly\",\n      \"example\": \"EMEA\"\n    },\n    {\n      \"name\": \"employee_count\",\n      \"type\": \"integer\",\n      \"description\": \"Modelled global headcount\",\n      \"coverage_pct\": 94.2,\n      \"refresh\": \"monthly\",\n      \"example\": 820\n    },\n    {\n      \"name\": \"size_band\",\n      \"type\": \"enum\",\n      \"description\": \"SMB / Mid-market / Enterprise\",\n      \"coverage_pct\": 94.2,\n      \"refresh\": \"monthly\",\n      \"example\": \"Mid-market\"\n    },\n    {\n      \"name\": \"founded_year\",\n      \"type\": \"integer\",\n      \"description\": \"Year founded\",\n      \"coverage_pct\": 88.0,\n      \"refresh\": \"quarterly\",\n      \"example\": 2004\n    },\n    {\n      \"name\": \"ownership\",\n      \"type\": \"enum\",\n      \"description\": \"Public, private, PE-backed, non-profit\",\n      \"coverage_pct\": 86.3,\n      \"refresh\": \"quarterly\",\n      \"example\": \"Private\"\n    }\n  ]\n}",
+              "type": "text"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "t": 1795459572.2599645,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · initialize",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-06-18",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "personal-agent",
+            "version": "1.0"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.2854757,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 25.6,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "listChanged": false,
+              "subscribe": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+          "protocolVersion": "2025-06-18",
+          "serverInfo": {
+            "name": "champions-catalog",
+            "version": ""
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.2864246,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · tools/call get_vaf_fields",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {
+          "name": "get_vaf_fields",
+          "arguments": {
+            "card_id": "technographics"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.3115911,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 25.3,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "text": "{\n  \"card_id\": \"technographics\",\n  \"name\": \"Technographics\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"hr_platform\",\n      \"type\": \"string\",\n      \"description\": \"Primary HRIS / HCM platform\",\n      \"coverage_pct\": 83.5,\n      \"refresh\": \"weekly\",\n      \"example\": \"Workday\"\n    },\n    {\n      \"name\": \"crm\",\n      \"type\": \"string\",\n      \"description\": \"CRM in use\",\n      \"coverage_pct\": 87.9,\n      \"refresh\": \"weekly\",\n      \"example\": \"Salesforce\"\n    },\n    {\n      \"name\": \"erp\",\n      \"type\": \"string\",\n      \"description\": \"ERP in use\",\n      \"coverage_pct\": 79.2,\n      \"refresh\": \"weekly\",\n      \"example\": \"SAP S/4HANA\"\n    },\n    {\n      \"name\": \"cloud_provider\",\n      \"type\": \"string\",\n      \"description\": \"Primary cloud\",\n      \"coverage_pct\": 81.0,\n      \"refresh\": \"weekly\",\n      \"example\": \"Azure\"\n    },\n    {\n      \"name\": \"security_stack\",\n      \"type\": \"list\",\n      \"description\": \"Detected security vendors\",\n      \"coverage_pct\": 64.7,\n      \"refresh\": \"weekly\",\n      \"example\": \"CrowdStrike, Okta\"\n    },\n    {\n      \"name\": \"tech_spend_band\",\n      \"type\": \"enum\",\n      \"description\": \"Modelled annual IT spend band\",\n      \"coverage_pct\": 72.4,\n      \"refresh\": \"monthly\",\n      \"example\": \"$1M-$5M\"\n    },\n    {\n      \"name\": \"install_first_seen\",\n      \"type\": \"date\",\n      \"description\": \"When each product was first detected\",\n      \"coverage_pct\": 83.5,\n      \"refresh\": \"weekly\",\n      \"example\": \"2021-03-14\"\n    }\n  ]\n}",
+              "type": "text"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "t": 1795459572.3139887,
+      "direction": "local",
+      "protocol": "Evaluate",
+      "title": "Checked must-have fields against VAF definitions (private)",
+      "detail": {
+        "must_have_fields": "(private, not sent)",
+        "found_in": {
+          "intent_signals": [
+            "intent_score"
+          ],
+          "firmographics": [
+            "employee_count"
+          ],
+          "technographics": [
+            "hr_platform"
+          ]
+        }
+      }
+    },
+    {
+      "t": 1795459572.3163807,
+      "direction": "local",
+      "protocol": "Judge",
+      "title": "4 of 6 insights are useful to you (reasons stay private)",
+      "detail": {
+        "ratings": {
+          "topic_surge": true,
+          "legacy_platform_switchers": true,
+          "renewals_soon": false,
+          "hot_accounts": true,
+          "spend_profile": false,
+          "growth_leaders": true
+        },
+        "reasons": "(private, not sent)"
+      }
+    },
+    {
+      "t": 1795459572.3182178,
+      "direction": "out",
+      "protocol": "A2A card",
+      "title": "GET /.well-known/agent-card.json",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "accept": "*/*"
+      },
+      "body": null
+    },
+    {
+      "t": 1795459572.3419616,
+      "direction": "in",
+      "protocol": "A2A card",
+      "title": "200 /.well-known/agent-card.json",
+      "status": 200,
+      "ms": 23.8,
+      "body": {
+        "name": "Champions Group Agent",
+        "description": "Company data provider. Knows the Champions data cards and VAF fields, matches them to a buyer's need and returns aggregate insights. Never exports records or personal data over A2A.",
+        "supportedInterfaces": [
+          {
+            "url": "http://127.0.0.1:9100/a2a",
+            "protocolBinding": "JSONRPC",
+            "protocolVersion": "1.0"
+          }
+        ],
+        "provider": {
+          "url": "https://champions.example",
+          "organization": "Champions Group (demo)"
+        },
+        "version": "1.0.0",
+        "capabilities": {
+          "streaming": false,
+          "pushNotifications": false
+        },
+        "securitySchemes": {
+          "bearer": {
+            "httpAuthSecurityScheme": {
+              "description": "OAuth2 client credentials: POST http://127.0.0.1:9100/oauth/token",
+              "scheme": "Bearer",
+              "bearerFormat": "JWT"
+            }
+          }
+        },
+        "securityRequirements": [
+          {
+            "schemes": {
+              "bearer": {
+                "list": [
+                  "catalog:read"
+                ]
+              }
+            }
+          }
+        ],
+        "defaultInputModes": [
+          "application/json"
+        ],
+        "defaultOutputModes": [
+          "application/json"
+        ],
+        "skills": [
+          {
+            "id": "describe_capabilities",
+            "name": "Describe capabilities",
+            "description": "Lists every data card with its VAF fields, coverage and refresh.",
+            "tags": [
+              "catalog"
+            ],
+            "examples": [
+              "What data can Champions provide?"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "find_data_cards",
+            "name": "Find data cards",
+            "description": "Ranks data cards and VAF fields for a described need and segment.",
+            "tags": [
+              "catalog",
+              "matching"
+            ],
+            "examples": [
+              "Mid-size healthcare companies in Europe switching HR platforms"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "get_insights",
+            "name": "Get insights",
+            "description": "Card matches plus aggregate insights and a small sample for a segment (needs insights:read).",
+            "tags": [
+              "insights"
+            ],
+            "examples": [
+              "How many fintechs in the UK are researching payroll?"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "submit_feedback",
+            "name": "Submit feedback",
+            "description": "Rate which insights from an earlier answer were useful (champions.feedback/v1: query_id + insight ratings, no reasons).",
+            "tags": [
+              "feedback",
+              "quality"
+            ],
+            "examples": [
+              "insight hot_accounts was useful"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "t": 1795459572.3467615,
+      "direction": "out",
+      "protocol": "A2A",
+      "title": "POST /a2a · SendMessage",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "a2a-version": "1.0",
+        "accept": "*/*"
+      },
+      "body": {
+        "method": "SendMessage",
+        "params": {
+          "message": {
+            "messageId": "0783a7f8-6a01-4015-ab36-9efc17cc8714",
+            "role": "ROLE_USER",
+            "parts": [
+              {
+                "data": {
+                  "ratings": [
+                    {
+                      "insight_id": "topic_surge",
+                      "useful": true
+                    },
+                    {
+                      "insight_id": "legacy_platform_switchers",
+                      "useful": true
+                    },
+                    {
+                      "insight_id": "renewals_soon",
+                      "useful": false
+                    },
+                    {
+                      "insight_id": "hot_accounts",
+                      "useful": true
+                    },
+                    {
+                      "insight_id": "spend_profile",
+                      "useful": false
+                    },
+                    {
+                      "insight_id": "growth_leaders",
+                      "useful": true
+                    }
+                  ],
+                  "query_id": "q-612085a70aad",
+                  "schema": "champions.feedback/v1"
+                }
+              }
+            ]
+          },
+          "configuration": {}
+        },
+        "id": "552ac42a-9ff8-4205-b697-dc071c6acc9e",
+        "jsonrpc": "2.0"
+      }
+    },
+    {
+      "t": 1795459572.3931975,
+      "direction": "in",
+      "protocol": "A2A",
+      "title": "200 /a2a",
+      "status": 200,
+      "ms": 46.6,
+      "body": {
+        "result": {
+          "task": {
+            "id": "8f357cb0-b5d4-476c-b2f6-a518921b9e86",
+            "contextId": "849280f8-1a33-432d-bfdb-78c3093be27e",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "timestamp": "2026-11-23T18:46:12.380258Z"
+            },
+            "artifacts": [
+              {
+                "artifactId": "99ee97a3-1f3e-4c39-82b1-15dd0f94935c",
+                "name": "feedback_ack",
+                "parts": [
+                  {
+                    "data": {
+                      "query_id": "q-612085a70aad",
+                      "recorded": 6.0,
+                      "schema": "champions.feedback_ack/v1"
+                    }
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "messageId": "0783a7f8-6a01-4015-ab36-9efc17cc8714",
+                "contextId": "849280f8-1a33-432d-bfdb-78c3093be27e",
+                "taskId": "8f357cb0-b5d4-476c-b2f6-a518921b9e86",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "data": {
+                      "ratings": [
+                        {
+                          "insight_id": "topic_surge",
+                          "useful": true
+                        },
+                        {
+                          "insight_id": "legacy_platform_switchers",
+                          "useful": true
+                        },
+                        {
+                          "insight_id": "renewals_soon",
+                          "useful": false
+                        },
+                        {
+                          "insight_id": "hot_accounts",
+                          "useful": true
+                        },
+                        {
+                          "insight_id": "spend_profile",
+                          "useful": false
+                        },
+                        {
+                          "insight_id": "growth_leaders",
+                          "useful": true
+                        }
+                      ],
+                      "query_id": "q-612085a70aad",
+                      "schema": "champions.feedback/v1"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "id": "552ac42a-9ff8-4205-b697-dc071c6acc9e",
+        "jsonrpc": "2.0"
+      }
+    },
+    {
+      "t": 1795459572.3968556,
+      "direction": "local",
+      "protocol": "Recommend",
+      "title": "Buy Intent Signals + Firmographics for about 520 credits/month (80 under your 600-credit budget).",
+      "detail": {
+        "bundle": [
+          "intent_signals",
+          "firmographics"
+        ],
+        "credits": 520
+      }
+    }
+  ]
+}

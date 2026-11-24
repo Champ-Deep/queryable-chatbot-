@@ -1,0 +1,918 @@
+{
+  "conversations": 41,
+  "answered_pct": 100.0,
+  "insights_shown": 240,
+  "useful_pct": 51.2,
+  "seconds": 17.5,
+  "by_persona": [
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "questions": 5,
+      "insights": 30,
+      "useful": 22,
+      "useful_pct": 73.3
+    },
+    {
+      "persona": "noor",
+      "role": "Product Marketing Manager",
+      "questions": 4,
+      "insights": 24,
+      "useful": 13,
+      "useful_pct": 54.2
+    },
+    {
+      "persona": "chen",
+      "role": "Channel Sales Director",
+      "questions": 4,
+      "insights": 24,
+      "useful": 13,
+      "useful_pct": 54.2
+    },
+    {
+      "persona": "marcus",
+      "role": "Marketing Operations Manager",
+      "questions": 4,
+      "insights": 24,
+      "useful": 12,
+      "useful_pct": 50.0
+    },
+    {
+      "persona": "aiko",
+      "role": "Strategy Analyst",
+      "questions": 4,
+      "insights": 18,
+      "useful": 9,
+      "useful_pct": 50.0
+    },
+    {
+      "persona": "sofia",
+      "role": "Investment Partner",
+      "questions": 4,
+      "insights": 24,
+      "useful": 12,
+      "useful_pct": 50.0
+    },
+    {
+      "persona": "omar",
+      "role": "Sales Director",
+      "questions": 4,
+      "insights": 24,
+      "useful": 12,
+      "useful_pct": 50.0
+    },
+    {
+      "persona": "elena",
+      "role": "Customer Success Director",
+      "questions": 4,
+      "insights": 24,
+      "useful": 11,
+      "useful_pct": 45.8
+    },
+    {
+      "persona": "liam",
+      "role": "Talent Acquisition Lead",
+      "questions": 4,
+      "insights": 24,
+      "useful": 10,
+      "useful_pct": 41.7
+    },
+    {
+      "persona": "dev",
+      "role": "Revenue Operations Lead",
+      "questions": 4,
+      "insights": 24,
+      "useful": 9,
+      "useful_pct": 37.5
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "topic_not_tracked",
+      "count": 3,
+      "examples": [
+        "Which companies are hiring HR systems people?",
+        "Which companies have ESG risks?",
+        "Where are logistics companies hiring the most?"
+      ]
+    },
+    {
+      "gap": "contacts_not_available",
+      "count": 2,
+      "examples": [
+        "Get me the emails of HR decision makers at those healthcare companies",
+        "Give me recruiter contacts at logistics firms in Europe"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "Which healthcare companies in Germany have an HR contract renewing soon?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 12,
+      "insights": 6,
+      "useful": 5,
+      "top_useful": [
+        "HR contract renews in 2026-Q4 or 2027-Q1: 4",
+        "On a legacy HR platform and researching a switch: 3"
+      ],
+      "why": "As Head of Sales, it tells you when to reach out; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "How much do mid-size European hospitals spend on HR tech?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 88,
+      "insights": 6,
+      "useful": 5,
+      "top_useful": [
+        "Median HR tech spend: $344,167",
+        "On a legacy HR platform and researching a switch: 14"
+      ],
+      "why": "Answers what you asked: it shows what these companies can spend.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "aiko",
+      "role": "Strategy Analyst",
+      "question": "Size the APAC manufacturing market for ERP upgrades, with revenue and tech stack",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 51,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching ERP Upgrade: 6",
+        "ERP in use: Infor 27.5%"
+      ],
+      "why": "Answers what you asked: it covers the ERP stack you care about.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "chen",
+      "role": "Channel Sales Director",
+      "question": "Which small and mid-size companies in APAC are researching payroll outsourcing?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 302,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching Payroll Outsourcing: 27",
+        "On a legacy HR platform and researching a switch: 23"
+      ],
+      "why": "As Channel Sales Director, it points to accounts you can act on.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "elena",
+      "role": "Customer Success Director",
+      "question": "Which manufacturing companies in Europe have a contract renewal coming up?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 155,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "HR contract renews in 2026-Q4 or 2027-Q1: 61",
+        "Hot accounts (surge score 80+): 45"
+      ],
+      "why": "As Customer Success Director, it tells you when to reach out; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "marcus",
+      "role": "Marketing Operations Manager",
+      "question": "Which fintech and tech companies in the UK are researching payroll? I need their tech stack",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 31,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching Payroll Outsourcing: 3",
+        "On a legacy HR platform and researching a switch: 2"
+      ],
+      "why": "As Marketing Operations Manager, these companies are actively researching right now.",
+      "gaps": [],
+      "error": ""
+    }
+  ],
+  "rows": [
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "Find mid-size healthcare companies in Europe that are switching HR platforms",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 88,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching HR Platform Replacement: 16",
+        "On a legacy HR platform and researching a switch: 14"
+      ],
+      "why": "As Head of Sales, these look like switchers away from a competing platform; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "Which healthcare companies in Germany have an HR contract renewing soon?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 12,
+      "insights": 6,
+      "useful": 5,
+      "top_useful": [
+        "HR contract renews in 2026-Q4 or 2027-Q1: 4",
+        "On a legacy HR platform and researching a switch: 3"
+      ],
+      "why": "As Head of Sales, it tells you when to reach out; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "How much do mid-size European hospitals spend on HR tech?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 88,
+      "insights": 6,
+      "useful": 5,
+      "top_useful": [
+        "Median HR tech spend: $344,167",
+        "On a legacy HR platform and researching a switch: 14"
+      ],
+      "why": "Answers what you asked: it shows what these companies can spend.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "Get me the emails of HR decision makers at those healthcare companies",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 88,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "On a legacy HR platform and researching a switch: 14",
+        "HR contract renews in 2026-Q4 or 2027-Q1: 43"
+      ],
+      "why": "As Head of Sales, it points to accounts you can act on.",
+      "gaps": [
+        "contacts_not_available"
+      ],
+      "error": ""
+    },
+    {
+      "persona": "priya",
+      "role": "Head of Sales",
+      "question": "Which companies are hiring HR systems people?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 88,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "On a legacy HR platform and researching a switch: 14",
+        "HR contract renews in 2026-Q4 or 2027-Q1: 43"
+      ],
+      "why": "As Head of Sales, it points to accounts you can act on.",
+      "gaps": [
+        "topic_not_tracked"
+      ],
+      "error": ""
+    },
+    {
+      "persona": "marcus",
+      "role": "Marketing Operations Manager",
+      "question": "Which fintech and tech companies in the UK are researching payroll? I need their tech stack",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 31,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching Payroll Outsourcing: 3",
+        "On a legacy HR platform and researching a switch: 2"
+      ],
+      "why": "As Marketing Operations Manager, these companies are actively researching right now.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "marcus",
+      "role": "Marketing Operations Manager",
+      "question": "What CRM do UK financial services SMBs use?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 12,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Researching CRM Migration: 2",
+        "CRM in use: HubSpot 50.0%"
+      ],
+      "why": "As Marketing Operations Manager, it covers the CRM stack you care about; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "marcus",
+      "role": "Marketing Operations Manager",
+      "question": "Which UK fintechs are growing fastest?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 12,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 4",
+        "Funding stage mix: Public 33.3%"
+      ],
+      "why": "As Marketing Operations Manager, it shows who has momentum and budget; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "marcus",
+      "role": "Marketing Operations Manager",
+      "question": "Find accounts for our ABM campaign in the UK",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 31,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "CRM in use: Salesforce 32.3%",
+        "What this segment is researching: Cybersecurity"
+      ],
+      "why": "As Marketing Operations Manager, it tells you where to focus a campaign.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "aiko",
+      "role": "Strategy Analyst",
+      "question": "Size the APAC manufacturing market for ERP upgrades, with revenue and tech stack",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 51,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching ERP Upgrade: 6",
+        "ERP in use: Infor 27.5%"
+      ],
+      "why": "Answers what you asked: it covers the ERP stack you care about.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "aiko",
+      "role": "Strategy Analyst",
+      "question": "How many manufacturers in Japan are researching an ERP upgrade?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 8,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "ERP in use: SAP S/4HANA 37.5%",
+        "Fast growers (20%+ revenue growth): 3"
+      ],
+      "why": "As Strategy Analyst, it sizes the opportunity.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "aiko",
+      "role": "Strategy Analyst",
+      "question": "What ERP do APAC manufacturers run today?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 51,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching ERP Upgrade: 6",
+        "ERP in use: Infor 27.5%"
+      ],
+      "why": "Answers what you asked: it covers the ERP stack you care about.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "aiko",
+      "role": "Strategy Analyst",
+      "question": "What data can Champions provide?",
+      "status": "ok",
+      "skill": "describe_capabilities",
+      "matching": 2400,
+      "insights": 0,
+      "useful": 0,
+      "top_useful": [],
+      "why": "",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "dev",
+      "role": "Revenue Operations Lead",
+      "question": "Which CRM do technology companies in North America use?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 115,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Researching CRM Migration: 8",
+        "CRM in use: Zoho 34.8%"
+      ],
+      "why": "As Revenue Operations Lead, it covers the CRM stack you care about; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "dev",
+      "role": "Revenue Operations Lead",
+      "question": "Find mid-market tech companies in North America researching a CRM migration",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 78,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching CRM Migration: 5",
+        "On a legacy HR platform and researching a switch: 10"
+      ],
+      "why": "As Revenue Operations Lead, these look like switchers away from a competing platform; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "dev",
+      "role": "Revenue Operations Lead",
+      "question": "How many enterprise software companies in the US use HubSpot?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 16,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "CRM in use: Zoho 43.8%",
+        "Fast growers (20%+ revenue growth): 2"
+      ],
+      "why": "Supports your goal \"Fix territory planning with accurate CRM and tech data\": it covers the CRM stack you care about.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "dev",
+      "role": "Revenue Operations Lead",
+      "question": "What's hot right now?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 115,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "CRM in use: Zoho 34.8%",
+        "Fast growers (20%+ revenue growth): 18"
+      ],
+      "why": "Supports your goal \"Fix territory planning with accurate CRM and tech data\": it covers the CRM stack you care about.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "sofia",
+      "role": "Investment Partner",
+      "question": "Which mid-market companies in Europe are growing fastest?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 734,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 180",
+        "Funding stage mix: Public 16.5%"
+      ],
+      "why": "As Investment Partner, it shows who has momentum and budget; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "sofia",
+      "role": "Investment Partner",
+      "question": "Show funding stages of mid-size healthcare companies in Europe",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 88,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 19",
+        "Funding stage mix: Seed 21.6%"
+      ],
+      "why": "As Investment Partner, it shows who has momentum and budget; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "sofia",
+      "role": "Investment Partner",
+      "question": "Fast-growing logistics companies in the Netherlands with revenue data",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 8,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 2",
+        "Funding stage mix: Bootstrapped 50.0%"
+      ],
+      "why": "As Investment Partner, it shows who has momentum and budget; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "sofia",
+      "role": "Investment Partner",
+      "question": "Which companies have ESG risks?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 734,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 180",
+        "Funding stage mix: Public 16.5%"
+      ],
+      "why": "As Investment Partner, it shows who has momentum and budget.",
+      "gaps": [
+        "topic_not_tracked"
+      ],
+      "error": ""
+    },
+    {
+      "persona": "liam",
+      "role": "Talent Acquisition Lead",
+      "question": "Which logistics companies in Ireland are growing?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 16,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Funding stage mix: Public 25.0%",
+        "Fast growers (20%+ revenue growth): 3"
+      ],
+      "why": "As Talent Acquisition Lead, it shows who has momentum and budget; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "liam",
+      "role": "Talent Acquisition Lead",
+      "question": "How many logistics companies are there in the UK and Ireland?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 41,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 5",
+        "Country with the most buying intent: Ireland"
+      ],
+      "why": "As Talent Acquisition Lead, it shows who has momentum and budget.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "liam",
+      "role": "Talent Acquisition Lead",
+      "question": "Where are logistics companies hiring the most?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 133,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 31",
+        "Companies in this segment: 133"
+      ],
+      "why": "As Talent Acquisition Lead, it shows who has momentum and budget.",
+      "gaps": [
+        "topic_not_tracked"
+      ],
+      "error": ""
+    },
+    {
+      "persona": "liam",
+      "role": "Talent Acquisition Lead",
+      "question": "Give me recruiter contacts at logistics firms in Europe",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 133,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Fast growers (20%+ revenue growth): 31",
+        "Companies in this segment: 133"
+      ],
+      "why": "As Talent Acquisition Lead, it shows who has momentum and budget.",
+      "gaps": [
+        "contacts_not_available"
+      ],
+      "error": ""
+    },
+    {
+      "persona": "noor",
+      "role": "Product Marketing Manager",
+      "question": "Which financial services companies in North America are researching cybersecurity?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 101,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Country with the most buying intent: United States",
+        "Researching Cybersecurity: 6"
+      ],
+      "why": "As Product Marketing Manager, it tells you where to focus a campaign.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "noor",
+      "role": "Product Marketing Manager",
+      "question": "Which cloud do North American banks and hospitals use?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 208,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Country with the most buying intent: United States",
+        "What this segment is researching: Employee Experience"
+      ],
+      "why": "As Product Marketing Manager, it tells you where to focus a campaign.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "noor",
+      "role": "Product Marketing Manager",
+      "question": "Find healthcare companies in Canada showing security intent",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 107,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Country with the most buying intent: United States",
+        "Researching Cybersecurity: 9"
+      ],
+      "why": "As Product Marketing Manager, it tells you where to focus a campaign.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "noor",
+      "role": "Product Marketing Manager",
+      "question": "Build an ABM list of in-market cybersecurity buyers in the US",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 208,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Country with the most buying intent: United States",
+        "Researching Cybersecurity: 15"
+      ],
+      "why": "As Product Marketing Manager, it tells you where to focus a campaign.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "chen",
+      "role": "Channel Sales Director",
+      "question": "Which small and mid-size companies in APAC are researching payroll outsourcing?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 302,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching Payroll Outsourcing: 27",
+        "On a legacy HR platform and researching a switch: 23"
+      ],
+      "why": "As Channel Sales Director, it points to accounts you can act on.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "chen",
+      "role": "Channel Sales Director",
+      "question": "What HR platforms do mid-market companies in India use?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 53,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching HR Platform Replacement: 6",
+        "On a legacy HR platform and researching a switch: 6"
+      ],
+      "why": "As Channel Sales Director, it points to accounts you can act on.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "chen",
+      "role": "Channel Sales Director",
+      "question": "Payroll outsourcing intent in Australia and Singapore",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 162,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching Payroll Outsourcing: 14",
+        "On a legacy HR platform and researching a switch: 11"
+      ],
+      "why": "As Channel Sales Director, it points to accounts you can act on.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "chen",
+      "role": "Channel Sales Director",
+      "question": "Which companies in APAC are switching HR platforms?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 302,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching HR Platform Replacement: 22",
+        "On a legacy HR platform and researching a switch: 23"
+      ],
+      "why": "As Channel Sales Director, these look like switchers away from a competing platform; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "elena",
+      "role": "Customer Success Director",
+      "question": "Which manufacturing companies in Europe have a contract renewal coming up?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 155,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "HR contract renews in 2026-Q4 or 2027-Q1: 61",
+        "Hot accounts (surge score 80+): 45"
+      ],
+      "why": "As Customer Success Director, it tells you when to reach out; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "elena",
+      "role": "Customer Success Director",
+      "question": "What ERP do German manufacturers use?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 17,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching ERP Upgrade: 2",
+        "ERP in use: Microsoft Dynamics 365 35.3%"
+      ],
+      "why": "As Customer Success Director, it covers the ERP stack you care about; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "elena",
+      "role": "Customer Success Director",
+      "question": "How many European manufacturers are researching an ERP upgrade?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 155,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Researching ERP Upgrade: 19",
+        "ERP in use: Microsoft Dynamics 365 29.7%"
+      ],
+      "why": "As Customer Success Director, it covers the ERP stack you care about; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "elena",
+      "role": "Customer Success Director",
+      "question": "Find enterprise manufacturers in France with revenue growth",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 3,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Funding stage mix: Bootstrapped 33.3%",
+        "ERP in use: Infor 33.3%"
+      ],
+      "why": "Answers what you asked: it shows who has momentum and budget.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "omar",
+      "role": "Sales Director",
+      "question": "Find retailers in North America moving to the cloud",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 110,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching Cloud Migration: 14",
+        "Primary cloud: Azure 35.5%"
+      ],
+      "why": "As Sales Director, it covers the cloud stack you care about; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "omar",
+      "role": "Sales Director",
+      "question": "Which cloud do US retailers use today?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 110,
+      "insights": 6,
+      "useful": 2,
+      "top_useful": [
+        "Primary cloud: Azure 35.5%",
+        "Hot accounts (surge score 80+): 27"
+      ],
+      "why": "Supports your goal \"Build pipeline with retailers moving to the cloud\": it covers the cloud stack you care about.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "omar",
+      "role": "Sales Director",
+      "question": "How many e-commerce companies in the US are researching cloud migration?",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 110,
+      "insights": 6,
+      "useful": 4,
+      "top_useful": [
+        "Researching Cloud Migration: 14",
+        "On a legacy HR platform and researching a switch: 15"
+      ],
+      "why": "As Sales Director, these look like switchers away from a competing platform; it answers what you asked.",
+      "gaps": [],
+      "error": ""
+    },
+    {
+      "persona": "omar",
+      "role": "Sales Director",
+      "question": "Retail companies in Latin America researching analytics",
+      "status": "ok",
+      "skill": "get_insights",
+      "matching": 12,
+      "insights": 6,
+      "useful": 3,
+      "top_useful": [
+        "Researching Data Analytics: 1",
+        "Hot accounts (surge score 80+): 2"
+      ],
+      "why": "As Sales Director, it points to accounts you can act on.",
+      "gaps": [],
+      "error": ""
+    }
+  ]
+}

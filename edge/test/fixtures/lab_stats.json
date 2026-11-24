@@ -1,0 +1,249 @@
+{
+  "total": 167,
+  "answered_pct": 100.0,
+  "useful_pct": 51.5,
+  "rated": 972,
+  "avg_latency_ms": 173.9,
+  "by_intent": [
+    {
+      "intent": "tech_stack",
+      "queries": 36,
+      "useful_pct": 46.3
+    },
+    {
+      "intent": "growth_signals",
+      "queries": 28,
+      "useful_pct": 52.4
+    },
+    {
+      "intent": "market_sizing",
+      "queries": 25,
+      "useful_pct": 54.0
+    },
+    {
+      "intent": "tech_displacement",
+      "queries": 21,
+      "useful_pct": 57.1
+    },
+    {
+      "intent": "intent_research",
+      "queries": 16,
+      "useful_pct": 50.0
+    },
+    {
+      "intent": "account_discovery",
+      "queries": 12,
+      "useful_pct": 50.0
+    },
+    {
+      "intent": "contacts",
+      "queries": 8,
+      "useful_pct": 50.0
+    },
+    {
+      "intent": "other",
+      "queries": 8,
+      "useful_pct": 33.3
+    },
+    {
+      "intent": "timing_renewals",
+      "queries": 8,
+      "useful_pct": 75.0
+    },
+    {
+      "intent": "catalog",
+      "queries": 5,
+      "useful_pct": 0.0
+    }
+  ],
+  "by_role": [
+    {
+      "role": "Head of Sales",
+      "queries": 22,
+      "useful_pct": 73.5
+    },
+    {
+      "role": "Channel Sales Director",
+      "queries": 16,
+      "useful_pct": 54.2
+    },
+    {
+      "role": "Customer Success Director",
+      "queries": 16,
+      "useful_pct": 45.8
+    },
+    {
+      "role": "Investment Partner",
+      "queries": 16,
+      "useful_pct": 50.0
+    },
+    {
+      "role": "Marketing Operations Manager",
+      "queries": 16,
+      "useful_pct": 50.0
+    },
+    {
+      "role": "Product Marketing Manager",
+      "queries": 16,
+      "useful_pct": 54.2
+    },
+    {
+      "role": "Revenue Operations Lead",
+      "queries": 16,
+      "useful_pct": 37.5
+    },
+    {
+      "role": "Sales Director",
+      "queries": 16,
+      "useful_pct": 50.0
+    },
+    {
+      "role": "Strategy Analyst",
+      "queries": 16,
+      "useful_pct": 50.0
+    },
+    {
+      "role": "Talent Acquisition Lead",
+      "queries": 16,
+      "useful_pct": 41.7
+    },
+    {
+      "role": "(not shared)",
+      "queries": 1,
+      "useful_pct": 0.0
+    }
+  ],
+  "insights": [
+    {
+      "insight": "top_topics",
+      "shown": 12,
+      "rated": 12,
+      "useful": 12,
+      "useful_pct": 100.0
+    },
+    {
+      "insight": "topic_surge",
+      "shown": 81,
+      "rated": 81,
+      "useful": 77,
+      "useful_pct": 95.1
+    },
+    {
+      "insight": "growth_leaders",
+      "shown": 110,
+      "rated": 110,
+      "useful": 86,
+      "useful_pct": 78.2
+    },
+    {
+      "insight": "funding_mix",
+      "shown": 40,
+      "rated": 40,
+      "useful": 28,
+      "useful_pct": 70.0
+    },
+    {
+      "insight": "legacy_platform_switchers",
+      "shown": 90,
+      "rated": 90,
+      "useful": 50,
+      "useful_pct": 55.6
+    },
+    {
+      "insight": "intent_share",
+      "shown": 65,
+      "rated": 65,
+      "useful": 33,
+      "useful_pct": 50.8
+    },
+    {
+      "insight": "crm_mix",
+      "shown": 64,
+      "rated": 64,
+      "useful": 32,
+      "useful_pct": 50.0
+    },
+    {
+      "insight": "hot_accounts",
+      "shown": 118,
+      "rated": 118,
+      "useful": 58,
+      "useful_pct": 49.2
+    },
+    {
+      "insight": "spend_profile",
+      "shown": 58,
+      "rated": 58,
+      "useful": 24,
+      "useful_pct": 41.4
+    },
+    {
+      "insight": "erp_mix",
+      "shown": 68,
+      "rated": 68,
+      "useful": 28,
+      "useful_pct": 41.2
+    },
+    {
+      "insight": "country_hotspot",
+      "shown": 56,
+      "rated": 56,
+      "useful": 20,
+      "useful_pct": 35.7
+    },
+    {
+      "insight": "cloud_mix",
+      "shown": 60,
+      "rated": 60,
+      "useful": 20,
+      "useful_pct": 33.3
+    },
+    {
+      "insight": "segment_size",
+      "shown": 52,
+      "rated": 52,
+      "useful": 16,
+      "useful_pct": 30.8
+    },
+    {
+      "insight": "renewals_soon",
+      "shown": 98,
+      "rated": 98,
+      "useful": 17,
+      "useful_pct": 17.3
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "topic_not_tracked",
+      "count": 12,
+      "examples": [
+        "Where are logistics companies hiring the most?",
+        "Which companies have ESG risks?",
+        "Which companies are hiring HR systems people?"
+      ]
+    },
+    {
+      "gap": "contacts_not_available",
+      "count": 8,
+      "examples": [
+        "Give me recruiter contacts at logistics firms in Europe",
+        "Get me the emails of HR decision makers at those healthcare companies"
+      ]
+    },
+    {
+      "gap": "segment_not_understood",
+      "count": 1,
+      "examples": [
+        "wt is the company size"
+      ]
+    }
+  ],
+  "by_source": {
+    "simulator": 164,
+    "live": 3
+  },
+  "by_channel": {
+    "a2a": 167
+  }
+}

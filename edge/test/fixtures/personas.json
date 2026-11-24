@@ -1,0 +1,52 @@
+[
+  {
+    "id": "priya",
+    "display": "Priya, Head of Sales at an HR-software vendor (Berlin)",
+    "role": "Head of Sales"
+  },
+  {
+    "id": "marcus",
+    "display": "Marcus, Marketing Ops at a UK fintech (London)",
+    "role": "Marketing Operations Manager"
+  },
+  {
+    "id": "aiko",
+    "display": "Aiko, Strategy Analyst at a manufacturer (Tokyo)",
+    "role": "Strategy Analyst"
+  },
+  {
+    "id": "dev",
+    "display": "Dev, RevOps Lead at a US SaaS company (Austin)",
+    "role": "Revenue Operations Lead"
+  },
+  {
+    "id": "sofia",
+    "display": "Sofia, Partner at a growth-equity fund (Amsterdam)",
+    "role": "Investment Partner"
+  },
+  {
+    "id": "liam",
+    "display": "Liam, Talent Acquisition Lead at a logistics group (Dublin)",
+    "role": "Talent Acquisition Lead"
+  },
+  {
+    "id": "noor",
+    "display": "Noor, Product Marketing at a cybersecurity vendor (Toronto)",
+    "role": "Product Marketing Manager"
+  },
+  {
+    "id": "chen",
+    "display": "Chen, Channel Sales Director at a payroll provider (Singapore)",
+    "role": "Channel Sales Director"
+  },
+  {
+    "id": "elena",
+    "display": "Elena, Customer Success Director at an ERP vendor (Munich)",
+    "role": "Customer Success Director"
+  },
+  {
+    "id": "omar",
+    "display": "Omar, Sales Director at a cloud consultancy (New York)",
+    "role": "Sales Director"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "status": "ok",
+  "agent": "personal",
+  "champions": {
+    "status": "ok",
+    "agent": "champions",
+    "cards": 6
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "tools": [
+      {
+        "description": "List Champions data cards with description, refresh, price and field count.",
+        "inputSchema": {
+          "properties": {},
+          "type": "object",
+          "title": "list_data_cardsArguments"
+        },
+        "name": "list_data_cards",
+        "outputSchema": {
+          "properties": {
+            "result": {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "title": "Result",
+              "type": "array"
+            }
+          },
+          "required": [
+            "result"
+          ],
+          "type": "object",
+          "title": "list_data_cardsOutput"
+        }
+      },
+      {
+        "description": "VAF field definitions (type, coverage %, refresh, example) for one data card.",
+        "inputSchema": {
+          "properties": {
+            "card_id": {
+              "title": "Card Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "card_id"
+          ],
+          "type": "object",
+          "title": "get_vaf_fieldsArguments"
+        },
+        "name": "get_vaf_fields"
+      },
+      {
+        "description": "Rank data cards and VAF fields for a described need and segment.",
+        "inputSchema": {
+          "properties": {
+            "need": {
+              "title": "Need",
+              "type": "string"
+            },
+            "industries": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Industries"
+            },
+            "regions": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Regions"
+            },
+            "countries": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Countries"
+            },
+            "size_bands": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Size Bands"
+            },
+            "intent_topics": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Intent Topics"
+            }
+          },
+          "required": [
+            "need"
+          ],
+          "type": "object",
+          "title": "find_data_cardsArguments"
+        },
+        "name": "find_data_cards"
+      },
+      {
+        "description": "Aggregate insights for a segment, ranked for the person (role, goals, industry).\nNeeds the insights:read scope.",
+        "inputSchema": {
+          "properties": {
+            "need": {
+              "default": "",
+              "title": "Need",
+              "type": "string"
+            },
+            "industries": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Industries"
+            },
+            "regions": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Regions"
+            },
+            "countries": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Countries"
+            },
+            "size_bands": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Size Bands"
+            },
+            "intent_topics": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Intent Topics"
+            },
+            "role": {
+              "default": "",
+              "title": "Role",
+              "type": "string"
+            },
+            "goals": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Goals"
+            },
+            "industry": {
+              "default": "",
+              "title": "Industry",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "title": "get_insightsArguments"
+        },
+        "name": "get_insights"
+      },
+      {
+        "description": "Your own queries to Champions: totals, intents, useful insights and gaps.",
+        "inputSchema": {
+          "properties": {},
+          "type": "object",
+          "title": "get_query_statsArguments"
+        },
+        "name": "get_query_stats"
+      }
+    ]
+  }
+}

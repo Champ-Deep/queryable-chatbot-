@@ -1,0 +1,90 @@
+{
+  "profile": {
+    "display": "Priya, Head of Sales at an HR-software vendor (Berlin)",
+    "industry": "HR Software",
+    "role": "Head of Sales",
+    "region": "EMEA",
+    "goals": [
+      "Build pipeline with companies replacing their HR platform"
+    ],
+    "target_segment": {
+      "industries": [
+        "Healthcare"
+      ],
+      "regions": [
+        "EMEA"
+      ],
+      "size_bands": [
+        "Mid-market"
+      ]
+    },
+    "company_name": "PeopleFlow GmbH",
+    "budget_monthly_credits": 600,
+    "must_have_fields": [
+      "intent_score",
+      "hr_platform",
+      "employee_count"
+    ],
+    "compliance": "gdpr_strict",
+    "freshness": "weekly",
+    "private_notes": "Q1 quota at risk; prioritise accounts on ADP or Oracle HCM."
+  },
+  "fields": [
+    {
+      "name": "industry",
+      "label": "Your industry",
+      "class": "shareable"
+    },
+    {
+      "name": "role",
+      "label": "Your role",
+      "class": "shareable"
+    },
+    {
+      "name": "region",
+      "label": "Your sales region",
+      "class": "shareable"
+    },
+    {
+      "name": "goals",
+      "label": "What you are trying to achieve",
+      "class": "shareable"
+    },
+    {
+      "name": "target_segment",
+      "label": "Industries, regions and sizes you sell to",
+      "class": "opt_in"
+    },
+    {
+      "name": "company_name",
+      "label": "Your company's name",
+      "class": "opt_in"
+    },
+    {
+      "name": "budget_monthly_credits",
+      "label": "Monthly data budget",
+      "class": "private"
+    },
+    {
+      "name": "must_have_fields",
+      "label": "Fields you require",
+      "class": "private"
+    },
+    {
+      "name": "compliance",
+      "label": "Your data-protection policy",
+      "class": "private"
+    },
+    {
+      "name": "private_notes",
+      "label": "Internal notes",
+      "class": "private"
+    }
+  ],
+  "consents": [],
+  "purposes": {
+    "data_discovery": "Find which Champions data cards fit a need",
+    "market_insights": "Get aggregate market insights for a segment",
+    "outreach": "Prepare contact-level outreach (personal data)"
+  }
+}

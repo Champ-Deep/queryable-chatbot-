@@ -1,0 +1,111 @@
+{
+  "entries": [
+    {
+      "at": "2026-11-24T00:15:59",
+      "client": null,
+      "event": "oauth.token_issued",
+      "client_id": "personal-agent-demo",
+      "scope": "audit:read catalog:read insights:read"
+    },
+    {
+      "at": "2026-11-24T00:16:11",
+      "client": "personal-agent-demo",
+      "event": "a2a.get_insights",
+      "task_id": "68939c8c-d52a-4c14-a53f-084253748146",
+      "consent_id": "cns-b8c389a0fa4e",
+      "purpose": "market_insights",
+      "shared_fields": [
+        "goals",
+        "industry",
+        "region",
+        "role"
+      ],
+      "cards": [
+        "intent_signals",
+        "firmographics",
+        "technographics"
+      ],
+      "matching_companies": 88,
+      "query_id": "q-612085a70aad"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "mcp.get_vaf_fields",
+      "card_id": "intent_signals"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "mcp.get_vaf_fields",
+      "card_id": "firmographics"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "mcp.get_vaf_fields",
+      "card_id": "technographics"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "a2a.submit_feedback",
+      "task_id": "8f357cb0-b5d4-476c-b2f6-a518921b9e86",
+      "query_id": "q-612085a70aad",
+      "ratings": 6
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": null,
+      "event": "oauth.token_issued",
+      "client_id": "personal-agent-demo",
+      "scope": "audit:read catalog:read insights:read"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "a2a.describe_capabilities",
+      "task_id": "b8aebf75-e610-46b9-b55a-9c925e2541fc",
+      "consent_id": "cns-6092113a5019",
+      "purpose": "data_discovery",
+      "shared_fields": [
+        "industry"
+      ],
+      "cards": [
+        "firmographics",
+        "technographics",
+        "intent_signals",
+        "hr_tech_spend",
+        "financials",
+        "contacts"
+      ],
+      "matching_companies": 2400,
+      "query_id": "q-1e9d07becfe9"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "mcp.get_vaf_fields",
+      "card_id": "firmographics"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "mcp.get_vaf_fields",
+      "card_id": "technographics"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": "personal-agent-demo",
+      "event": "mcp.get_vaf_fields",
+      "card_id": "intent_signals"
+    },
+    {
+      "at": "2026-11-24T00:16:12",
+      "client": null,
+      "event": "oauth.token_issued",
+      "client_id": "personal-agent-demo",
+      "scope": "audit:read catalog:read insights:read"
+    }
+  ]
+}

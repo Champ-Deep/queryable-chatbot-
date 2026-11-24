@@ -1,0 +1,112 @@
+{
+  "status": "consent_required",
+  "purpose": "outreach",
+  "purpose_label": "Prepare contact-level outreach (personal data)",
+  "fields": [
+    {
+      "name": "industry",
+      "label": "Your industry",
+      "class": "shareable",
+      "default": true,
+      "preview": "HR Software"
+    },
+    {
+      "name": "role",
+      "label": "Your role",
+      "class": "shareable",
+      "default": true,
+      "preview": "Head of Sales"
+    },
+    {
+      "name": "region",
+      "label": "Your sales region",
+      "class": "shareable",
+      "default": true,
+      "preview": "EMEA"
+    },
+    {
+      "name": "goals",
+      "label": "What you are trying to achieve",
+      "class": "shareable",
+      "default": true,
+      "preview": [
+        "Build pipeline with companies replacing their HR platform"
+      ]
+    },
+    {
+      "name": "target_segment",
+      "label": "Industries, regions and sizes you sell to",
+      "class": "opt_in",
+      "default": false,
+      "preview": {
+        "industries": [
+          "Healthcare"
+        ],
+        "regions": [
+          "EMEA"
+        ],
+        "size_bands": [
+          "Mid-market"
+        ]
+      }
+    },
+    {
+      "name": "company_name",
+      "label": "Your company's name",
+      "class": "opt_in",
+      "default": false,
+      "preview": "PeopleFlow GmbH"
+    },
+    {
+      "name": "budget_monthly_credits",
+      "label": "Monthly data budget",
+      "class": "private",
+      "default": false,
+      "preview": null
+    },
+    {
+      "name": "must_have_fields",
+      "label": "Fields you require",
+      "class": "private",
+      "default": false,
+      "preview": null
+    },
+    {
+      "name": "compliance",
+      "label": "Your data-protection policy",
+      "class": "private",
+      "default": false,
+      "preview": null
+    },
+    {
+      "name": "private_notes",
+      "label": "Internal notes",
+      "class": "private",
+      "default": false,
+      "preview": null
+    }
+  ],
+  "wire": [
+    {
+      "t": 1795459572.6738007,
+      "direction": "local",
+      "protocol": "Consent",
+      "title": "Consent needed for purpose 'outreach'",
+      "detail": {
+        "purpose": "outreach",
+        "would_share_by_default": [
+          "industry",
+          "role",
+          "region",
+          "goals"
+        ],
+        "never_shared": [
+          "budget_monthly_credits",
+          "must_have_fields",
+          "compliance",
+          "private_notes"
+        ]
+      }
+    }
+  ]
+}

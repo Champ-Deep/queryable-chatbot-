@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "result": {
+    "content": [
+      {
+        "text": "Error executing tool get_vaf_fields: Unknown card_id 'nope'. Known: firmographics, technographics, intent_signals, hr_tech_spend, financials, contacts",
+        "type": "text"
+      }
+    ],
+    "isError": true
+  }
+}

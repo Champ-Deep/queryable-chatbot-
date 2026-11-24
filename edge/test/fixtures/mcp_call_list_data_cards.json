@@ -1,0 +1,91 @@
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "content": [
+      {
+        "text": "{\n  \"id\": \"firmographics\",\n  \"name\": \"Firmographics\",\n  \"description\": \"Core company profile: industry, size, location and structure.\",\n  \"refresh\": \"monthly\",\n  \"credits_per_1k_records\": 40,\n  \"vaf_field_count\": 10,\n  \"contains_personal_data\": false\n}",
+        "type": "text"
+      },
+      {
+        "text": "{\n  \"id\": \"technographics\",\n  \"name\": \"Technographics\",\n  \"description\": \"Installed technology by category, detected from 40+ signal sources.\",\n  \"refresh\": \"weekly\",\n  \"credits_per_1k_records\": 75,\n  \"vaf_field_count\": 7,\n  \"contains_personal_data\": false\n}",
+        "type": "text"
+      },
+      {
+        "text": "{\n  \"id\": \"intent_signals\",\n  \"name\": \"Intent Signals\",\n  \"description\": \"Topic-level buying intent from content consumption and job postings.\",\n  \"refresh\": \"daily\",\n  \"credits_per_1k_records\": 120,\n  \"vaf_field_count\": 5,\n  \"contains_personal_data\": false\n}",
+        "type": "text"
+      },
+      {
+        "text": "{\n  \"id\": \"hr_tech_spend\",\n  \"name\": \"HR Tech Spend\",\n  \"description\": \"Modelled HR technology budget, contract timing and vendor mix.\",\n  \"refresh\": \"quarterly\",\n  \"credits_per_1k_records\": 90,\n  \"vaf_field_count\": 4,\n  \"contains_personal_data\": false\n}",
+        "type": "text"
+      },
+      {
+        "text": "{\n  \"id\": \"financials\",\n  \"name\": \"Financials\",\n  \"description\": \"Revenue, growth and funding for public and private companies.\",\n  \"refresh\": \"quarterly\",\n  \"credits_per_1k_records\": 60,\n  \"vaf_field_count\": 4,\n  \"contains_personal_data\": false\n}",
+        "type": "text"
+      },
+      {
+        "text": "{\n  \"id\": \"contacts\",\n  \"name\": \"Contacts\",\n  \"description\": \"Business contacts by role and seniority. Personal data: requires the 'outreach' purpose, a data processing agreement and the contacts:read scope.\",\n  \"refresh\": \"weekly\",\n  \"credits_per_1k_records\": 250,\n  \"vaf_field_count\": 6,\n  \"contains_personal_data\": true\n}",
+        "type": "text"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "result": [
+        {
+          "id": "firmographics",
+          "name": "Firmographics",
+          "description": "Core company profile: industry, size, location and structure.",
+          "refresh": "monthly",
+          "credits_per_1k_records": 40,
+          "vaf_field_count": 10,
+          "contains_personal_data": false
+        },
+        {
+          "id": "technographics",
+          "name": "Technographics",
+          "description": "Installed technology by category, detected from 40+ signal sources.",
+          "refresh": "weekly",
+          "credits_per_1k_records": 75,
+          "vaf_field_count": 7,
+          "contains_personal_data": false
+        },
+        {
+          "id": "intent_signals",
+          "name": "Intent Signals",
+          "description": "Topic-level buying intent from content consumption and job postings.",
+          "refresh": "daily",
+          "credits_per_1k_records": 120,
+          "vaf_field_count": 5,
+          "contains_personal_data": false
+        },
+        {
+          "id": "hr_tech_spend",
+          "name": "HR Tech Spend",
+          "description": "Modelled HR technology budget, contract timing and vendor mix.",
+          "refresh": "quarterly",
+          "credits_per_1k_records": 90,
+          "vaf_field_count": 4,
+          "contains_personal_data": false
+        },
+        {
+          "id": "financials",
+          "name": "Financials",
+          "description": "Revenue, growth and funding for public and private companies.",
+          "refresh": "quarterly",
+          "credits_per_1k_records": 60,
+          "vaf_field_count": 4,
+          "contains_personal_data": false
+        },
+        {
+          "id": "contacts",
+          "name": "Contacts",
+          "description": "Business contacts by role and seniority. Personal data: requires the 'outreach' purpose, a data processing agreement and the contacts:read scope.",
+          "refresh": "weekly",
+          "credits_per_1k_records": 250,
+          "vaf_field_count": 6,
+          "contains_personal_data": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "access_token": "<jwt>",
+  "token_type": "Bearer",
+  "expires_in": 300,
+  "scope": "audit:read catalog:read insights:read"
+}

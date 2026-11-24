@@ -1,0 +1,118 @@
+{
+  "name": "Champions Group Agent",
+  "description": "Company data provider. Knows the Champions data cards and VAF fields, matches them to a buyer's need and returns aggregate insights. Never exports records or personal data over A2A.",
+  "supportedInterfaces": [
+    {
+      "url": "http://127.0.0.1:9100/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "url": "https://champions.example",
+    "organization": "Champions Group (demo)"
+  },
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "securitySchemes": {
+    "bearer": {
+      "httpAuthSecurityScheme": {
+        "description": "OAuth2 client credentials: POST http://127.0.0.1:9100/oauth/token",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "schemes": {
+        "bearer": {
+          "list": [
+            "catalog:read"
+          ]
+        }
+      }
+    }
+  ],
+  "defaultInputModes": [
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "describe_capabilities",
+      "name": "Describe capabilities",
+      "description": "Lists every data card with its VAF fields, coverage and refresh.",
+      "tags": [
+        "catalog"
+      ],
+      "examples": [
+        "What data can Champions provide?"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "find_data_cards",
+      "name": "Find data cards",
+      "description": "Ranks data cards and VAF fields for a described need and segment.",
+      "tags": [
+        "catalog",
+        "matching"
+      ],
+      "examples": [
+        "Mid-size healthcare companies in Europe switching HR platforms"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "get_insights",
+      "name": "Get insights",
+      "description": "Card matches plus aggregate insights and a small sample for a segment (needs insights:read).",
+      "tags": [
+        "insights"
+      ],
+      "examples": [
+        "How many fintechs in the UK are researching payroll?"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "submit_feedback",
+      "name": "Submit feedback",
+      "description": "Rate which insights from an earlier answer were useful (champions.feedback/v1: query_id + insight ratings, no reasons).",
+      "tags": [
+        "feedback",
+        "quality"
+      ],
+      "examples": [
+        "insight hot_accounts was useful"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    }
+  ]
+}

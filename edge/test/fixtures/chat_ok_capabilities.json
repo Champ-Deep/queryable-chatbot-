@@ -1,0 +1,1029 @@
+{
+  "status": "ok",
+  "answer": "Champions offers 6 data cards (Firmographics, Technographics, Intent Signals, HR Tech Spend, Financials, Contacts) with 36 VAF fields in total. Best fits for your profile: Technographics and Financials. Ask about a specific segment and I'll check what fits your budget.",
+  "insights": [],
+  "follow_ups": [],
+  "skill": "describe_capabilities",
+  "catalog": {
+    "schema": "champions.catalog_result/v1",
+    "matches": [
+      {
+        "card_id": "firmographics",
+        "name": "Firmographics",
+        "relevance": 0.5,
+        "why": "Core company profile: industry, size, location and structure.",
+        "matched_fields": [
+          "company_name",
+          "domain",
+          "industry",
+          "sub_industry"
+        ],
+        "coverage_pct": 95.0,
+        "refresh": "monthly",
+        "credits_per_1k_records": 40,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "technographics",
+        "name": "Technographics",
+        "relevance": 0.5,
+        "why": "Installed technology by category, detected from 40+ signal sources.",
+        "matched_fields": [
+          "hr_platform",
+          "crm",
+          "erp",
+          "cloud_provider"
+        ],
+        "coverage_pct": 78.9,
+        "refresh": "weekly",
+        "credits_per_1k_records": 75,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "intent_signals",
+        "name": "Intent Signals",
+        "relevance": 0.5,
+        "why": "Topic-level buying intent from content consumption and job postings.",
+        "matched_fields": [
+          "intent_topic",
+          "intent_score",
+          "surge_start",
+          "hiring_signal"
+        ],
+        "coverage_pct": 61.8,
+        "refresh": "daily",
+        "credits_per_1k_records": 120,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "hr_tech_spend",
+        "name": "HR Tech Spend",
+        "relevance": 0.5,
+        "why": "Modelled HR technology budget, contract timing and vendor mix.",
+        "matched_fields": [
+          "annual_hr_tech_spend_usd",
+          "contract_renewal_window",
+          "deployment_type",
+          "vendor_count"
+        ],
+        "coverage_pct": 71.7,
+        "refresh": "quarterly",
+        "credits_per_1k_records": 90,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "financials",
+        "name": "Financials",
+        "relevance": 0.5,
+        "why": "Revenue, growth and funding for public and private companies.",
+        "matched_fields": [
+          "revenue_usd_m",
+          "revenue_growth_pct",
+          "funding_stage",
+          "total_funding_usd_m"
+        ],
+        "coverage_pct": 69.1,
+        "refresh": "quarterly",
+        "credits_per_1k_records": 60,
+        "contains_personal_data": false
+      },
+      {
+        "card_id": "contacts",
+        "name": "Contacts",
+        "relevance": 0.5,
+        "why": "Business contacts by role and seniority. Personal data: requires the 'outreach' purpose, a data processing agreement and the contacts:read scope.",
+        "matched_fields": [
+          "full_name",
+          "job_title",
+          "seniority",
+          "department"
+        ],
+        "coverage_pct": 89.1,
+        "refresh": "weekly",
+        "credits_per_1k_records": 250,
+        "contains_personal_data": true
+      }
+    ],
+    "matching_companies": 2400,
+    "insights": [
+      {
+        "label": "Data cards",
+        "value": 6,
+        "detail": "",
+        "id": "",
+        "themes": [],
+        "score": 0.0,
+        "why_for_you": "",
+        "evidence": "",
+        "follow_ups": []
+      },
+      {
+        "label": "VAF fields",
+        "value": 36,
+        "detail": "",
+        "id": "",
+        "themes": [],
+        "score": 0.0,
+        "why_for_you": "",
+        "evidence": "",
+        "follow_ups": []
+      }
+    ],
+    "sample": [],
+    "method": "Full catalog listing",
+    "consent_id": "cns-6092113a5019",
+    "query_id": "q-1e9d07becfe9",
+    "personalised_for": [],
+    "gaps": []
+  },
+  "recommendation": {
+    "schema": "champions.recommendation/v1",
+    "summary": "How each Champions data card fits your profile. Nothing to buy yet: ask about a segment for a budgeted bundle.",
+    "options": [
+      {
+        "card_id": "technographics",
+        "name": "Technographics",
+        "score": 69.3,
+        "verdict": "recommended",
+        "reasons": [
+          "Champions: installed technology by category, detected from 40+ signal sources. (relevance 0.50)",
+          "Average field coverage 78.9%, refreshed weekly",
+          "About 720 credits/month (fits your budget)",
+          "Has your must-have field(s): erp"
+        ],
+        "est_monthly_credits": 720
+      },
+      {
+        "card_id": "financials",
+        "name": "Financials",
+        "score": 67.9,
+        "verdict": "recommended",
+        "reasons": [
+          "Champions: revenue, growth and funding for public and private companies. (relevance 0.50)",
+          "Average field coverage 69.1%, refreshed quarterly",
+          "About 48 credits/month (fits your budget)",
+          "Has your must-have field(s): revenue_usd_m"
+        ],
+        "est_monthly_credits": 48
+      },
+      {
+        "card_id": "firmographics",
+        "name": "Firmographics",
+        "score": 66.8,
+        "verdict": "recommended",
+        "reasons": [
+          "Champions: core company profile: industry, size, location and structure. (relevance 0.50)",
+          "Average field coverage 95.0%, refreshed monthly",
+          "About 96 credits/month (fits your budget)"
+        ],
+        "est_monthly_credits": 96
+      },
+      {
+        "card_id": "hr_tech_spend",
+        "name": "HR Tech Spend",
+        "score": 63.3,
+        "verdict": "recommended",
+        "reasons": [
+          "Champions: modelled hr technology budget, contract timing and vendor mix. (relevance 0.50)",
+          "Average field coverage 71.7%, refreshed quarterly",
+          "About 72 credits/month (fits your budget)"
+        ],
+        "est_monthly_credits": 72
+      },
+      {
+        "card_id": "contacts",
+        "name": "Contacts",
+        "score": 50.9,
+        "verdict": "optional",
+        "reasons": [
+          "Champions: business contacts by role and seniority. personal data: requires the 'outreach' purpose, a data processing agreement and the contacts:read scope. (relevance 0.50)",
+          "Average field coverage 89.1%, refreshed weekly",
+          "About 2400 credits/month (over your monthly budget)"
+        ],
+        "est_monthly_credits": 2400
+      },
+      {
+        "card_id": "intent_signals",
+        "name": "Intent Signals",
+        "score": 46.8,
+        "verdict": "optional",
+        "reasons": [
+          "Champions: topic-level buying intent from content consumption and job postings. (relevance 0.50)",
+          "Average field coverage 61.8%, refreshed daily",
+          "About 1152 credits/month (over your monthly budget)"
+        ],
+        "est_monthly_credits": 1152
+      }
+    ],
+    "bundle": [
+      "technographics",
+      "financials",
+      "firmographics",
+      "hr_tech_spend"
+    ],
+    "bundle_monthly_credits": 936,
+    "within_budget": true
+  },
+  "consent": {
+    "consent_id": "cns-6092113a5019",
+    "persona": "aiko",
+    "purpose": "data_discovery",
+    "fields": [
+      "industry"
+    ],
+    "granted_at": "2026-11-24T00:16:12"
+  },
+  "wire": [
+    {
+      "t": 1795459572.4209545,
+      "direction": "local",
+      "protocol": "Consent",
+      "title": "Consent cns-6092113a5019 covers 'data_discovery'",
+      "detail": {
+        "sending": [
+          "industry"
+        ],
+        "kept_private": [
+          "budget_monthly_credits",
+          "company_name",
+          "compliance",
+          "goals",
+          "must_have_fields",
+          "private_notes",
+          "region",
+          "role",
+          "target_segment"
+        ]
+      }
+    },
+    {
+      "t": 1795459572.4210467,
+      "direction": "local",
+      "protocol": "Plan",
+      "title": "Skill describe_capabilities",
+      "detail": {
+        "schema": "champions.capability_request/v1",
+        "skill": "describe_capabilities",
+        "need": "What data can Champions provide?",
+        "filters": {
+          "industries": [],
+          "regions": [],
+          "countries": [],
+          "size_bands": [],
+          "intent_topics": []
+        },
+        "desired_outputs": [],
+        "source": "live"
+      }
+    },
+    {
+      "t": 1795459572.4223163,
+      "direction": "out",
+      "protocol": "OAuth2",
+      "title": "POST /oauth/token",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "accept": "*/*"
+      },
+      "body": {
+        "grant_type": "client_credentials",
+        "client_id": "personal-agent-demo",
+        "client_secret": "***",
+        "scope": "catalog%3Aread+insights%3Aread+audit%3Aread"
+      }
+    },
+    {
+      "t": 1795459572.4403539,
+      "direction": "in",
+      "protocol": "OAuth2",
+      "title": "200 /oauth/token",
+      "status": 200,
+      "ms": 18.1,
+      "body": {
+        "access_token": "eyJhbGciOiJI...(redacted)",
+        "token_type": "Bearer",
+        "expires_in": 300,
+        "scope": "audit:read catalog:read insights:read"
+      }
+    },
+    {
+      "t": 1795459572.4433439,
+      "direction": "out",
+      "protocol": "A2A card",
+      "title": "GET /.well-known/agent-card.json",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "accept": "*/*"
+      },
+      "body": null
+    },
+    {
+      "t": 1795459572.4610188,
+      "direction": "in",
+      "protocol": "A2A card",
+      "title": "200 /.well-known/agent-card.json",
+      "status": 200,
+      "ms": 17.7,
+      "body": {
+        "name": "Champions Group Agent",
+        "description": "Company data provider. Knows the Champions data cards and VAF fields, matches them to a buyer's need and returns aggregate insights. Never exports records or personal data over A2A.",
+        "supportedInterfaces": [
+          {
+            "url": "http://127.0.0.1:9100/a2a",
+            "protocolBinding": "JSONRPC",
+            "protocolVersion": "1.0"
+          }
+        ],
+        "provider": {
+          "url": "https://champions.example",
+          "organization": "Champions Group (demo)"
+        },
+        "version": "1.0.0",
+        "capabilities": {
+          "streaming": false,
+          "pushNotifications": false
+        },
+        "securitySchemes": {
+          "bearer": {
+            "httpAuthSecurityScheme": {
+              "description": "OAuth2 client credentials: POST http://127.0.0.1:9100/oauth/token",
+              "scheme": "Bearer",
+              "bearerFormat": "JWT"
+            }
+          }
+        },
+        "securityRequirements": [
+          {
+            "schemes": {
+              "bearer": {
+                "list": [
+                  "catalog:read"
+                ]
+              }
+            }
+          }
+        ],
+        "defaultInputModes": [
+          "application/json"
+        ],
+        "defaultOutputModes": [
+          "application/json"
+        ],
+        "skills": [
+          {
+            "id": "describe_capabilities",
+            "name": "Describe capabilities",
+            "description": "Lists every data card with its VAF fields, coverage and refresh.",
+            "tags": [
+              "catalog"
+            ],
+            "examples": [
+              "What data can Champions provide?"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "find_data_cards",
+            "name": "Find data cards",
+            "description": "Ranks data cards and VAF fields for a described need and segment.",
+            "tags": [
+              "catalog",
+              "matching"
+            ],
+            "examples": [
+              "Mid-size healthcare companies in Europe switching HR platforms"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "get_insights",
+            "name": "Get insights",
+            "description": "Card matches plus aggregate insights and a small sample for a segment (needs insights:read).",
+            "tags": [
+              "insights"
+            ],
+            "examples": [
+              "How many fintechs in the UK are researching payroll?"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          },
+          {
+            "id": "submit_feedback",
+            "name": "Submit feedback",
+            "description": "Rate which insights from an earlier answer were useful (champions.feedback/v1: query_id + insight ratings, no reasons).",
+            "tags": [
+              "feedback",
+              "quality"
+            ],
+            "examples": [
+              "insight hot_accounts was useful"
+            ],
+            "inputModes": [
+              "application/json"
+            ],
+            "outputModes": [
+              "application/json"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "t": 1795459572.4647057,
+      "direction": "out",
+      "protocol": "A2A",
+      "title": "POST /a2a · SendMessage",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "a2a-version": "1.0",
+        "accept": "*/*"
+      },
+      "body": {
+        "method": "SendMessage",
+        "params": {
+          "message": {
+            "messageId": "ff96e4ba-7a36-4f5e-849b-757752589645",
+            "role": "ROLE_USER",
+            "parts": [
+              {
+                "data": {
+                  "desired_outputs": [],
+                  "context": {
+                    "schema": "champions.user_context/v1",
+                    "shared": {
+                      "industry": "Manufacturing"
+                    },
+                    "purpose": "data_discovery",
+                    "consent_id": "cns-6092113a5019"
+                  },
+                  "skill": "describe_capabilities",
+                  "schema": "champions.capability_request/v1",
+                  "source": "live",
+                  "filters": {
+                    "industries": [],
+                    "countries": [],
+                    "intent_topics": [],
+                    "regions": [],
+                    "size_bands": []
+                  },
+                  "need": "What data can Champions provide?"
+                }
+              }
+            ]
+          },
+          "configuration": {}
+        },
+        "id": "356174a9-026b-462e-a471-47293e4e1155",
+        "jsonrpc": "2.0"
+      }
+    },
+    {
+      "t": 1795459572.513632,
+      "direction": "in",
+      "protocol": "A2A",
+      "title": "200 /a2a",
+      "status": 200,
+      "ms": 49.0,
+      "body": {
+        "result": {
+          "task": {
+            "id": "b8aebf75-e610-46b9-b55a-9c925e2541fc",
+            "contextId": "dd1f8385-f512-4d37-b0b0-c4ac09ca46e2",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "timestamp": "2026-11-23T18:46:12.500096Z"
+            },
+            "artifacts": [
+              {
+                "artifactId": "a66224af-5d23-4d52-9a0c-24168d27c0a6",
+                "name": "catalog_result",
+                "parts": [
+                  {
+                    "data": {
+                      "personalised_for": [],
+                      "query_id": "q-1e9d07becfe9",
+                      "matches": [
+                        {
+                          "name": "Firmographics",
+                          "credits_per_1k_records": 40.0,
+                          "card_id": "firmographics",
+                          "refresh": "monthly",
+                          "matched_fields": [
+                            "company_name",
+                            "domain",
+                            "industry",
+                            "sub_industry"
+                          ],
+                          "coverage_pct": 95.0,
+                          "contains_personal_data": false,
+                          "why": "Core company profile: industry, size, location and structure.",
+                          "relevance": 0.5
+                        },
+                        {
+                          "name": "Technographics",
+                          "credits_per_1k_records": 75.0,
+                          "card_id": "technographics",
+                          "refresh": "weekly",
+                          "matched_fields": [
+                            "hr_platform",
+                            "crm",
+                            "erp",
+                            "cloud_provider"
+                          ],
+                          "coverage_pct": 78.9,
+                          "contains_personal_data": false,
+                          "why": "Installed technology by category, detected from 40+ signal sources.",
+                          "relevance": 0.5
+                        },
+                        {
+                          "name": "Intent Signals",
+                          "credits_per_1k_records": 120.0,
+                          "card_id": "intent_signals",
+                          "refresh": "daily",
+                          "matched_fields": [
+                            "intent_topic",
+                            "intent_score",
+                            "surge_start",
+                            "hiring_signal"
+                          ],
+                          "coverage_pct": 61.8,
+                          "contains_personal_data": false,
+                          "why": "Topic-level buying intent from content consumption and job postings.",
+                          "relevance": 0.5
+                        },
+                        {
+                          "name": "HR Tech Spend",
+                          "credits_per_1k_records": 90.0,
+                          "card_id": "hr_tech_spend",
+                          "refresh": "quarterly",
+                          "matched_fields": [
+                            "annual_hr_tech_spend_usd",
+                            "contract_renewal_window",
+                            "deployment_type",
+                            "vendor_count"
+                          ],
+                          "coverage_pct": 71.7,
+                          "contains_personal_data": false,
+                          "why": "Modelled HR technology budget, contract timing and vendor mix.",
+                          "relevance": 0.5
+                        },
+                        {
+                          "name": "Financials",
+                          "credits_per_1k_records": 60.0,
+                          "card_id": "financials",
+                          "refresh": "quarterly",
+                          "matched_fields": [
+                            "revenue_usd_m",
+                            "revenue_growth_pct",
+                            "funding_stage",
+                            "total_funding_usd_m"
+                          ],
+                          "coverage_pct": 69.1,
+                          "contains_personal_data": false,
+                          "why": "Revenue, growth and funding for public and private companies.",
+                          "relevance": 0.5
+                        },
+                        {
+                          "name": "Contacts",
+                          "credits_per_1k_records": 250.0,
+                          "card_id": "contacts",
+                          "refresh": "weekly",
+                          "matched_fields": [
+                            "full_name",
+                            "job_title",
+                            "seniority",
+                            "department"
+                          ],
+                          "coverage_pct": 89.1,
+                          "contains_personal_data": true,
+                          "why": "Business contacts by role and seniority. Personal data: requires the 'outreach' purpose, a data processing agreement and the contacts:read scope.",
+                          "relevance": 0.5
+                        }
+                      ],
+                      "schema": "champions.catalog_result/v1",
+                      "matching_companies": 2400.0,
+                      "method": "Full catalog listing",
+                      "gaps": [],
+                      "sample": [],
+                      "insights": [
+                        {
+                          "value": 6.0,
+                          "score": 0.0,
+                          "why_for_you": "",
+                          "follow_ups": [],
+                          "evidence": "",
+                          "id": "",
+                          "label": "Data cards",
+                          "themes": [],
+                          "detail": ""
+                        },
+                        {
+                          "value": 36.0,
+                          "score": 0.0,
+                          "why_for_you": "",
+                          "follow_ups": [],
+                          "evidence": "",
+                          "id": "",
+                          "label": "VAF fields",
+                          "themes": [],
+                          "detail": ""
+                        }
+                      ],
+                      "consent_id": "cns-6092113a5019"
+                    }
+                  }
+                ]
+              }
+            ],
+            "history": [
+              {
+                "messageId": "ff96e4ba-7a36-4f5e-849b-757752589645",
+                "contextId": "dd1f8385-f512-4d37-b0b0-c4ac09ca46e2",
+                "taskId": "b8aebf75-e610-46b9-b55a-9c925e2541fc",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "data": {
+                      "desired_outputs": [],
+                      "context": {
+                        "schema": "champions.user_context/v1",
+                        "shared": {
+                          "industry": "Manufacturing"
+                        },
+                        "purpose": "data_discovery",
+                        "consent_id": "cns-6092113a5019"
+                      },
+                      "skill": "describe_capabilities",
+                      "schema": "champions.capability_request/v1",
+                      "source": "live",
+                      "filters": {
+                        "industries": [],
+                        "countries": [],
+                        "intent_topics": [],
+                        "regions": [],
+                        "size_bands": []
+                      },
+                      "need": "What data can Champions provide?"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "id": "356174a9-026b-462e-a471-47293e4e1155",
+        "jsonrpc": "2.0"
+      }
+    },
+    {
+      "t": 1795459572.5204456,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · initialize",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-06-18",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "personal-agent",
+            "version": "1.0"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.5407162,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 20.3,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "listChanged": false,
+              "subscribe": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+          "protocolVersion": "2025-06-18",
+          "serverInfo": {
+            "name": "champions-catalog",
+            "version": ""
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.5414019,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · tools/call get_vaf_fields",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {
+          "name": "get_vaf_fields",
+          "arguments": {
+            "card_id": "firmographics"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.5615134,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 20.2,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "text": "{\n  \"card_id\": \"firmographics\",\n  \"name\": \"Firmographics\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"company_name\",\n      \"type\": \"string\",\n      \"description\": \"Registered trading name\",\n      \"coverage_pct\": 99.8,\n      \"refresh\": \"monthly\",\n      \"example\": \"Northwind Health GmbH\"\n    },\n    {\n      \"name\": \"domain\",\n      \"type\": \"string\",\n      \"description\": \"Primary web domain\",\n      \"coverage_pct\": 97.5,\n      \"refresh\": \"monthly\",\n      \"example\": \"northwind-health.example\"\n    },\n    {\n      \"name\": \"industry\",\n      \"type\": \"enum\",\n      \"description\": \"Champions industry taxonomy (L1)\",\n      \"coverage_pct\": 99.1,\n      \"refresh\": \"monthly\",\n      \"example\": \"Healthcare\"\n    },\n    {\n      \"name\": \"sub_industry\",\n      \"type\": \"enum\",\n      \"description\": \"Industry taxonomy (L2)\",\n      \"coverage_pct\": 91.4,\n      \"refresh\": \"monthly\",\n      \"example\": \"Hospitals & Clinics\"\n    },\n    {\n      \"name\": \"hq_country\",\n      \"type\": \"string\",\n      \"description\": \"Headquarters country\",\n      \"coverage_pct\": 99.6,\n      \"refresh\": \"monthly\",\n      \"example\": \"Germany\"\n    },\n    {\n      \"name\": \"region\",\n      \"type\": \"enum\",\n      \"description\": \"Sales region (EMEA, NA, APAC, LATAM)\",\n      \"coverage_pct\": 99.6,\n      \"refresh\": \"monthly\",\n      \"example\": \"EMEA\"\n    },\n    {\n      \"name\": \"employee_count\",\n      \"type\": \"integer\",\n      \"description\": \"Modelled global headcount\",\n      \"coverage_pct\": 94.2,\n      \"refresh\": \"monthly\",\n      \"example\": 820\n    },\n    {\n      \"name\": \"size_band\",\n      \"type\": \"enum\",\n      \"description\": \"SMB / Mid-market / Enterprise\",\n      \"coverage_pct\": 94.2,\n      \"refresh\": \"monthly\",\n      \"example\": \"Mid-market\"\n    },\n    {\n      \"name\": \"founded_year\",\n      \"type\": \"integer\",\n      \"description\": \"Year founded\",\n      \"coverage_pct\": 88.0,\n      \"refresh\": \"quarterly\",\n      \"example\": 2004\n    },\n    {\n      \"name\": \"ownership\",\n      \"type\": \"enum\",\n      \"description\": \"Public, private, PE-backed, non-profit\",\n      \"coverage_pct\": 86.3,\n      \"refresh\": \"quarterly\",\n      \"example\": \"Private\"\n    }\n  ]\n}",
+              "type": "text"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "t": 1795459572.565298,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · initialize",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-06-18",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "personal-agent",
+            "version": "1.0"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.5851684,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 19.9,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "listChanged": false,
+              "subscribe": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+          "protocolVersion": "2025-06-18",
+          "serverInfo": {
+            "name": "champions-catalog",
+            "version": ""
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.585843,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · tools/call get_vaf_fields",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {
+          "name": "get_vaf_fields",
+          "arguments": {
+            "card_id": "technographics"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.6061552,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 20.4,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "text": "{\n  \"card_id\": \"technographics\",\n  \"name\": \"Technographics\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"hr_platform\",\n      \"type\": \"string\",\n      \"description\": \"Primary HRIS / HCM platform\",\n      \"coverage_pct\": 83.5,\n      \"refresh\": \"weekly\",\n      \"example\": \"Workday\"\n    },\n    {\n      \"name\": \"crm\",\n      \"type\": \"string\",\n      \"description\": \"CRM in use\",\n      \"coverage_pct\": 87.9,\n      \"refresh\": \"weekly\",\n      \"example\": \"Salesforce\"\n    },\n    {\n      \"name\": \"erp\",\n      \"type\": \"string\",\n      \"description\": \"ERP in use\",\n      \"coverage_pct\": 79.2,\n      \"refresh\": \"weekly\",\n      \"example\": \"SAP S/4HANA\"\n    },\n    {\n      \"name\": \"cloud_provider\",\n      \"type\": \"string\",\n      \"description\": \"Primary cloud\",\n      \"coverage_pct\": 81.0,\n      \"refresh\": \"weekly\",\n      \"example\": \"Azure\"\n    },\n    {\n      \"name\": \"security_stack\",\n      \"type\": \"list\",\n      \"description\": \"Detected security vendors\",\n      \"coverage_pct\": 64.7,\n      \"refresh\": \"weekly\",\n      \"example\": \"CrowdStrike, Okta\"\n    },\n    {\n      \"name\": \"tech_spend_band\",\n      \"type\": \"enum\",\n      \"description\": \"Modelled annual IT spend band\",\n      \"coverage_pct\": 72.4,\n      \"refresh\": \"monthly\",\n      \"example\": \"$1M-$5M\"\n    },\n    {\n      \"name\": \"install_first_seen\",\n      \"type\": \"date\",\n      \"description\": \"When each product was first detected\",\n      \"coverage_pct\": 83.5,\n      \"refresh\": \"weekly\",\n      \"example\": \"2021-03-14\"\n    }\n  ]\n}",
+              "type": "text"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "t": 1795459572.6092021,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · initialize",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-06-18",
+          "capabilities": {},
+          "clientInfo": {
+            "name": "personal-agent",
+            "version": "1.0"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.6310923,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 22.0,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "prompts": {
+              "listChanged": false
+            },
+            "resources": {
+              "listChanged": false,
+              "subscribe": false
+            },
+            "tools": {
+              "listChanged": false
+            }
+          },
+          "instructions": "Champions Group data catalog: data cards, VAF field definitions, personalised aggregate insights and query statistics. All tools are read-only. Pass role and goals to get_insights for insights ranked for that person.",
+          "protocolVersion": "2025-06-18",
+          "serverInfo": {
+            "name": "champions-catalog",
+            "version": ""
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.631783,
+      "direction": "out",
+      "protocol": "MCP",
+      "title": "POST /mcp · tools/call get_vaf_fields",
+      "headers": {
+        "authorization": "Bearer eyJhbGciOiJI...(redacted)",
+        "content-type": "application/json",
+        "mcp-protocol-version": "2025-06-18",
+        "accept": "application/json, text/event-stream"
+      },
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {
+          "name": "get_vaf_fields",
+          "arguments": {
+            "card_id": "intent_signals"
+          }
+        }
+      }
+    },
+    {
+      "t": 1795459572.654845,
+      "direction": "in",
+      "protocol": "MCP",
+      "title": "200 /mcp",
+      "status": 200,
+      "ms": 23.1,
+      "body": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "content": [
+            {
+              "text": "{\n  \"card_id\": \"intent_signals\",\n  \"name\": \"Intent Signals\",\n  \"vaf_fields\": [\n    {\n      \"name\": \"intent_topic\",\n      \"type\": \"enum\",\n      \"description\": \"Topic showing elevated research\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": \"HR Platform Replacement\"\n    },\n    {\n      \"name\": \"intent_score\",\n      \"type\": \"integer\",\n      \"description\": \"0-100 surge score vs. baseline\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": 82\n    },\n    {\n      \"name\": \"surge_start\",\n      \"type\": \"date\",\n      \"description\": \"First day of the current surge\",\n      \"coverage_pct\": 68.0,\n      \"refresh\": \"daily\",\n      \"example\": \"2026-10-21\"\n    },\n    {\n      \"name\": \"hiring_signal\",\n      \"type\": \"string\",\n      \"description\": \"Related job postings detected\",\n      \"coverage_pct\": 55.3,\n      \"refresh\": \"daily\",\n      \"example\": \"HRIS Project Manager\"\n    },\n    {\n      \"name\": \"competitor_research\",\n      \"type\": \"list\",\n      \"description\": \"Vendors being researched\",\n      \"coverage_pct\": 49.8,\n      \"refresh\": \"daily\",\n      \"example\": \"SAP SuccessFactors, Workday\"\n    }\n  ]\n}",
+              "type": "text"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "t": 1795459572.6566231,
+      "direction": "local",
+      "protocol": "Evaluate",
+      "title": "Checked must-have fields against VAF definitions (private)",
+      "detail": {
+        "must_have_fields": "(private, not sent)",
+        "found_in": {
+          "firmographics": [],
+          "technographics": [
+            "erp"
+          ],
+          "intent_signals": []
+        }
+      }
+    },
+    {
+      "t": 1795459572.656973,
+      "direction": "local",
+      "protocol": "Recommend",
+      "title": "How each Champions data card fits your profile. Nothing to buy yet: ask about a segment for a budgeted bundle.",
+      "detail": {
+        "bundle": [
+          "technographics",
+          "financials",
+          "firmographics",
+          "hr_tech_spend"
+        ],
+        "credits": 936
+      }
+    }
+  ]
+}

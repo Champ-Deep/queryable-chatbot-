@@ -1,0 +1,12 @@
+{
+  "consent_id": "cns-b8c389a0fa4e",
+  "persona": "priya",
+  "purpose": "market_insights",
+  "fields": [
+    "goals",
+    "industry",
+    "region",
+    "role"
+  ],
+  "granted_at": "2026-11-24T00:15:59"
+}

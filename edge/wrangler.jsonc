@@ -1,0 +1,19 @@
+// Champions A2A demo, JavaScript edition: runs on the Cloudflare Workers Free plan.
+//   cd edge && npm install
+//   npx wrangler secret put LAB_PASSWORD
+//   npx wrangler secret put PERSONAL_AGENT_CLIENT_SECRET
+//   npx wrangler deploy
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "champions-a2a",
+  "main": "src/index.js",
+  "account_id": "b24cc98f3aeb0a33161dff396c5f8c25",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "rules": [{ "type": "Text", "globs": ["**/*.html"], "fallthrough": true }],
+  "durable_objects": {
+    "bindings": [{ "name": "CHAMPIONS_EDGE", "class_name": "ChampionsEdge" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChampionsEdge"] }]
+}
